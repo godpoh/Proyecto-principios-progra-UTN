@@ -1,0 +1,15 @@
+"""" def __init__(self):
+el self es el parametro, puede ser cualquier otro nombre, pero
+se utiliza como convecion de la comunidad de python
+
+segunda explicacion del programa
+
+ class Perro:
+     def ladrar(self):
+         print("¡Guau, guau!")
+
+  Creamos una instancia de la clase Perro
+ mi_perro = Perro()
+
+ Llamamos al método ladrar de la instancia mi_perro
+ mi_perro.ladrar()"""
