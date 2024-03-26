@@ -2,22 +2,15 @@ class GestionJugadores:
     def __init__(self):
         self.jugadores = []
 
-    def verificacion_opciones(self, numero):
-        while True:
-            if numero.isnumeric():
-                return int(numero)
-            else:
-                opcion = input("Ingrese el digito de la opcion")
-
     def menu_principal(self):
         while True:
-            print("\n--- Menu Principal ---")
+            print("\n------------Menu Principal------------")
             print("1-Gestion de Jugadores")
             print("2-Visualizar lista de jugadores")
             print("3-Estadísticas de Jugadores")
             print("4-Consultas avanzadas")
             print("5-Salir del sistema.")
-
+            print("--------------------------------------")
             opciones = input("Ingrese el digito de la opcion(1-5)")
 
             if opciones == '1':
@@ -75,10 +68,10 @@ class GestionJugadores:
     def leer_informacion_jugador(self):
         pass
 
-    def modificar_datos_jugador():
+    def modificar_datos_jugador(self):
         pass
 
-    def eliminar_jugador():
+    def eliminar_jugador(self):
         pass
 
 prueba = GestionJugadores()
