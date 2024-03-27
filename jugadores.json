@@ -1,4 +1,212 @@
-{
-  "edad": 23,
-  "nombre": "arturo"
-}
+[
+    {
+        "nombre": "Lionel Andres Messi",
+        "fecha_nacimiento": "24 de junio de 1987",
+        "origen": "Rosario, Argentina",
+        "genero": "Masculino",
+        "altura": 1.70,
+        "peso": 72,
+        "posicion_campo": "Extremo derecho",
+        "club_militante": "Inter Miami",
+        "reconocimientos": 13
+    },
+    {
+        "nombre": "Cristiano Ronaldo",
+        "fecha_nacimiento": "5 de febrero de 1985",
+        "origen": "Funchal, Portugal",
+        "genero": "Masculino",
+        "altura": 1.87,
+        "peso": 83,
+        "posicion_campo": "Delantero",
+        "club_militante": "Manchester United",
+        "reconocimientos": 15
+    },
+    {
+        "nombre": "Neymar Jr.",
+        "fecha_nacimiento": "5 de febrero de 1992",
+        "origen": "Mogi das Cruzes, Brasil",
+        "genero": "Masculino",
+        "altura": 1.75,
+        "peso": 68,
+        "posicion_campo": "Extremo izquierdo",
+        "club_militante": "Paris Saint-Germain",
+        "reconocimientos": 10
+    },
+    {
+        "nombre": "Kylian Mbappe",
+        "fecha_nacimiento": "20 de diciembre de 1998",
+        "origen": "Bondy, Francia",
+        "genero": "Masculino",
+        "altura": 1.78,
+        "peso": 73,
+        "posicion_campo": "Delantero",
+        "club_militante": "Real Madrid",
+        "reconocimientos": 8
+    },
+    {
+        "nombre": "Robert Lewandowski",
+        "fecha_nacimiento": "21 de agosto de 1988",
+        "origen": "Varsovia, Polonia",
+        "genero": "Masculino",
+        "altura": 1.84,
+        "peso": 80,
+        "posicion_campo": "Delantero",
+        "club_militante": "Bayern Munich",
+        "reconocimientos": 9
+    },
+    {
+        "nombre": "Mohamed Salah",
+        "fecha_nacimiento": "15 de junio de 1992",
+        "origen": "Nagrig, Egipto",
+        "genero": "Masculino",
+        "altura": 1.75,
+        "peso": 71,
+        "posicion_campo": "Extremo derecho",
+        "club_militante": "Liverpool",
+        "reconocimientos": 7
+    },
+    {
+        "nombre": "Sergio Ramos",
+        "fecha_nacimiento": "30 de marzo de 1986",
+        "origen": "Camas, Espana",
+        "genero": "Masculino",
+        "altura": 1.84,
+        "peso": 82,
+        "posicion_campo": "Defensa central",
+        "club_militante": "Paris Saint-Germain",
+        "reconocimientos": 18
+    },
+    {
+        "nombre": "Kevin De Bruyne",
+        "fecha_nacimiento": "28 de junio de 1991",
+        "origen": "Drongen, Belgica",
+        "genero": "Masculino",
+        "altura": 1.81,
+        "peso": 70,
+        "posicion_campo": "Centrocampista",
+        "club_militante": "Manchester City",
+        "reconocimientos": 6
+    },
+    {
+        "nombre": "Luis Suarez",
+        "fecha_nacimiento": "24 de enero de 1987",
+        "origen": "Salto, Uruguay",
+        "genero": "Masculino",
+        "altura": 1.82,
+        "peso": 86,
+        "posicion_campo": "Delantero",
+        "club_militante": "Atletico de Madrid",
+        "reconocimientos": 5
+    },
+    {
+        "nombre": "Virgil van Dijk",
+        "fecha_nacimiento": "8 de julio de 1991",
+        "origen": "Breda, Paises Bajos",
+        "genero": "Masculino",
+        "altura": 1.93,
+        "peso": 92,
+        "posicion_campo": "Defensa central",
+        "club_militante": "Liverpool",
+        "reconocimientos": 11
+    },
+    {
+        "nombre": "Antoine Griezmann",
+        "fecha_nacimiento": "21 de marzo de 1991",
+        "origen": "Macon, Francia",
+        "genero": "Masculino",
+        "altura": 1.76,
+        "peso": 73,
+        "posicion_campo": "Delantero",
+        "club_militante": "Atletico de Madrid",
+        "reconocimientos": 4
+    },
+    {
+        "nombre": "Harry Kane",
+        "fecha_nacimiento": "28 de julio de 1993",
+        "origen": "Walthamstow, Inglaterra",
+        "genero": "Masculino",
+        "altura": 1.88,
+        "peso": 86,
+        "posicion_campo": "Delantero",
+        "club_militante": "Tottenham Hotspur",
+        "reconocimientos": 3
+    },
+    {
+        "nombre": "Eden Hazard",
+        "fecha_nacimiento": "7 de enero de 1991",
+        "origen": "La Louviere, Belgica",
+        "genero": "Masculino",
+        "altura": 1.75,
+        "peso": 74,
+        "posicion_campo": "Extremo izquierdo",
+        "club_militante": "Real Madrid",
+        "reconocimientos": 7
+    },
+    {
+        "nombre": "Paul Pogba",
+        "fecha_nacimiento": "15 de marzo de 1993",
+        "origen": "Lagny-sur-Marne, Francia",
+        "genero": "Masculino",
+        "altura": 1.91,
+        "peso": 84,
+        "posicion_campo": "Centrocampista",
+        "club_militante": "Manchester United",
+        "reconocimientos": 6
+    },
+      {
+        "nombre": "Sadio Mane",
+        "fecha_nacimiento": "10 de abril de 1992",
+        "origen": "Bambali, Senegal",
+        "genero": "Masculino",
+        "altura": 1.75,
+        "peso": 69,
+        "posicion_campo": "Extremo izquierdo",
+        "club_militante": "Liverpool",
+        "reconocimientos": 6
+    },
+    {
+        "nombre": "Toni Kroos",
+        "fecha_nacimiento": "4 de enero de 1990",
+        "origen": "Greifswald, Alemania",
+        "genero": "Masculino",
+        "altura": 1.83,
+        "peso": 76,
+        "posicion_campo": "Centrocampista",
+        "club_militante": "Real Madrid",
+        "reconocimientos": 9
+    },
+    {
+        "nombre": "Karim Benzema",
+        "fecha_nacimiento": "19 de diciembre de 1987",
+        "origen": "Lyon, Francia",
+        "genero": "Masculino",
+        "altura": 1.85,
+        "peso": 81,
+        "posicion_campo": "Delantero",
+        "club_militante": "Real Madrid",
+        "reconocimientos": 4
+    },
+    {
+        "nombre": "Manuel Neuer",
+        "fecha_nacimiento": "27 de marzo de 1986",
+        "origen": "Gelsenkirchen, Alemania",
+        "genero": "Masculino",
+        "altura": 1.93,
+        "peso": 92,
+        "posicion_campo": "Portero",
+        "club_militante": "Bayern Munich",
+        "reconocimientos": 8
+    },
+    {
+        "nombre": "Gareth Bale",
+        "fecha_nacimiento": "16 de julio de 1989",
+        "origen": "Cardiff, Gales",
+        "genero": "Masculino",
+        "altura": 1.85,
+        "peso": 82,
+        "posicion_campo": "Extremo derecho",
+        "club_militante": "Real Madrid",
+        "reconocimientos": 6
+    }
+]
+
