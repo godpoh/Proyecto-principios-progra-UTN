@@ -1,9 +1,6 @@
 import json
 import time
 
-# with open("jugadores.json", "r") as file:
-#     jugadores_datos = json.load(file)
-
 class Menu:
     def __init__(self):
         self.opciones_principales = {
@@ -23,7 +20,6 @@ class Menu:
         print("4-Consultas avanzadas")
         print("5-Salir del sistema.")
         print("--------------------------------------")
-
 
     #Menu principal Menu principal Menu principal Menu principal Menu principal Menu principal
     def gestion_jugadores(self):
@@ -76,7 +72,7 @@ class Menu:
             opcion = input("Desea volver al menu principal?(SI): ")
             if opcion.lower() == 'si':
                 print("Volviendo al menu principal")
-                time.sleep(5)
+                time.sleep(2)
                 return()
 
     def consultas_avanzadas(self):
@@ -111,6 +107,8 @@ class Menu:
 
     def eliminar_jugador(self):
         pass
+
+#CONSULTAS AVANZADAS #CONSULTAS AVANZADAS #CONSULTAS AVANZADAS #CONSULTAS AVANZADAS #CONSULTAS AVANZADAS
 
 
 
