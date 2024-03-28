@@ -110,6 +110,25 @@ class Menu:
 
 #CONSULTAS AVANZADAS #CONSULTAS AVANZADAS #CONSULTAS AVANZADAS #CONSULTAS AVANZADAS #CONSULTAS AVANZADAS
 
+    def Mostrar_cantidad_jugadores_mismo_origen(self):
+        pass
+
+    def Mostrar_todos_los_jugadores_que_se_encuentren_en_un_rango_de_edad(self):
+        pass
+
+    def Mostrar_cantidad_jugadores_con_misma_altura_y_tienen_referencia_al_género_de_cada_uno(self):
+        pass
+
+    def Mostrar_los_jugadores_de_Club_específico(self):
+        pass
+    def Mostrar_cantidad_jugadores_acuerdo_con_la_posición_en_el_campo_considerando_unicamente_los_de_género_femenino(self):
+        pass
+    def Mostrar_top_diez_jugadores_mayor_altura_con_mejor_agilidad_la_información_muestra_nombre_genero_origen_altura_agilidad(self):
+        pass
+    def Mostrar_cantidad_jugadores_cuya_velocidad_este_en_un_rango_específico(self):
+        pass
+    def Determinar_promedio_control_balon_para_jugadores_en_una_posición_específica(self):
+        pass
 
 
 iniciador = Menu()

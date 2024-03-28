@@ -1,3 +1,118 @@
-{
-  "remate": 80
-}
+[
+    {
+        "ID": 1,
+        "Jugador": "Lionel Andres Messi"
+    },
+    {
+        "ID": 2,
+        "Jugador": "Cristiano Ronaldo"
+    },
+    {
+        "ID": 3,
+        "Jugador": "Neymar Jr"
+    },
+    {
+        "ID": 4,
+        "Jugador": "Kylian Mbappe"
+    },
+    {
+        "ID": 5,
+        "Jugador": "Robert Lewandowski"
+    },
+    {
+        "ID": 6,
+        "Jugador": "Mohamed Salah"
+    },
+    {
+        "ID": 7,
+        "Jugador": "Sergio Ramos"
+    },
+    {
+        "ID": 8,
+        "Jugador": "Kevin De Bruyne"
+    },
+    {
+        "ID": 9,
+        "Jugador": "Luis Suarez"
+    },
+    {
+        "ID": 10,
+        "Jugador": "Virgil van Dijk"
+    },
+    {
+        "ID": 11,
+        "Jugador": "Antoine Griezmann"
+    },
+    {
+        "ID": 12,
+        "Jugador": "Harry Kane"
+    },
+    {
+        "ID": 13,
+        "Jugador": "Eden Hazard"
+    },
+    {
+        "ID": 14,
+        "Jugador": "Paul Pogba"
+    },
+    {
+        "ID": 15,
+        "Jugador": "Sadio Mane"
+    },
+    {
+        "ID": 16,
+        "Jugador": "Toni Kroos"
+    },
+    {
+        "ID": 17,
+        "Jugador": "Karim Benzema"
+    },
+    {
+        "ID": 18,
+        "Jugador": "Manuel Neuer"
+    },
+    {
+        "ID": 19,
+        "Jugador": "Gareth Bale"
+    },
+    {
+        "ID": 20,
+        "Jugador": "Marta Vieira da Silva"
+    },
+    {
+        "ID": 21,
+        "Jugador": "Alex Morgan"
+    },
+    {
+        "ID": 22,
+        "Jugador": "Ada Hegerberg"
+    },
+    {
+        "ID": 23,
+        "Jugador": "Megan Rapinoe"
+    },
+    {
+        "ID": 24,
+        "Jugador": "Sam Kerr"
+    },
+    {
+        "ID": 25,
+        "Jugador": "Wendie Renard"
+    },
+    {
+        "ID": 26,
+        "Jugador": "Amandine Henry"
+    },
+    {
+        "ID": 27,
+        "Jugador": "Pernille Harder"
+    },
+    {
+        "ID": 28,
+        "Jugador": "Fran Kirby"
+    },
+    {
+        "ID": 29,
+        "Jugador": "Lucy Bronze"
+    }
+]
