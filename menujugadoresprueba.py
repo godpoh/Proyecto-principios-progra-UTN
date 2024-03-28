@@ -67,7 +67,7 @@ class Menu:
     def estadisticas_jugadores(self):
         with open("estadistica_jugador.json", "r") as file:
             datos_estadisticas = json.load(file)
-            print(datos_estadisticas)
+            print(json.dumps(datos_estadisticas, indent=4))
         while True:
             opcion = input("Desea volver al menu principal?(SI): ")
             if opcion.lower() == 'si':
@@ -95,9 +95,7 @@ class Menu:
 #Gestion de jugadores Gestion de jugadores Gestion de jugadores Gestion de jugadores
 
     def insertar_nuevo_jugador(self):
-        with open("jugadores.json", 'w')as file:
-            json.dump(self)
-        print("El jugador ha sido agregado con exito")
+        pass
 
     def leer_informacion_jugador(self):
         pass
