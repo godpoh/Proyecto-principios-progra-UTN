@@ -2,9 +2,6 @@ import json
 import time
 import re
 
-with open("estadistica_jugador.json", "r") as file:
-    jugadores_id_y_nombres = json.load(file)
-
 class agregar_jugadores:
     def __init__(self, nombre, fecha_de_nacimiento, origen, genero, altura, peso, posicion_campo, club_militante, reconocimientos):
         self.nombre = []
@@ -108,13 +105,13 @@ class Menu:
     def insertar_nuevo_jugador(self):
         while True:
             # Solicitar al usuario que ingrese los datos del nuevo jugador
-
             nombre_jugador = input("Ingrese el nombre del jugador (Ej: Lionel Andres Messi) o (SALIR, regresar al menu de gestion): ")
+
             if nombre_jugador.lower() == "salir":
                 return()
 
-            if not nombre_jugador.replace(" ", "").isalpha():
-                print("\nError: El nombre debe contener solo letras.")
+            if not nombre_jugador.replace(" ", "").isalpha() or not nombre_jugador.istitle():
+                print("\nError: El nombre debe contener solo letras y comenzar con mayuscula Ej: Lionel Andres.")
                 continue
 
             with open("jugadores.json", "r") as jugadores_file:
@@ -128,6 +125,7 @@ class Menu:
             if nombre_existente:
                 print("\nError: Este nombre ya esta en uso. Por favor, ingrese un nombre diferente.")
                 continue
+
             while True:
                 fecha_nacimiento = input("Ingrese la fecha de nacimiento del jugador (Ej: 28 de octubre de 1991): ")
 
@@ -138,8 +136,7 @@ class Menu:
                 if re.match(patron_fecha, fecha_nacimiento.lower()):
                     break
                 else:
-                    print(
-                        "Error: El formato de la fecha de nacimiento no es válido. Debe ser en el formato 'dd de mes de año'. Por ejemplo, '28 de octubre de 1991'.")
+                    print("Error: El formato de la fecha de nacimiento no es válido. Debe ser en el formato 'dd de mes de año'. Por ejemplo, '28 de octubre de 1991'.")
 
             origen = input("Ingrese el origen del jugador (Ej: Costa Rica): ")
             if origen.replace(" ", "").isalpha():
@@ -165,21 +162,20 @@ class Menu:
                 print("\nError: La altura debe ser un número decimal y debe llever un(.)")
                 continue
 
-            peso = input("Ingrese el peso del jugador (Ej: 82.5kgs) (Min:50, Max:200 KGS: ")
+            peso = input("Ingrese el peso del jugador (Ej: 82.5kgs) (Min:50, Max:130 KGS: ")
             try:
                 peso = float(peso)
-                if peso < 50 or peso > 200:
-                    print("\nError: Debe ser un peso entre 50 y 120kgs")
+                if peso < 50 or peso > 130:
+                    print("\nError: Debe ser un peso entre 50 y 130kgs")
                     continue
             except ValueError:
                 print("\nError: El peso debe ser un número decimal y debe llever un(.)")
                 continue
 
             posicion_campo = input("Ingrese la posición en el campo del jugador (Ej: Delantero): ")
-            try:
-                posicion_campo = str(posicion_campo)
-            except ValueError:
-                print("\nError: La posicion del campo debe ser solo letras")
+            if not posicion_campo.isalpha():
+                print("\nError: El campo debe ser en letras.")
+                continue
 
             club_militante = input("Ingrese el club militante del jugador (Ej: Inter Miami): ")
             if club_militante.replace(" ", "").isalpha():
@@ -200,6 +196,9 @@ class Menu:
                 if not idx.isdigit():
                     print("\nError: El ID debe ser un número entero.")
                     continue
+
+                with open("estadistica_jugador.json", "r") as file:
+                    jugadores_id_y_nombres = json.load(file)
 
                 idx = int(idx)
                 id_existente = False
@@ -379,7 +378,13 @@ class Menu:
 
 
     def leer_informacion_jugador(self):
-        pass
+        pregunta_jugador = input("Ingrese el ID y nombre del jugador que desea ver la informacion")
+
+        # nombre_jugador_existente = False
+        # if pregunta_jugador.get("nombre") == jugador:
+        #
+        # ID_jugador = False
+
 
     def modificar_datos_jugador(self):
         pass
