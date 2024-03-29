@@ -1,5 +1,6 @@
 import json
 import time
+import re
 
 with open("estadistica_jugador.json", "r") as file:
     jugadores_id_y_nombres = json.load(file)
@@ -100,23 +101,45 @@ class Menu:
                 accion()
             else:
                 print("\nError: Opción no válida. Por favor, seleccione una opción válida.\n")
+                time.sleep(1)
 
 #Gestion de jugadores Gestion de jugadores Gestion de jugadores Gestion de jugadores
-
-    import json
 
     def insertar_nuevo_jugador(self):
         while True:
             # Solicitar al usuario que ingrese los datos del nuevo jugador
 
-            nombre = input("Ingrese el nombre del jugador (Ej: Jose Maria): ")
-            if nombre.replace(" ", "").isalpha():
-                pass
-            else:
+            nombre_jugador = input("Ingrese el nombre del jugador (Ej: Lionel Andres Messi) o (SALIR, regresar al menu de gestion): ")
+            if nombre_jugador.lower() == "salir":
+                return()
+
+            if not nombre_jugador.replace(" ", "").isalpha():
                 print("\nError: El nombre debe contener solo letras.")
                 continue
 
-            fecha_nacimiento = input("Ingrese la fecha de nacimiento del jugador (Ej: 28 de octubre de 1991): ")
+            with open("jugadores.json", "r") as jugadores_file:
+                jugadores_no_repetir_nombre = json.load(jugadores_file)
+
+            nombre_existente = False
+            for jugador in jugadores_no_repetir_nombre:
+                if jugador.get("nombre") == nombre_jugador:
+                    nombre_existente = True
+
+            if nombre_existente:
+                print("\nError: Este nombre ya esta en uso. Por favor, ingrese un nombre diferente.")
+                continue
+            while True:
+                fecha_nacimiento = input("Ingrese la fecha de nacimiento del jugador (Ej: 28 de octubre de 1991): ")
+
+                # Definir el patron regex para validar la fecha de nacimiento
+                patron_fecha = r"^\d{1,2} de (enero|febrero|marzo|abril|mayo|junio|julio|agosto|septiembre|octubre|noviembre|diciembre) de \d{4}$"
+
+                # Verificar si la entrada coincide con el patron regex
+                if re.match(patron_fecha, fecha_nacimiento.lower()):
+                    break
+                else:
+                    print(
+                        "Error: El formato de la fecha de nacimiento no es válido. Debe ser en el formato 'dd de mes de año'. Por ejemplo, '28 de octubre de 1991'.")
 
             origen = input("Ingrese el origen del jugador (Ej: Costa Rica): ")
             if origen.replace(" ", "").isalpha():
@@ -132,7 +155,7 @@ class Menu:
                 print("\nError: Debe ser Masculino o Femenino")
                 continue
 
-            altura = input("Ingrese la altura del jugador (Ej: 1.82): ")
+            altura = input("Ingrese la altura del jugador (Ej: 1.82) (Min:1.0, Max:2.1 MTS): ")
             try:
                 altura = float(altura)
                 if altura < 1 or altura > 2.1:
@@ -142,7 +165,7 @@ class Menu:
                 print("\nError: La altura debe ser un número decimal y debe llever un(.)")
                 continue
 
-            peso = input("Ingrese el peso del jugador (Ej: 82.5kgs): ")
+            peso = input("Ingrese el peso del jugador (Ej: 82.5kgs) (Min:50, Max:200 KGS: ")
             try:
                 peso = float(peso)
                 if peso < 50 or peso > 200:
@@ -192,7 +215,7 @@ class Menu:
 
 
             jugador = input("Ingrese el nombre del jugador nuevamente (Debe ser exactamente igual): ")
-            if not jugador == nombre:
+            if not jugador == nombre_jugador:
                 print("\nError: El nombre del jugador debe de ser el mismo")
                 continue
 
@@ -297,7 +320,7 @@ class Menu:
 
             # Crear un diccionario con los datos del nuevo jugador
             nuevo_jugador = {
-                "nombre": nombre,
+                "nombre": nombre_jugador,
                 "fecha_nacimiento": fecha_nacimiento,
                 "origen": origen,
                 "genero": genero,
@@ -336,6 +359,8 @@ class Menu:
             # Escribir los datos actualizados de los jugadores en el archivo JSON
             with open("jugadores.json", "w") as file:
                 json.dump(jugadores, file, indent=4)
+
+
 
             try:
                 with open("estadistica_jugador.json", "r") as file:
