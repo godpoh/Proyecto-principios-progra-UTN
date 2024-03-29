@@ -1,6 +1,9 @@
 import json
 import time
 
+with open("estadistica_jugador.json", "r") as file:
+    jugadores_id_y_nombres = json.load(file)
+
 class agregar_jugadores:
     def __init__(self, nombre, fecha_de_nacimiento, origen, genero, altura, peso, posicion_campo, club_militante, reconocimientos):
         self.nombre = []
@@ -134,6 +137,7 @@ class Menu:
                 altura = float(altura)
                 if altura < 1 or altura > 2.1:
                     print("\nError: Debe ser una altura entre 1.0 y 2.0")
+                    continue
             except ValueError:
                 print("\nError: La altura debe ser un número decimal y debe llever un(.)")
                 continue
@@ -143,6 +147,7 @@ class Menu:
                 peso = float(peso)
                 if peso < 50 or peso > 200:
                     print("\nError: Debe ser un peso entre 50 y 120kgs")
+                    continue
             except ValueError:
                 print("\nError: El peso debe ser un número decimal y debe llever un(.)")
                 continue
@@ -167,7 +172,24 @@ class Menu:
                 print("\nError: Los reconocimientos deben ser un número entero.")
                 continue
 
-            idx = input("Ingrese el ID del jugador (Ej: 30): ")
+            while True:
+                idx = input("Ingrese el ID del jugador (Ej: 30): ")
+                if not idx.isdigit():
+                    print("\nError: El ID debe ser un número entero.")
+                    continue
+
+                idx = int(idx)
+                id_existente = False
+                for jugador in jugadores_id_y_nombres:
+                    if jugador.get("ID") == idx:
+                        id_existente = True
+                        break
+
+                if id_existente:
+                    print("\nError: Este ID ya está en uso. Por favor, ingrese un ID diferente.")
+                else:
+                    break  # El ID es valido y unico
+
 
             jugador = input("Ingrese el nombre del jugador nuevamente (Debe ser exactamente igual): ")
             if not jugador == nombre:
