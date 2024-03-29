@@ -1,6 +1,10 @@
 import json
 import time
 
+class agregar_jugadores:
+    def __init__(self, nombre, fecha_de_nacimiento, origen, genero, altura, peso, posicion_campo, club_militante, reconocimientos):
+        self.nombre = []
+
 class Menu:
     def __init__(self):
         self.opciones_principales = {
@@ -42,7 +46,9 @@ class Menu:
             elif opciones == '4':
                 self.eliminar_jugador()
             elif opciones == '5':
-                break
+                print("Volviendo al menu principal")
+                time.sleep(2)
+                return
             else:
                 print("Valor no valido, vuelva a intentarlo")
 
@@ -94,8 +100,185 @@ class Menu:
 
 #Gestion de jugadores Gestion de jugadores Gestion de jugadores Gestion de jugadores
 
+    import json
+
     def insertar_nuevo_jugador(self):
-        pass
+        while True:
+            # Solicitar al usuario que ingrese los datos del nuevo jugador
+
+            nombre = input("Ingrese el nombre del jugador (Ej: Jose Maria): ")
+            try:
+                nombre = str(nombre)
+            except ValueError:
+                print("\nError: El nombre debe contener solo letras.")
+                continue
+
+            fecha_nacimiento = input("Ingrese la fecha de nacimiento del jugador (Ej: 28 de octubre de 1991): ")
+
+            origen = input("Ingrese el origen del jugador (Ej: Costa Rica): ")
+            try:
+                origen = str(origen)
+            except ValueError:
+                print("\nError: El origen debe contener letras")
+
+            genero = input("Ingrese el género del jugador (Masculino/Femenino): ")
+            if not genero.isalpha():
+                print("\nError: El genero debe contener solo letras")
+            if not (genero == "Masculino" or genero == "Femenino"):
+                print("\nError: Debe ser Masculino o Femenino")
+                continue
+
+            altura = input("Ingrese la altura del jugador (Ej: 1.82): ")
+            try:
+                altura = float(altura)
+            except ValueError:
+                print("\nError: La altura debe ser un número decimal.")
+                continue
+
+            peso = input("Ingrese el peso del jugador (Ej: 82.5): ")
+            try:
+                peso = float(peso)
+            except ValueError:
+                print("\nError: El peso debe ser un número decimal.")
+                continue
+
+            posicion_campo = input("Ingrese la posición en el campo del jugador (Ej: Delantero): ")
+            try:
+                posicion_campo = str(posicion_campo)
+            except ValueError:
+                print("\nError: La posicion del campo debe ser solo letras")
+            club_militante = input("Ingrese el club militante del jugador (Ej: Inter Miami): ")
+
+            reconocimientos = input("Ingrese los reconocimientos del jugador (Ej: 13): ")
+            try:
+                reconocimientos = int(reconocimientos)
+            except ValueError:
+                print("\nError: Los reconocimientos deben ser un número entero.")
+                continue
+
+            idx = input("Ingrese el ID del jugador (Ej: 30): ")
+            jugador = input("Ingrese el nombre del jugador nuevamente (Debe ser exactamente igual): ")
+            if not jugador == nombre:
+                print("\nError: El nombre del jugador debe de ser el mismo")
+                continue
+
+            aceleracion = input("Ingrese la aceleracion del jugador (Ej: 1-99): ")
+            aceleracion = int(aceleracion)
+            if aceleracion < 0 or aceleracion > 100:
+                print("\nError: El valor no debe ser menor a 0 y mayor a 100")
+                continue
+
+            pases_cortos = input("Ingrese la estadistica de pases cortos del jugador(Ej: 1-99): ")
+            pases_cortos = int(pases_cortos)
+            if pases_cortos < 0 or pases_cortos > 100:
+                print("\nError: El valor no debe ser menor a 0 y mayor a 100")
+                continue
+
+            potencia_tiro = input("Ingrese la potencia de tiro del jugador (Ej: 1-99): ")
+            potencia_tiro = int(potencia_tiro)
+            if potencia_tiro < 0 or potencia_tiro > 100:
+                print("\nError: El valor no debe ser menor a 0 y mayor a 100")
+                continue
+
+            pases_largos = input("Ingrese la estadistica de pases largos del jugador(Ej: 1-99): ")
+            pases_largos = int(pases_largos)
+            if pases_largos < 0 or pases_largos > 100:
+                print("\nError: El valor no debe ser menor a 0 y mayor a 100")
+                continue
+
+            velocidad = input("Ingrese la velocidad del jugador(Ej: 1-99): ")
+            velocidad = int(velocidad)
+            if velocidad < 0 or velocidad > 100:
+                print("\nError: El valor no debe ser menor a 0 y mayor a 100")
+                continue
+
+            agilidad = input("Ingrese la agilidad del jugador(Ej: 1-99): ")
+            agilidad = int(agilidad)
+            if agilidad < 0 or agilidad > 100:
+                print("\nError: El valor no debe ser menor a 0 y mayor a 100")
+                continue
+
+            resistencia = input("Ingrese la resistencia del jugador(Ej: 1-99): ")
+            resistencia = int(resistencia)
+            if resistencia < 0 or resistencia > 100:
+                print("\nError: El valor no debe ser menor a 0 y mayor a 100")
+                continue
+
+            salto = input("Ingrese el salto del jugador(Ej: 1-99): ")
+            salto = int(salto)
+            if salto < 0 or salto > 100:
+                print("\nError: El valor no debe ser menor a 0 y mayor a 100")
+                continue
+
+            regates = input("Ingrese la estadistica de regate del jugador(Ej: 1-99): ")
+            regates = int(regates)
+            if regates < 0 or regates > 100:
+                print("\nError: El valor no debe ser menor a 0 y mayor a 100")
+                continue
+
+            control_balon = input("Ingrese la estadistica de control de balon del jugador(Ej: 1-99): ")
+            control_balon = int(control_balon)
+            if control_balon < 0 or control_balon > 100:
+                print("\nError: El valor no debe ser menor a 0 y mayor a 100")
+                continue
+
+            # Crear un diccionario con los datos del nuevo jugador
+            nuevo_jugador = {
+                "nombre": nombre,
+                "fecha_nacimiento": fecha_nacimiento,
+                "origen": origen,
+                "genero": genero,
+                "altura": altura,
+                "peso": peso,
+                "posicion_campo": posicion_campo,
+                "club_militante": club_militante,
+                "reconocimientos": reconocimientos
+            }
+
+            nuevo_jugador_estadisticas = {
+                "ID": idx,
+                "Jugador": jugador,
+                "Aceleracion": aceleracion,
+                "Pases cortos": pases_cortos,
+                "Potencia de tiro": potencia_tiro,
+                "Pases largos": pases_largos,
+                "Velocidad": velocidad,
+                "Agilidad": agilidad,
+                "Resistencia": resistencia,
+                "Salto": salto,
+                "Regates": regates,
+                "Control de balon": control_balon
+            }
+
+            # Leer los datos actuales de los jugadores desde el archivo JSON
+            try:
+                with open("jugadores.json", "r") as file:
+                    jugadores = json.load(file)
+            except FileNotFoundError:
+                jugadores = []
+
+            # Agregar el nuevo jugador a la lista de jugadores
+            jugadores.append(nuevo_jugador)
+
+            # Escribir los datos actualizados de los jugadores en el archivo JSON
+            with open("jugadores.json", "w") as file:
+                json.dump(jugadores, file, indent=4)
+
+            try:
+                with open("estadistica_jugador.json", "r") as file:
+                    estadistica = json.load(file)
+            except FileNotFoundError:
+                estadistica = []
+
+            estadistica.append(nuevo_jugador_estadisticas)
+
+            with open("estadistica_jugador.json", "w") as file:
+                json.dump(estadistica, file, indent=4)
+
+            print("Nuevo jugador agregado con éxito.")
+            time.sleep(2)
+            return()
+
 
     def leer_informacion_jugador(self):
         pass
