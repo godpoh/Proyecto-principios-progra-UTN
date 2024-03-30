@@ -139,10 +139,8 @@ class Menu:
                     print("Error: El formato de la fecha de nacimiento no es válido. Debe ser en el formato 'dd de mes de año'. Por ejemplo, '28 de octubre de 1991'.")
 
             origen = input("Ingrese el origen del jugador (Ej: Costa Rica): ")
-            if origen.replace(" ", "").isalpha():
-                pass
-            else:
-                print("\nError: El nombre debe contener solo letras.")
+            if not origen.replace(" ", "").isalpha() or not origen.istitle():
+                print("\nError: El nombre debe contener solo letras y debe empezar con mayuscula.")
                 continue
 
             genero = input("Ingrese el género del jugador (Masculino/Femenino): ")
@@ -378,13 +376,47 @@ class Menu:
 
 
     def leer_informacion_jugador(self):
-        pregunta_jugador = input("Ingrese el ID y nombre del jugador que desea ver la informacion")
 
-        # nombre_jugador_existente = False
-        # if pregunta_jugador.get("nombre") == jugador:
-        #
-        # ID_jugador = False
+        while True:
+            with open("jugadores.json", "r") as nombre_file:
+                ver_nombre = json.load(nombre_file)
 
+            with open("estadistica_jugador.json", "r") as ID_file:
+                ver_ID = json.load(ID_file)
+
+            print("\nIMPORTANTE: El ID y el nombre del jugador deben ser EXACTOS...")
+            preguntar_nombre = input("Ingrese el nombre del jugador que desea consultar informacion: ")
+            preguntar_ID = input("Ingrese el ID del jugador que desea consultar informacion: ")
+
+            if not preguntar_nombre.isalpha() or not preguntar_ID.isnumeric():
+                print("\nError: Debe ingresar los datos correctos, en ID un NUMERO entero, en nombre LETRAS")
+                continue
+
+            jugador_existente = False
+            for jugador in ver_nombre:
+                if jugador["nombre"] == preguntar_nombre:
+                    for IDx in ver_ID:
+                        if IDx["ID"] == (preguntar_ID):
+                            jugador_existente = True
+# En vez de key y value puede ser cualquier parametro, para mas legibilidad asi, tambien podria ser (for nombre, informacion in jugador.items():
+                            print("\nInformacion del jugador:")
+                            for key, value in jugador.items():
+                                print(f"{key}: {value}")
+                            for key, value in IDx.items():
+                                print(f"{key}: {value}")
+                            repetir = input("Desea consultar la informacion de otro jugador? (SI/NO): ")
+                            if repetir.lower() != "si":
+                                print("\nVolviendo al gestor de jugadores...")
+                                time.sleep(2)
+                                return ()
+
+            if not jugador_existente:
+                print("\nNo se encontro el jugador que se especifico, intentelo de nuevo...")
+                repetir = input("Desea consultar la informacion de otro jugador? (SI/NO): ")
+                if repetir.lower() != "si":
+                    print("\nVolviendo al gestor de jugadores...")
+                    time.sleep(2)
+                    return ()
 
     def modificar_datos_jugador(self):
         pass
