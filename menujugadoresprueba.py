@@ -80,7 +80,6 @@ class Menu:
             else:
                 print("Opcion invalida, porfavor seleccione una opcion valida.")
 
-
     def filtrar_por_posicion_campo(self):
         while True:
             print("IMPORTANTE: Deben ser solo LETRAS, ademas ambas iniciales deben empezar con MAYUSCULAS ej: Delantero o Extremo Derecho.")
@@ -133,7 +132,6 @@ class Menu:
                     else:
                         print("No se encontraron jugadores del origen especificido")
 
-
             except FileNotFoundError:
                 print("No existe el archivo")
             except json.decoder.JSONDecodeError:
@@ -165,11 +163,11 @@ class Menu:
                     else:
                         print("No se encontraron jugadores con los reconocimientos especificidos")
 
-
             except FileNotFoundError:
                 print("No existe el archivo")
             except json.decoder.JSONDecodeError:
                 print("El archivo jugadores.json no contiene datos legibles")
+
     def visualizar_todos_jugadores(self):
         try:
             with open("jugadores.json", "r") as file:
@@ -187,7 +185,6 @@ class Menu:
                 return
             else:
                 print("Por favor, digite (exit).")
-
 
     def estadisticas_jugadores(self):
         with open("estadistica_jugador.json", "r") as file:
@@ -475,7 +472,6 @@ class Menu:
             with open("jugadores.json", "w") as file:
                 json.dump(jugadores, file, indent=4)
 
-
             try:
                 with open("estadistica_jugador.json", "r") as file:
                     estadistica = json.load(file)
@@ -490,7 +486,6 @@ class Menu:
             print("Nuevo jugador agregado con éxito.")
             time.sleep(2)
             return()
-
 
     def leer_informacion_jugador(self):
 
@@ -536,7 +531,6 @@ class Menu:
                     return ()
 
     def modificar_datos_jugador(self):
-
         while True:
             with open("jugadores.json", "r") as informacion_jugadores_file:
                 informacion_jugadores = json.load(informacion_jugadores_file)
@@ -559,7 +553,6 @@ class Menu:
                         if idx["ID"] == pedir_id_jugador:
                             nombre_existente = True
 
-
     def eliminar_jugador(self):
         pass
 
@@ -576,12 +569,16 @@ class Menu:
 
     def Mostrar_los_jugadores_de_Club_específico(self):
         pass
+
     def Mostrar_cantidad_jugadores_acuerdo_con_la_posición_en_el_campo_considerando_unicamente_los_de_género_femenino(self):
         pass
+
     def Mostrar_top_diez_jugadores_mayor_altura_con_mejor_agilidad_la_información_muestra_nombre_genero_origen_altura_agilidad(self):
         pass
+
     def Mostrar_cantidad_jugadores_cuya_velocidad_este_en_un_rango_específico(self):
         pass
+
     def Determinar_promedio_control_balon_para_jugadores_en_una_posición_específica(self):
         pass
 
