@@ -54,6 +54,123 @@ class Menu:
                 print("Valor no valido, vuelva a intentarlo")
 
     def visualizar_lista_jugadores(self):
+        while True:
+            print("\nSeleccione un filtro para visualizar la lista de jugadores")
+            print("1-Por posicion de campo")
+            print("2-Por origen(PAIS)")
+            print("3-Por reconocimientos(BALONES DE ORO, ETC)")
+            print("4-Mostrar todos los jugadores")
+            print("5-Regresar al Menu Principal")
+            print("----------------------------------------------------------")
+
+            opcion = input("Ingrese el numero de la opcion deseada: ")
+
+            if opcion == '1':
+                self.filtrar_por_posicion_campo()
+            elif opcion == '2':
+                self.filtrar_por_origen()
+            elif opcion == '3':
+                self.filtrar_por_reconocimientos()
+            elif opcion == '4':
+                self.visualizar_todos_jugadores()
+            elif opcion == '5':
+                print("Volviendo al menu principal")
+                time.sleep(2)
+                return
+            else:
+                print("Opcion invalida, porfavor seleccione una opcion valida.")
+
+
+    def filtrar_por_posicion_campo(self):
+        while True:
+            print("IMPORTANTE: Deben ser solo LETRAS, ademas ambas iniciales deben empezar con MAYUSCULAS ej: Delantero o Extremo Derecho.")
+            filtrar = input("Ingrese la posicion que desea filtrar de los jugadores: ")
+            if not filtrar.isalpha() or not filtrar.istitle():
+                continue
+            try:
+                with open("jugadores.json", "r") as jugadores_file:
+                    jugadores = json.load(jugadores_file)
+#esta primera (jugador_expresion) es una variable de iteracion que se utiliza para recorrer cada elemento de la lista jugadores.
+                    filtrar_jugadores = [jugador_expresion for jugador_expresion in jugadores if jugador_expresion["posicion_campo"] == filtrar]
+                    if jugadores:
+                        print("Jugadores encontrados: ")
+                        for jugador_expresion in filtrar_jugadores:
+                            print(json.dumps(jugador_expresion, indent=4))
+                        opcion = input("Desea realizar otra consulta? (SI/NO): ")
+                        if opcion.lower() != 'si':
+                            print("Volviendo al menu anterior...")
+                            time.sleep(2)
+                            break
+                    else:
+                        print("No se encontraron jugadores de la posicion especificida")
+
+            except FileNotFoundError:
+                print("No existe el archivo")
+            except json.decoder.JSONDecodeError:
+                print("El archivo jugadores.json no contiene datos legibles")
+
+    def filtrar_por_origen(self):
+        while True:
+            print(
+                "IMPORTANTE: Deben ser solo LETRAS, ademas ambas iniciales deben empezar con MAYUSCULAS ej: Belgica o Costa Rica.")
+            filtrar = input("Ingrese el pais de origen que desea filtrar de los jugadores: ")
+            if not filtrar.isalpha() or not filtrar.istitle():
+                continue
+            try:
+                with open("jugadores.json", "r") as jugadores_file:
+                    jugadores = json.load(jugadores_file)
+# esta primera (jugador_expresion) es una variable de iteracion que se utiliza para recorrer cada elemento de la lista jugadores.
+                    filtrar_jugadores = [jugador_expresion for jugador_expresion in jugadores if jugador_expresion["origen"] == filtrar]
+                    if jugadores:
+                        print("Jugadores encontrados: ")
+                        for jugador_expresion in filtrar_jugadores:
+                            print(json.dumps(jugador_expresion, indent=4))
+                        opcion = input("Desea realizar otra consulta? (SI/NO): ")
+                        if opcion.lower() != 'si':
+                            print("Volviendo al menu anterior...")
+                            time.sleep(2)
+                            break
+                    else:
+                        print("No se encontraron jugadores del origen especificido")
+
+
+            except FileNotFoundError:
+                print("No existe el archivo")
+            except json.decoder.JSONDecodeError:
+                print("El archivo jugadores.json no contiene datos legibles")
+
+    def filtrar_por_reconocimientos(self):
+        while True:
+            print("IMPORTANTE: Deben ser solo NUMEROS, ej: 10, 20, 2")
+            try:
+                filtrar = int(input("Ingrese los reconocimientos que desea filtrar de los jugadores: "))
+            except ValueError:
+                print("Error: Debe ingresar un NUMERO entero")
+                continue
+
+            try:
+                with open("jugadores.json", "r") as jugadores_file:
+                    jugadores = json.load(jugadores_file)
+                    # esta primera (jugador_expresion) es una variable de iteracion que se utiliza para recorrer cada elemento de la lista jugadores.
+                    filtrar_jugadores = [jugador_expresion for jugador_expresion in jugadores if jugador_expresion["reconocimientos"] == filtrar]
+                    if jugadores:
+                        print("Jugadores encontrados: ")
+                        for jugador_expresion in filtrar_jugadores:
+                            print(json.dumps(jugador_expresion, indent=4))
+                        opcion = input("Desea realizar otra consulta? (SI/NO): ")
+                        if opcion.lower() != 'si':
+                            print("Volviendo al menu anterior...")
+                            time.sleep(2)
+                            break
+                    else:
+                        print("No se encontraron jugadores con los reconocimientos especificidos")
+
+
+            except FileNotFoundError:
+                print("No existe el archivo")
+            except json.decoder.JSONDecodeError:
+                print("El archivo jugadores.json no contiene datos legibles")
+    def visualizar_todos_jugadores(self):
         try:
             with open("jugadores.json", "r") as file:
                 jugadores_datos = json.load(file)
@@ -63,13 +180,14 @@ class Menu:
         except json.JSONDecodeError:
             print("El archivo 'jugadores.json' no contiene datos JSON válidos.")
         while True:
-            opcion = input("¿Desea volver al menú principal? (SI): ")
-            if opcion.lower() == 'si':
-                print("Volviendo al menú principal.")
+            opcion = input("Para volver al menu anterior digite (exit): ")
+            if opcion.lower() == 'exit':
+                print("Volviendo al menu.")
                 time.sleep(2)
                 return
             else:
-                print("Por favor, digite 'SI'.")
+                print("Por favor, digite (exit).")
+
 
     def estadisticas_jugadores(self):
         with open("estadistica_jugador.json", "r") as file:
@@ -171,8 +289,8 @@ class Menu:
                 continue
 
             posicion_campo = input("Ingrese la posición en el campo del jugador (Ej: Delantero): ")
-            if not posicion_campo.isalpha():
-                print("\nError: El campo debe ser en letras.")
+            if not posicion_campo.isalpha() and not posicion_campo.istitle():
+                print("\nError: El campo debe ser en letras y las iniciales MAYUSCULAS ej: Delantero o Extremo Derecho.")
                 continue
 
             club_militante = input("Ingrese el club militante del jugador (Ej: Inter Miami): ")
@@ -358,7 +476,6 @@ class Menu:
                 json.dump(jugadores, file, indent=4)
 
 
-
             try:
                 with open("estadistica_jugador.json", "r") as file:
                     estadistica = json.load(file)
@@ -419,7 +536,29 @@ class Menu:
                     return ()
 
     def modificar_datos_jugador(self):
-        pass
+
+        while True:
+            with open("jugadores.json", "r") as informacion_jugadores_file:
+                informacion_jugadores = json.load(informacion_jugadores_file)
+
+            with open("estadistica_jugador.json", "r") as estadisticas_jugadores_file:
+                estadisticas_jugadores = json.load(estadisticas_jugadores_file)
+
+            print("\nIMPORTANTE: El ID y el nombre del jugador deben ser EXACTOS...")
+            pedir_nombre_jugador = input("Ingrese el nombre del jugador que desea modificar: ")
+            pedir_id_jugador = input("Ingrese el ID del jugador que desea modificar: ")
+
+            if not pedir_nombre_jugador.isalpha() or not pedir_id_jugador.isnumeric():
+                print("El nombre del jugador debe ser en LETRAS y el ID del jugador en NUMEROS...")
+                continue
+
+            nombre_existente = False
+            for nombre in informacion_jugadores:
+                if nombre["nombre"] == pedir_nombre_jugador:
+                    for idx in estadisticas_jugadores:
+                        if idx["ID"] == pedir_id_jugador:
+                            nombre_existente = True
+
 
     def eliminar_jugador(self):
         pass
