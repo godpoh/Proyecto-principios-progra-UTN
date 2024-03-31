@@ -74,15 +74,24 @@ class Menu:
                 print("Opcion invalida, porfavor seleccione una opcion valida.")
 
     def estadisticas_jugadores(self):
-        with open("estadistica_jugador.json", "r") as file:
-            datos_estadisticas = json.load(file)
-            print(json.dumps(datos_estadisticas, indent=4))
         while True:
-            opcion = input("Desea volver al menu principal?(SI): ")
-            if opcion.lower() == 'si':
+            print("\nEstadisticas de jugadores: ")
+            print("1-Ver las estadisticas de un jugador")
+            print("2-Comparar las estadisticas de dos jugadores")
+            print("3-Volver al menu principal")
+
+            opcion = input("Seleccione una opcion y digitela")
+
+            if opcion == '1':
+                self.ver_estadisticas_jugador:
+            if opcion == '2':
+                self.comparar_estadisticas:
+            if opcion == '3':
                 print("Volviendo al menu principal")
                 time.sleep(2)
                 return()
+            else:
+                print("Opcion invalida, intentelo de nuevo.")
 
     def consultas_avanzadas(self):
         pass
@@ -214,6 +223,19 @@ class Menu:
                 return
             else:
                 print("Por favor, digite (exit).")
+
+#Visualizar estadisticas jugadores #Visualizar estadisticas jugadores #Visualizar estadisticas jugadores #Visualizar estadisticas jugadores #Visualizar estadisticas jugadores
+
+    def ver_estadisticas_jugador(self):
+        while True:
+            nombre_jugador = input("Ingrese el nombre de jugador cuyas estadisticas desea ver: ")
+            if not nombre_jugador.replace(" ", "").isalpha() and not nombre_jugador.istitle():
+
+
+    def comparar_estadisticas(self):
+        pass
+
+
 
 
 #Gestion de jugadores Gestion de jugadores Gestion de jugadores Gestion de jugadores
