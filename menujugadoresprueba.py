@@ -2,10 +2,6 @@ import json
 import time
 import re
 
-class agregar_jugadores:
-    def __init__(self, nombre, fecha_de_nacimiento, origen, genero, altura, peso, posicion_campo, club_militante, reconocimientos):
-        self.nombre = []
-
 class Menu:
     def __init__(self):
         self.opciones_principales = {
@@ -17,7 +13,6 @@ class Menu:
         }
 
     def mostrar_menu_principal(self):
-
         print("\n------------Menu Principal------------")
         print("1-Gestion de Jugadores")
         print("2-Visualizar lista de jugadores")
@@ -199,6 +194,7 @@ class Menu:
 
     def consultas_avanzadas(self):
         pass
+
 
     def salir(self):
         print("Saliendo del sistema.")
@@ -539,10 +535,17 @@ class Menu:
                 estadisticas_jugadores = json.load(estadisticas_jugadores_file)
 
             print("\nIMPORTANTE: El ID y el nombre del jugador deben ser EXACTOS...")
-            pedir_nombre_jugador = input("Ingrese el nombre del jugador que desea modificar: ")
+
+            pedir_nombre_jugador = input("Ingrese el nombre del jugador que desea modificar(SI desea volver al menu anterior digite EXIT): ")
+            if pedir_nombre_jugador.lower() == "exit":
+                print("Volviendo al menu anterior...")
+                time.sleep(2)
+                return ()
             pedir_id_jugador = input("Ingrese el ID del jugador que desea modificar: ")
 
-            if not pedir_nombre_jugador.isalpha() or not pedir_id_jugador.isnumeric():
+
+
+            if not pedir_nombre_jugador.replace(" ","").isalpha() or not pedir_id_jugador.isdigit():
                 print("El nombre del jugador debe ser en LETRAS y el ID del jugador en NUMEROS...")
                 continue
 
@@ -550,8 +553,85 @@ class Menu:
             for nombre in informacion_jugadores:
                 if nombre["nombre"] == pedir_nombre_jugador:
                     for idx in estadisticas_jugadores:
-                        if idx["ID"] == pedir_id_jugador:
+                        if idx["ID"] == int(pedir_id_jugador):
                             nombre_existente = True
+                            print("\nInformacion basica del jugador:")
+                            print(json.dumps(nombre, indent=4))
+                            print("\nInformacion estadistica del jugador:")
+                            print(json.dumps(idx, indent=4))
+                            while True:
+                                try:
+                                    nuevo_nombre = input("Ingrese el nuevo nombre, si no desea cambiar este dato digite el mismo dato: ")
+                                    if not nuevo_nombre.replace(" ", "").isalpha() or not nuevo_nombre.istitle():
+                                        print("\nError: El nombre debe contener solo letras y debe empezar con mayuscula.")
+                                        continue
+                                except ValueError:
+                                    print("\nError: Valor no correcto...")
+                                    continue
+                                while True:
+                                    nueva_fecha_nacimiento = input("Ingrese la nueva fecha de nacimiento, si no desea cambiar este dato digite el mismo dato: ")
+                                    # Definir el patron regex para validar la fecha de nacimiento
+                                    patron_fecha = r"^\d{1,2} de (enero|febrero|marzo|abril|mayo|junio|julio|agosto|septiembre|octubre|noviembre|diciembre) de \d{4}$"
+
+                                    # Verificar si la entrada coincide con el patron regex
+                                    if re.match(patron_fecha, nueva_fecha_nacimiento.lower()):
+                                        break
+                                    else:
+                                        print(
+                                            "Error: El formato de la fecha de nacimiento no es válido. Debe ser en el formato 'dd de mes de año'. Por ejemplo, '28 de octubre de 1991'.")
+                                while True:
+                                    nuevo_genero = input("Ingrese el nuevo genero, si no desea cambiar este dato digite el mismo dato(Masculino/Femenino/Otro): ")
+                                    nueva_altura = input("Ingrese la nueva altura, si no desea cambiar este dato digite el mismo dato: ")
+                                    nuevo_peso = input("Ingrese el nuevo peso, si no desea cambiar este dato digite el mismo dato: ")
+                                    nueva_posicion_campo = input("Ingrese la nueva posicion de campo, si no desea cambiar este dato digite el mismo dato: ")
+                                    nuevo_club_militante = input("Ingrese el nuevo club militante, si no desea cambiar este dato digite el mismo dato: ")
+                                    nuevo_reconocimiento = input("Ingrese el nuevo(s) reconocimientos, si no desea cambiar este dato digite el mismo dato: ")
+
+                                    nombre["nombre"] = nuevo_nombre
+                                    nombre["fecha_nacimiento"] = nueva_fecha_nacimiento
+                                    nombre["genero"] = nuevo_genero
+                                    nombre["altura"] = nueva_altura
+                                    nombre["peso"] = nuevo_peso
+                                    nombre["posicion_campo"] = nueva_posicion_campo
+                                    nombre["club_militante"] = nuevo_club_militante
+                                    nombre["reconocimientos"] = nuevo_reconocimiento
+
+                                    nueva_aceleracion = input("Ingrese el nuevo genero, si no desea cambiar este dato digite el mismo dato(Masculino/Femenino/Otro): ")
+                                    nuevo_pases_cortos = input("Ingrese la nueva altura, si no desea cambiar este dato digite el mismo dato: ")
+                                    nueva_potencia_tiro = input("Ingrese el nuevo peso, si no desea cambiar este dato digite el mismo dato: ")
+                                    nuevo_pases_largos = input("Ingrese la nueva posicion de campo, si no desea cambiar este dato digite el mismo dato: ")
+                                    nueva_velocidad = input("Ingrese el nuevo club militante, si no desea cambiar este dato digite el mismo dato: ")
+                                    nueva_agilidad = input("Ingrese el nuevo(s) reconocimientos, si no desea cambiar este dato digite el mismo dato: ")
+                                    nueva_resistencia = input("Ingrese la nueva altura, si no desea cambiar este dato digite el mismo dato: ")
+                                    nuevo_salto = input("Ingrese la nueva altura, si no desea cambiar este dato digite el mismo dato: ")
+                                    nuevo_regate = input("Ingrese la nueva altura, si no desea cambiar este dato digite el mismo dato: ")
+
+                                    idx["Jugador"] = nuevo_nombre
+                                    idx["Aceleracion"] = nueva_aceleracion
+                                    idx["Pases cortos"] = nuevo_pases_cortos
+                                    idx["Potencia de tiro"] = nueva_potencia_tiro
+                                    idx["Pases largos"] = nuevo_pases_largos
+                                    idx["Velocidad"] = nueva_velocidad
+                                    idx["Agilidad"] = nueva_agilidad
+                                    idx["Resistencia"] = nueva_resistencia
+                                    idx["Salto"] = nuevo_salto
+                                    idx["Regates"] = nuevo_regate
+
+                                    with open("jugadores.json", "w") as informacion_jugadores_file:
+                                        json.dump(informacion_jugadores, informacion_jugadores_file, indent=4)
+
+                                    with open("estadistica_jugador.json", "w") as estadisticas_jugadores_file:
+                                        json.dump(estadisticas_jugadores, estadisticas_jugadores_file, indent=4)
+
+                                    print("Datos del jugador actualizados correctamente")
+                                    consultar = input("Desea modificar otro jugador?(SI/NO)")
+                                    if consultar.lower() != "si":
+                                        print("Volviendo al menu anterior...")
+                                        time.sleep(2)
+                                        return()
+
+            if not nombre_existente:
+                print("No se encontro al jugador con el ID y nombre especificados...")
 
     def eliminar_jugador(self):
         pass

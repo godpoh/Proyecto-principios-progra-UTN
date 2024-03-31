@@ -367,3 +367,26 @@ class Menu:
 
 menu = Menu()
 menu.main()
+
+        "ID": 1,
+        "Jugador": "Lionel Andres Messi",
+        "Aceleracion": 92,
+        "Pases cortos": 92,
+        "Potencia de tiro": 92,
+        "Pases largos": 91,
+        "Velocidad": 85,
+        "Agilidad": 95,
+        "Resistencia": 72,
+        "Salto": 68,
+        "Regates": 96,
+        "Control de balon": 96
+
+        "nombre": "Lionel Andres Messi",
+        "fecha_nacimiento": "24 de junio de 1987",
+        "origen": "Argentina",
+        "genero": "Masculino",
+        "altura": 1.7,
+        "peso": 72,
+        "posicion_campo": "Delantero",
+        "club_militante": "Inter Miami",
+        "reconocimientos": 13
