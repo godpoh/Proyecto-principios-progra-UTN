@@ -69,9 +69,7 @@ class Menu:
             elif opcion == '4':
                 self.visualizar_todos_jugadores()
             elif opcion == '5':
-                print("Volviendo al menu principal")
-                time.sleep(2)
-                return
+                self.salir()
             else:
                 print("Opcion invalida, porfavor seleccione una opcion valida.")
 
@@ -88,7 +86,6 @@ class Menu:
 
     def consultas_avanzadas(self):
         pass
-
 
     def salir(self):
         print("Saliendo del sistema.")
@@ -224,7 +221,7 @@ class Menu:
     def insertar_nuevo_jugador(self):
         while True:
             # Solicitar al usuario que ingrese los datos del nuevo jugador
-            nombre_jugador = input("Ingrese el nombre del jugador (Ej: Lionel Andres Messi) o (SALIR, regresar al menu de gestion): ")
+            nombre_jugador = input("Ingrese el nombre del jugador que desea ingresar (Ej: Lionel Andres Messi) o (SALIR, regresar al menu de gestion): ")
 
             if nombre_jugador.lower() == "salir":
                 return()
@@ -295,7 +292,7 @@ class Menu:
                 continue
 
             club_militante = input("Ingrese el club militante del jugador (Ej: Inter Miami): ")
-            if club_militante.replace(" ", "").isalpha():
+            if club_militante.replace(" ", "").isalpha() and club_militante.istitle():
                 pass
             else:
                 print("\nError: Debe contener solo letras.")
@@ -338,8 +335,8 @@ class Menu:
             aceleracion = input("Ingrese la aceleracion del jugador (Ej: 1-99): ")
             try:
                 aceleracion = int(aceleracion)
-                if aceleracion < 0 or aceleracion > 100:
-                    print("\nError: El valor debe estar en el rango de 0 a 100")
+                if aceleracion < 42 or aceleracion > 99:
+                    print("\nError: El valor no debe ser menor a 42 y mayor a 99")
                     continue
             except ValueError:
                     print("\nError: Debe ingresar un número entero.")
@@ -348,8 +345,8 @@ class Menu:
             pases_cortos = input("Ingrese la estadistica de pases cortos del jugador(Ej: 1-99): ")
             pases_cortos = int(pases_cortos)
             try:
-                if pases_cortos < 0 or pases_cortos > 100:
-                    print("\nError: El valor no debe ser menor a 0 y mayor a 100")
+                if pases_cortos < 42 or pases_cortos > 99:
+                    print("\nError: El valor no debe ser menor a 42 y mayor a 99")
                     continue
             except ValueError:
                     print("\nError: Debe ingresar un número entero.")
@@ -358,8 +355,8 @@ class Menu:
             potencia_tiro = input("Ingrese la potencia de tiro del jugador (Ej: 1-99): ")
             potencia_tiro = int(potencia_tiro)
             try:
-                if potencia_tiro < 0 or potencia_tiro > 100:
-                    print("\nError: El valor no debe ser menor a 0 y mayor a 100")
+                if potencia_tiro < 42 or potencia_tiro > 100:
+                    print("\nError: El valor no debe ser menor a 42 y mayor a 99")
                     continue
             except ValueError:
                     print("\nError: Debe ingresar un número entero.")
@@ -368,8 +365,8 @@ class Menu:
             pases_largos = input("Ingrese la estadistica de pases largos del jugador(Ej: 1-99): ")
             pases_largos = int(pases_largos)
             try:
-                if pases_largos < 0 or pases_largos > 100:
-                    print("\nError: El valor no debe ser menor a 0 y mayor a 100")
+                if pases_largos < 42 or pases_largos > 99:
+                    print("\nError: El valor no debe ser menor a 42 y mayor a 99")
                     continue
             except ValueError:
                     print("\nError: Debe ingresar un número entero.")
@@ -378,8 +375,8 @@ class Menu:
             velocidad = input("Ingrese la velocidad del jugador(Ej: 1-99): ")
             velocidad = int(velocidad)
             try:
-                if velocidad < 0 or velocidad > 100:
-                    print("\nError: El valor no debe ser menor a 0 y mayor a 100")
+                if velocidad < 42 or velocidad > 99:
+                    print("\nError: El valor no debe ser menor a 42 y mayor a 99")
                     continue
             except ValueError:
                     print("\nError: Debe ingresar un número entero.")
@@ -388,8 +385,8 @@ class Menu:
             agilidad = input("Ingrese la agilidad del jugador(Ej: 1-99): ")
             agilidad = int(agilidad)
             try:
-                if agilidad < 0 or agilidad > 100:
-                    print("\nError: El valor no debe ser menor a 0 y mayor a 100")
+                if agilidad < 42 or agilidad > 99:
+                    print("\nError: El valor no debe ser menor a 42 y mayor a 99")
                     continue
             except ValueError:
                     print("\nError: Debe ingresar un número entero.")
@@ -398,7 +395,7 @@ class Menu:
             resistencia = input("Ingrese la resistencia del jugador(Ej: 1-99): ")
             resistencia = int(resistencia)
             try:
-                if resistencia < 0 or resistencia > 100:
+                if resistencia < 42 or resistencia > 99:
                     print("\nError: El valor no debe ser menor a 0 y mayor a 100")
                     continue
             except ValueError:
@@ -408,8 +405,8 @@ class Menu:
             salto = input("Ingrese el salto del jugador(Ej: 1-99): ")
             salto = int(salto)
             try:
-                if salto < 0 or salto > 100:
-                    print("\nError: El valor no debe ser menor a 0 y mayor a 100")
+                if salto < 42 or salto > 99:
+                    print("\nError: El valor no debe ser menor a 42 y mayor a 99")
                     continue
             except ValueError:
                     print("\nError: Debe ingresar un número entero.")
@@ -418,8 +415,8 @@ class Menu:
             regates = input("Ingrese la estadistica de regate del jugador(Ej: 1-99): ")
             regates = int(regates)
             try:
-                if regates < 0 or regates > 100:
-                    print("\nError: El valor no debe ser menor a 0 y mayor a 100")
+                if regates < 42 or regates > 99:
+                    print("\nError: El valor no debe ser menor a 42 y mayor a 99")
                     continue
             except ValueError:
                     print("\nError: Debe ingresar un número entero.")
@@ -427,8 +424,8 @@ class Menu:
             control_balon = input("Ingrese la estadistica de control de balon del jugador(Ej: 1-99): ")
             control_balon = int(control_balon)
             try:
-                if control_balon < 0 or control_balon > 100:
-                    print("\nError: El valor no debe ser menor a 0 y mayor a 100")
+                if control_balon < 42 or control_balon > 99:
+                    print("\nError: El valor no debe ser menor a 42 y mayor a 99")
                     continue
             except ValueError:
                     print("\nError: Debe ingresar un número entero.")
@@ -598,7 +595,7 @@ class Menu:
                                     else:
                                         break
                                 except ValueError:
-                                    print("Error: Ingrese solo números decimales en el formato adecuado (Ej: 1.82)")
+                                    print("Error: Ingrese solo NUMEROS decimales en el formato adecuado (Ej: 1.82)")
                                     continue
 
                             while True:
@@ -649,82 +646,110 @@ class Menu:
 
                             while True:
                                 nueva_aceleracion = input("Ingrese la nueva estadistica de aceleracion, si no desea cambiar este dato digite el mismo dato: ")
-                                if not nueva_aceleracion.isnumeric():
+                                if not nueva_aceleracion.isnumeric() or nueva_aceleracion.isalpha():
                                     print("Error: Debe ser NUMEROS enteros")
                                     continue
+                                nueva_aceleracion = int(nueva_aceleracion)
+                                if nueva_aceleracion < 42 or nueva_aceleracion > 99:
+                                    print("\nError: El valor no DEBE ser MENOR a 42 y MAYOR a 99")
+                                    continue
                                 else:
-                                    nuevo_reconocimiento = int(nuevo_reconocimiento)
                                     break
 
                             while True:
                                 nuevo_pases_cortos = input("Ingrese la nueva estadistica de pases cortos, si no desea cambiar este dato digite el mismo dato: ")
-                                if not nuevo_pases_cortos.isnumeric():
+                                if not nuevo_pases_cortos.isnumeric() or nuevo_pases_cortos.isalpha():
                                     print("Error: Debe ser NUMEROS enteros")
                                     continue
+                                nuevo_pases_cortos = int(nuevo_pases_cortos)
+                                if nuevo_pases_cortos < 42 or nuevo_pases_cortos > 99:
+                                    print("\nError: El valor no DEBE ser MENOR a 42 y MAYOR a 99")
+                                    continue
                                 else:
-                                    nuevo_reconocimiento = int(nuevo_reconocimiento)
                                     break
 
                             while True:
                                 nueva_potencia_tiro = input("Ingrese la nueva estadistica de potencia de tiro, si no desea cambiar este dato digite el mismo dato: ")
-                                if not nueva_potencia_tiro.isnumeric():
+                                if not nueva_potencia_tiro.isnumeric() or nueva_potencia_tiro.isalpha():
                                     print("Error: Debe ser NUMEROS enteros")
                                     continue
+                                nueva_potencia_tiro = int(nueva_potencia_tiro)
+                                if nueva_potencia_tiro < 42 or nueva_potencia_tiro > 99:
+                                    print("\nError: El valor no DEBE ser MENOR a 42 y MAYOR a 99")
+                                    continue
                                 else:
-                                    nuevo_reconocimiento = int(nuevo_reconocimiento)
                                     break
 
                             while True:
                                 nuevo_pases_largos = input("Ingrese la nueva estadistica de pases largos, si no desea cambiar este dato digite el mismo dato: ")
-                                if not nuevo_pases_largos.isnumeric():
+                                if not nuevo_pases_largos.isnumeric() or nuevo_pases_largos.isalpha():
                                     print("Error: Debe ser NUMEROS enteros")
                                     continue
+                                nuevo_pases_largos = int(nuevo_pases_largos)
+                                if nuevo_pases_largos < 42 or nuevo_pases_largos > 99:
+                                    print("\nError: El valor no DEBE ser MENOR a 42 y MAYOR a 99")
+                                    continue
                                 else:
-                                    nuevo_reconocimiento = int(nuevo_reconocimiento)
                                     break
+
                             while True:
                                 nueva_velocidad = input("Ingrese la nueva estadistica de velocidad, si no desea cambiar este dato digite el mismo dato: ")
-                                if not nueva_velocidad.isnumeric():
+                                if not nueva_velocidad.isnumeric() or nueva_velocidad.isalpha():
                                     print("Error: Debe ser NUMEROS enteros")
                                     continue
+                                nueva_velocidad = int(nueva_velocidad)
+                                if nueva_velocidad < 42 or nueva_velocidad > 99:
+                                    print("\nError: El valor no DEBE ser MENOR a 42 y MAYOR a 99")
+                                    continue
                                 else:
-                                    nuevo_reconocimiento = int(nuevo_reconocimiento)
                                     break
 
                             while True:
                                 nueva_agilidad = input("Ingrese la nueva estadistica de agilidad, si no desea cambiar este dato digite el mismo dato: ")
-                                if not nueva_velocidad.isnumeric():
+                                if not nueva_velocidad.isnumeric() or nueva_velocidad.isalpha():
                                     print("Error: Debe ser NUMEROS enteros")
                                     continue
+                                nueva_agilidad = int(nueva_agilidad)
+                                if nueva_agilidad < 42 or nueva_agilidad > 99:
+                                    print("\nError: El valor no DEBE ser MENOR a 42 y MAYOR a 99")
+                                    continue
                                 else:
-                                    nuevo_reconocimiento = int(nuevo_reconocimiento)
                                     break
 
                             while True:
                                 nueva_resistencia = input("Ingrese la nueva estadistica de resistencia, si no desea cambiar este dato digite el mismo dato: ")
-                                if not nueva_resistencia.isnumeric():
+                                if not nueva_resistencia.isnumeric() or nueva_resistencia.isalpha():
                                     print("Error: Debe ser NUMEROS enteros")
                                     continue
+                                nueva_resistencia = int(nueva_resistencia)
+                                if nueva_resistencia < 42 or nueva_resistencia > 99:
+                                    print("\nError: El valor no DEBE ser MENOR a 42 y MAYOR a 99")
+                                    continue
                                 else:
-                                    nuevo_reconocimiento = int(nuevo_reconocimiento)
                                     break
 
                             while True:
                                 nuevo_salto = input("Ingrese la nueva estadistica de salto, si no desea cambiar este dato digite el mismo dato: ")
-                                if not nuevo_salto.isnumeric():
+                                if not nuevo_salto.isnumeric() or nuevo_salto.isalpha():
                                     print("Error: Debe ser NUMEROS enteros")
                                     continue
+                                nuevo_salto = int(nuevo_salto)
+                                if nuevo_salto < 42 or nuevo_salto > 99:
+                                    print("\nError: El valor no DEBE ser MENOR a 42 y MAYOR a 99")
+                                    continue
                                 else:
-                                    nuevo_reconocimiento = int(nuevo_reconocimiento)
                                     break
 
                             while True:
                                 nuevo_regate = input("Ingrese la nueva estadistica de regate, si no desea cambiar este dato digite el mismo dato: ")
-                                if not nuevo_regate.isnumeric():
+                                if not nuevo_regate.isnumeric() or nuevo_regate.isalpha():
                                     print("Error: Debe ser NUMEROS enteros")
                                     continue
+                                nuevo_regate = int(nuevo_regate)
+                                if nuevo_regate < 42 or nuevo_regate > 99:
+                                    print("\nError: El valor no DEBE ser MENOR a 42 y MAYOR a 99")
+                                    continue
                                 else:
-                                    nuevo_reconocimiento = int(nuevo_reconocimiento)
                                     break
 
                             jugadorr["Jugador"] = nuevo_nombre
