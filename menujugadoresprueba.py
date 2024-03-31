@@ -254,37 +254,47 @@ class Menu:
                 else:
                     print("Error: El formato de la fecha de nacimiento no es válido. Debe ser en el formato 'dd de mes de año'. Por ejemplo, '28 de octubre de 1991'.")
 
-            origen = input("Ingrese el origen del jugador (Ej: Costa Rica): ")
-            if not origen.replace(" ", "").isalpha() or not origen.istitle():
-                print("\nError: El nombre debe contener solo letras y debe empezar con mayuscula.")
-                continue
-
-            genero = input("Ingrese el género del jugador (Masculino/Femenino/Otro): ")
-            if not genero.isalpha():
-                print("\nError: El genero debe contener solo letras")
-            if not (genero == "Masculino" or genero == "Femenino" or genero == "Otro"):
-                print("\nError: Debe ser Masculino o Femenino")
-                continue
-
-            altura = input("Ingrese la altura del jugador (Ej: 1.82) (Min:1.0, Max:2.1 MTS): ")
-            try:
-                altura = float(altura)
-                if altura < 1.0 or altura > 2.1:
-                    print("\nError: Debe ser una altura entre 1.0 y 2.0")
+            while True:
+                origen = input("Ingrese el origen del jugador (Ej: Costa Rica): ")
+                if not origen.replace(" ", "").isalpha() or not origen.istitle():
+                    print("\nError: El nombre debe contener solo letras y debe empezar con mayuscula.")
                     continue
-            except ValueError:
-                print("\nError: La altura debe ser un número decimal y debe llever un(.)")
-                continue
+                else:
+                    break
 
-            peso = input("Ingrese el peso del jugador (Ej: 82.5kgs) (Min:50, Max:130 KGS: ")
-            try:
-                peso = float(peso)
-                if peso < 50 or peso > 130:
-                    print("\nError: Debe ser un peso entre 50 y 130kgs")
+            while True:
+                genero = input("Ingrese el género del jugador (Masculino/Femenino/Otro): ")
+                if not genero.isalpha():
+                    print("\nError: El genero debe contener solo letras")
+                if not (genero == "Masculino" or genero == "Femenino" or genero == "Otro"):
+                    print("\nError: Debe ser Masculino o Femenino")
                     continue
-            except ValueError:
-                print("\nError: El peso debe ser un número decimal y debe llever un(.)")
-                continue
+                else:
+                    break
+
+            while True:
+                try:
+                    altura = float(input("Ingrese la altura del jugador (Ej: 1.82) (Min:1.0, Max:2.1 MTS): "))
+                    if altura < 1.0 or altura > 2.1:
+                        print("\nError: Debe ser una altura entre 1.0 y 2.1 MTS")
+                        continue
+                    else:
+                        break
+                except ValueError:
+                    print("Error: Ingrese solo NUMEROS decimales en el formato adecuado (Ej: 1.82)")
+                    continue
+
+            while True:
+                try:
+                    peso = float(input("Ingrese el peso del jugador (Ej: 82.5kgs) (Min:50, Max:130 KGS): "))
+                    if peso < 50 or peso > 130:
+                        print("\nError: Debe ser un peso entre 50 y 130kgs")
+                        continue
+                    else:
+                        break
+                except ValueError:
+                    print("Error: Ingrese solo NUMEROS decimales o enteros en el formato adecuado (Ej: 82.5 o 90 KGS)")
+                    continue
 
             posicion_campo = input("Ingrese la posición en el campo del jugador (Ej: Delantero): ")
             if not posicion_campo.isalpha() and not posicion_campo.istitle():
@@ -326,13 +336,13 @@ class Menu:
                 else:
                     break  # El ID es valido y unico
 
-
+            print("\nADVERTENCIA: A partir de aqui si digita algo que no se le indica VOLVERA al INICIO...\n")
             jugador = input("Ingrese el nombre del jugador nuevamente (Debe ser exactamente igual): ")
             if not jugador == nombre_jugador:
                 print("\nError: El nombre del jugador debe de ser el mismo")
                 continue
 
-            aceleracion = input("Ingrese la aceleracion del jugador (Ej: 1-99): ")
+            aceleracion = input("Ingrese la aceleracion del jugador (Ej: 42-99): ")
             try:
                 aceleracion = int(aceleracion)
                 if aceleracion < 42 or aceleracion > 99:
@@ -342,7 +352,7 @@ class Menu:
                     print("\nError: Debe ingresar un número entero.")
                     continue
 
-            pases_cortos = input("Ingrese la estadistica de pases cortos del jugador(Ej: 1-99): ")
+            pases_cortos = input("Ingrese la estadistica de pases cortos del jugador(Ej: 42-99): ")
             pases_cortos = int(pases_cortos)
             try:
                 if pases_cortos < 42 or pases_cortos > 99:
@@ -352,7 +362,7 @@ class Menu:
                     print("\nError: Debe ingresar un número entero.")
                     continue
 
-            potencia_tiro = input("Ingrese la potencia de tiro del jugador (Ej: 1-99): ")
+            potencia_tiro = input("Ingrese la potencia de tiro del jugador (Ej: 42-99): ")
             potencia_tiro = int(potencia_tiro)
             try:
                 if potencia_tiro < 42 or potencia_tiro > 100:
@@ -362,7 +372,7 @@ class Menu:
                     print("\nError: Debe ingresar un número entero.")
                     continue
 
-            pases_largos = input("Ingrese la estadistica de pases largos del jugador(Ej: 1-99): ")
+            pases_largos = input("Ingrese la estadistica de pases largos del jugador(Ej: 42-99): ")
             pases_largos = int(pases_largos)
             try:
                 if pases_largos < 42 or pases_largos > 99:
@@ -372,7 +382,7 @@ class Menu:
                     print("\nError: Debe ingresar un número entero.")
                     continue
 
-            velocidad = input("Ingrese la velocidad del jugador(Ej: 1-99): ")
+            velocidad = input("Ingrese la velocidad del jugador(Ej: 42-99): ")
             velocidad = int(velocidad)
             try:
                 if velocidad < 42 or velocidad > 99:
@@ -382,7 +392,7 @@ class Menu:
                     print("\nError: Debe ingresar un número entero.")
                     continue
 
-            agilidad = input("Ingrese la agilidad del jugador(Ej: 1-99): ")
+            agilidad = input("Ingrese la agilidad del jugador(Ej: 42-99): ")
             agilidad = int(agilidad)
             try:
                 if agilidad < 42 or agilidad > 99:
@@ -392,7 +402,7 @@ class Menu:
                     print("\nError: Debe ingresar un número entero.")
                     continue
 
-            resistencia = input("Ingrese la resistencia del jugador(Ej: 1-99): ")
+            resistencia = input("Ingrese la resistencia del jugador(Ej: 42-99): ")
             resistencia = int(resistencia)
             try:
                 if resistencia < 42 or resistencia > 99:
@@ -402,7 +412,7 @@ class Menu:
                     print("\nError: Debe ingresar un número entero.")
                     continue
 
-            salto = input("Ingrese el salto del jugador(Ej: 1-99): ")
+            salto = input("Ingrese el salto del jugador(Ej: 42-99): ")
             salto = int(salto)
             try:
                 if salto < 42 or salto > 99:
@@ -412,7 +422,7 @@ class Menu:
                     print("\nError: Debe ingresar un número entero.")
                     continue
 
-            regates = input("Ingrese la estadistica de regate del jugador(Ej: 1-99): ")
+            regates = input("Ingrese la estadistica de regate del jugador(Ej: 42-99): ")
             regates = int(regates)
             try:
                 if regates < 42 or regates > 99:
@@ -421,7 +431,7 @@ class Menu:
             except ValueError:
                     print("\nError: Debe ingresar un número entero.")
                     continue
-            control_balon = input("Ingrese la estadistica de control de balon del jugador(Ej: 1-99): ")
+            control_balon = input("Ingrese la estadistica de control de balon del jugador(Ej: 42-99): ")
             control_balon = int(control_balon)
             try:
                 if control_balon < 42 or control_balon > 99:
@@ -484,7 +494,7 @@ class Menu:
             with open("estadistica_jugador.json", "w") as file:
                 json.dump(estadistica, file, indent=4)
 
-            print("Nuevo jugador agregado con éxito.")
+            print("\nNuevo jugador agregado con éxito.")
             time.sleep(2)
             return()
 
