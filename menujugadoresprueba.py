@@ -654,6 +654,21 @@ class Menu:
                             nombre["club_militante"] = nuevo_club_militante
                             nombre["reconocimientos"] = nuevo_reconocimiento
 
+                            with open("jugadores.json", "w") as informacion_jugadores_file:
+                                json.dump(informacion_jugadores, informacion_jugadores_file, indent=4)
+
+                            print("Los cambios se han aplicado correctamente...")
+                            while True:
+                                opcion_si_no = input("Desea tambien modificar las estadisticas del jugador?(SI/NO): ")
+                                if opcion_si_no.lower() == "si":
+                                    break
+                                elif opcion_si_no.lower() == "no":
+                                    print("Volviendo al menu anterior...")
+                                    time.sleep(2)
+                                    return()
+                                else:
+                                    print("Digite (SI o NO)")
+
                             while True:
                                 nueva_aceleracion = input("Ingrese la nueva estadistica de aceleracion, si no desea cambiar este dato digite el mismo dato: ")
                                 if not nueva_aceleracion.isnumeric() or nueva_aceleracion.isalpha():
@@ -772,9 +787,6 @@ class Menu:
                             jugadorr["Resistencia"] = nueva_resistencia
                             jugadorr["Salto"] = nuevo_salto
                             jugadorr["Regates"] = nuevo_regate
-
-                            with open("jugadores.json", "w") as informacion_jugadores_file:
-                                json.dump(informacion_jugadores, informacion_jugadores_file, indent=4)
 
                             with open("estadistica_jugador.json", "w") as estadisticas_jugadores_file:
                                 json.dump(estadisticas_jugadores, estadisticas_jugadores_file, indent=4)
