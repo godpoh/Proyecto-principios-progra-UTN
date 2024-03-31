@@ -80,13 +80,15 @@ class Menu:
             print("2-Comparar las estadisticas de dos jugadores")
             print("3-Volver al menu principal")
 
-            opcion = input("Seleccione una opcion y digitela")
+            opcion = input("Seleccione una opcion y digitela: ")
 
             if opcion == '1':
-                self.ver_estadisticas_jugador:
-            if opcion == '2':
-                self.comparar_estadisticas:
-            if opcion == '3':
+                self.ver_estadisticas_jugador()
+
+            elif opcion == '2':
+                self.comparar_estadisticas()
+
+            elif opcion == '3':
                 print("Volviendo al menu principal")
                 time.sleep(2)
                 return()
@@ -230,7 +232,18 @@ class Menu:
         while True:
             nombre_jugador = input("Ingrese el nombre de jugador cuyas estadisticas desea ver: ")
             if not nombre_jugador.replace(" ", "").isalpha() and not nombre_jugador.istitle():
+                print("Error: El nombre de jugador debe iniciar con MAYUSCULA y solo se permiten letras.")
+                continue
+            else:
+                break
 
+        with open("estadistica_jugador.json", "r") as file:
+            estadisticas = json.load(file)
+
+        for nombre in estadisticas:
+            if nombre["Jugador"] == nombre_jugador:
+                print("\nEstadisticas de Jugador: ")
+                print(json.dumps(nombre, indent=4))
 
     def comparar_estadisticas(self):
         pass
