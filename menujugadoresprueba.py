@@ -266,13 +266,10 @@ class Menu:
                     time.sleep(2)
                     return ()
 
-
-
-
     def comparar_estadisticas(self):
         while True:
             while True:
-                nombre1 = input("Ingrese el nombre del primer jugador: ")
+                nombre1 = input("Ingrese el nombre del primer jugador, si desea volver al menu anterior digite (EXIT): ")
 
                 if nombre1.lower() == "salir":
                     print("Volviendo al menu anterior")
@@ -338,8 +335,6 @@ class Menu:
                 return ()
 
             continue
-
-
 
 #Gestion de jugadores Gestion de jugadores Gestion de jugadores Gestion de jugadores
 
@@ -927,7 +922,49 @@ class Menu:
                 print("No se encontro al jugador con el ID y nombre especificados...")
 
     def eliminar_jugador(self):
-        pass
+        while True:
+            nombre_jugador = input("Ingrese el nombre del jugador que desea eliminar, si desea volver al menu anterior ingrese (EXIT): ")
+
+            if nombre_jugador.lower() == "exit":
+                print("Volviendo al menu anterior")
+                time.sleep(2)
+                return()
+
+            if not nombre_jugador.replace(" ", "").isalpha() or not nombre_jugador.istitle():
+                print("Error: El nombre del jugador debe empezar con MAYUSCULA y deben ser solo letras")
+                continue
+
+            with open("jugadores.json", "r") as jugadores_file:
+                jugadores = json.load(jugadores_file)
+
+            jugadores_actualizados = [jugador for jugador in jugadores if jugador["nombre"] != nombre_jugador]
+
+            if len(jugadores_actualizados) == len(jugadores):
+                print(f"El jugador {nombre_jugador} no se encontro en la lista")
+                continue
+
+            with open("jugadores.json", "w") as jugadores_file:
+                json.dump(jugadores_actualizados, jugadores_file, indent=4)
+
+            with open("estadistica_jugador.json", "r") as estadistica_jugador_file:
+                estadistica_jugador = json.load(estadistica_jugador_file)
+
+            estadisticas_actualizadas = [estadistica for estadistica in estadistica_jugador if estadistica["Jugador"] != nombre_jugador]
+
+            if len(estadisticas_actualizadas) == len(estadistica_jugador):
+                print(f"El jugador {nombre_jugador} no se encontro en la lista")
+                continue
+
+            with open("estadistica_jugador.json", "w") as estadistica_jugador_file:
+                json.dump(estadisticas_actualizadas, estadistica_jugador_file, indent=4)
+
+            print(f"El jugador {nombre_jugador} se ha eliminado con exito")
+
+            consultar = input("Desea modificar otro jugador?(SI/NO)")
+            if consultar.lower() != "si":
+                print("Volviendo al menu anterior...")
+                time.sleep(2)
+                return ()
 
 #CONSULTAS AVANZADAS #CONSULTAS AVANZADAS #CONSULTAS AVANZADAS #CONSULTAS AVANZADAS #CONSULTAS AVANZADAS
 

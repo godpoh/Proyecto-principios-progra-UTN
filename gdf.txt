@@ -368,6 +368,19 @@ class Menu:
 menu = Menu()
 menu.main()
 
+    {
+        "nombre": "Lionel Andres Messi",
+        "fecha_nacimiento": "24 de junio de 1987",
+        "origen": "Argentina",
+        "genero": "Masculino",
+        "altura": 1.7,
+        "peso": 72,
+        "posicion_campo": "Delantero",
+        "club_militante": "Inter Miami",
+        "reconocimientos": 13
+    },
+
+    {
         "ID": 1,
         "Jugador": "Lionel Andres Messi",
         "Aceleracion": 92,
@@ -380,13 +393,4 @@ menu.main()
         "Salto": 68,
         "Regates": 96,
         "Control de balon": 96
-
-        "nombre": "Lionel Andres Messi",
-        "fecha_nacimiento": "24 de junio de 1987",
-        "origen": "Argentina",
-        "genero": "Masculino",
-        "altura": 1.7,
-        "peso": 72,
-        "posicion_campo": "Delantero",
-        "club_militante": "Inter Miami",
-        "reconocimientos": 13
+    },
