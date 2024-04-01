@@ -232,20 +232,42 @@ class Menu:
 
     def ver_estadisticas_jugador(self):
         while True:
-            nombre_jugador = input("Ingrese el nombre de jugador cuyas estadisticas desea ver: ")
-            if not nombre_jugador.replace(" ", "").isalpha() and not nombre_jugador.istitle():
-                print("Error: El nombre de jugador debe iniciar con MAYUSCULA y solo se permiten letras.")
-                continue
-            else:
-                break
+            jugador_encontrado = False
+            while True:
+                nombre_jugador = input("Ingrese el nombre de jugador cuyas estadisticas desea ver: ")
+                if not nombre_jugador.replace(" ", "").isalpha() or not nombre_jugador.istitle():
+                    print("Error: El nombre de jugador debe iniciar con MAYUSCULA y solo se permiten letras.")
+                    continue
+                else:
+                    break
 
-        with open("estadistica_jugador.json", "r") as file:
-            estadisticas = json.load(file)
+            with open("estadistica_jugador.json", "r") as file:
+                estadisticas = json.load(file)
 
-        for nombre in estadisticas:
-            if nombre["Jugador"] == nombre_jugador:
-                print("\nEstadisticas de Jugador: ")
-                print(json.dumps(nombre, indent=4))
+            for nombre in estadisticas:
+                if nombre["Jugador"] == nombre_jugador:
+                    jugador_encontrado = True
+                    print("\nEstadisticas de Jugador: ")
+                    print(json.dumps(nombre, indent=4))
+
+                    opcion = input("Desea consultar a otro jugador?(SI/NO): ")
+                    if opcion.lower() != "si":
+                        print("Volviendo al menu anterior")
+                        time.sleep(2)
+                        return ()
+                    else:
+                        break
+
+            if not jugador_encontrado:
+                print("El jugador no fue encontrado o no existe.")
+                opcion = input("Desea consultar a otro jugador?(SI/NO): ")
+                if opcion.lower() != "si":
+                    print("Volviendo al menu anterior")
+                    time.sleep(2)
+                    return ()
+
+
+
 
     def comparar_estadisticas(self):
         while True:
@@ -314,6 +336,7 @@ class Menu:
                 print("Volviendo al menu anterior")
                 time.sleep(2)
                 return ()
+
             continue
 
 
