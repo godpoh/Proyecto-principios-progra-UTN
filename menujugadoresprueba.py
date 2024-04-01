@@ -69,7 +69,9 @@ class Menu:
             elif opcion == '4':
                 self.visualizar_todos_jugadores()
             elif opcion == '5':
-                self.salir()
+                print("Volviendo al menu principal")
+                time.sleep(2)
+                return
             else:
                 print("Opcion invalida, porfavor seleccione una opcion valida.")
 
@@ -246,8 +248,73 @@ class Menu:
                 print(json.dumps(nombre, indent=4))
 
     def comparar_estadisticas(self):
-        pass
+        while True:
+            while True:
+                nombre1 = input("Ingrese el nombre del primer jugador: ")
 
+                if nombre1.lower() == "salir":
+                    print("Volviendo al menu anterior")
+                    time.sleep(2)
+                    return()
+
+                if not nombre1.replace(" ", "").isalpha() or not nombre1.istitle():
+                    print("Error: El nombre de jugador debe iniciar con MAYUSCULA y solo se permiten letras.")
+                    continue
+                else:
+                    break
+
+            while True:
+                nombre2 = input("Ingrese el nombre del segundo jugador: ")
+                if not nombre2.replace(" ", "").isalpha() or not nombre2.istitle():
+                    print("Error: El nombre de jugador debe iniciar con MAYUSCULA y solo se permiten letras.")
+                    continue
+                else:
+                    break
+
+            with open("jugadores.json", "r") as file:
+                estadistica = json.load(file)
+
+            jugador1 = None
+            jugador2 = None
+
+            for jugador in estadistica:
+                if jugador["nombre"] == nombre1:
+                    jugador1 = jugador
+                elif jugador["nombre"] == nombre2:
+                    jugador2 = jugador
+
+
+            if jugador1 is None or jugador2 is None:
+                print("Uno o ambos jugadores no se encontraron, intente de nuevo")
+                opcion = input("Desea hacer otra comparacion?(SI/NO): ")
+                if opcion.lower() != "si":
+                    print("Volviendo al menu anterior")
+                    time.sleep(2)
+                    return ()
+
+                continue
+
+            if jugador1["posicion_campo"] != jugador2["posicion_campo"]:
+                print("Los jugadores no poseen la misma posicion de campo y no son comparables")
+                opcion = input("Desea hacer otra comparacion?(SI/NO): ")
+                if opcion.lower() != "si":
+                    print("Volviendo al menu anterior")
+                    time.sleep(2)
+                    return()
+
+                continue
+
+            print("\nEstadisticas del primer jugador: ")
+            print(json.dumps(jugador1, indent=4))
+            print("\nEstadisticas del segundo jugador: ")
+            print(json.dumps(jugador2, indent=4))
+
+            opcion = input("Desea hacer otra comparacion?(SI/NO): ")
+            if opcion.lower() != "si":
+                print("Volviendo al menu anterior")
+                time.sleep(2)
+                return ()
+            continue
 
 
 
