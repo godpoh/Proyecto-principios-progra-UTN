@@ -98,7 +98,41 @@ class Menu:
                 print("Opcion invalida, intentelo de nuevo.")
 
     def consultas_avanzadas(self):
-        pass
+        while True:
+            print("\n-----------------------------------------------Consultas Avanzadas-----------------------------------------------")
+            print("1-Mostrar la cantidad de jugadores de acuerdo al origen")
+            print("2-Mostrar todos los jugadores que se encuentren en un rango de edad")
+            print("3-Mostrar la cantidad de jugadores de acuerdo con la altura que tienen y con referencia al genero de cada uno")
+            print("4-Mostrar los jugadores de Club específico")
+            print("5-Mostrar la cantidad de jugadores de acuerdo con la posición en el campo que posee, considerando unicamente los de genero femenino")
+            print("6-Mostrar el top 10 de los jugadores con mayor altura y con mejor agilidad, la informacion que se muestra es el nombre, genero, origen, altura y agilidad")
+            print("7-Mostrar la cantidad de jugadores cuya velocidad esté en un rango específico")
+            print("8-Determinar el promedio de control de balón para jugadores en una posición específica")
+            print("9-Volver al Menu Principal")
+            print("--------------------------------------------------------------------------------------------------------------------")
+
+            opcion = input("Seleccione una opcion y digitela: ")
+
+            if opcion == "1":
+                self.Mostrar_cantidad_jugadores_mismo_origen()
+            if opcion == "2":
+                self.Mostrar_todos_los_jugadores_que_se_encuentren_en_un_rango_de_edad()
+            if opcion == "3":
+                self.Mostrar_cantidad_jugadores_con_misma_altura_y_tienen_referencia_al_género_de_cada_uno()
+            if opcion == "4":
+                self.Mostrar_los_jugadores_de_Club_específico()
+            if opcion == "5":
+                self.Mostrar_cantidad_jugadores_acuerdo_con_la_posición_en_el_campo_considerando_unicamente_los_de_género_femenino()
+            if opcion == "6":
+                self.Mostrar_top_diez_jugadores_mayor_altura_con_mejor_agilidad_la_información_muestra_nombre_genero_origen_altura_agilidad()
+            if opcion == "7":
+                self.Mostrar_cantidad_jugadores_cuya_velocidad_este_en_un_rango_específico()
+            if opcion == "8":
+                self.Determinar_promedio_control_balon_para_jugadores_en_una_posición_específica()
+            if opcion == "9":
+                print("Volviendo al menu principal...")
+                time.sleep(2)
+                return()
 
     def salir(self):
         print("Saliendo del sistema.")
