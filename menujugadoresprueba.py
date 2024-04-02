@@ -336,7 +336,6 @@ class Menu:
                 elif jugador["nombre"] == nombre2:
                     jugador2 = jugador
 
-
             if jugador1 is None or jugador2 is None:
                 print("Uno o ambos jugadores no se encontraron, intente de nuevo")
                 opcion = input("Desea hacer otra comparacion?(SI/NO): ")
@@ -597,15 +596,15 @@ class Menu:
 
             # Crear un diccionario con los datos del nuevo jugador
             nuevo_jugador = {
-                "nombre": nombre_jugador,
-                "fecha_nacimiento": fecha_nacimiento,
-                "origen": origen,
-                "genero": genero,
-                "altura": altura,
-                "peso": peso,
-                "posicion_campo": posicion_campo,
-                "club_militante": club_militante,
-                "reconocimientos": reconocimientos
+                "Nombre": nombre_jugador,
+                "Fecha de nacimiento": fecha_nacimiento,
+                "Origen": origen,
+                "Genero": genero,
+                "Altura": altura,
+                "Peso": peso,
+                "Posicion en campo": posicion_campo,
+                "Club militante": club_militante,
+                "Reconocimientos": reconocimientos
             }
 
             nuevo_jugador_estadisticas = {
@@ -1003,10 +1002,59 @@ class Menu:
 #CONSULTAS AVANZADAS #CONSULTAS AVANZADAS #CONSULTAS AVANZADAS #CONSULTAS AVANZADAS #CONSULTAS AVANZADAS
 
     def Mostrar_cantidad_jugadores_mismo_origen(self):
-        pass
+        while True:
+            origen_buscar = input("Ingrese el origen para mostrar la cantidad de jugadores: ")
+
+            with open("jugadores.json", "r") as file:
+                jugadores = json.load(file)
+
+            jugadores_mismo_origen = {}
+
+            for jugador in jugadores:
+                if jugador["origen"] == origen_buscar:
+                    if origen_buscar in jugadores_mismo_origen:
+                        jugadores_mismo_origen[origen_buscar] += 1
+                    else:
+                        jugadores_mismo_origen[origen_buscar] = 1
+
+            if origen_buscar in jugadores_mismo_origen:
+                print(f"La cantidad de jugadores provenientes de {origen_buscar}: {jugadores_mismo_origen.get(origen_buscar, 0)}")
+            else:
+                print(f"No se encontraron los jugadores provenientes de {origen_buscar}")
+
+            consultar = input("Desea hacer otra consulta?(SI/NO)")
+            if consultar.lower() != "si":
+                print("Volviendo al menu anterior...")
+                time.sleep(2)
+                return()
 
     def Mostrar_todos_los_jugadores_que_se_encuentren_en_un_rango_de_edad(self):
-        pass
+        while True:
+
+            edad_buscar = int(input("Ingrese la edad para mostrar la cantidad de jugadores: "))
+
+            with open("jugadores", "r") as file:
+                jugadores = json.load(file)
+
+            jugadores_misma_edad = {}
+
+            for jugador in jugadores:
+                if jugador["edad"] == edad_buscar:
+                    if edad_buscar in jugadores_misma_edad:
+                        jugadores_misma_edad[edad_buscar] += 1
+                    else:
+                        jugadores_misma_edad[edad_buscar] = 1
+
+            if edad_buscar in jugadores_misma_edad:
+                print(f"La cantidad de jugadores de la edad de {edad_buscar}: {jugadores_misma_edad.get(edad_buscar)}")
+            else:
+                print(f"No se encontraron los jugadores provenientes de {edad_buscar}")
+
+            consultar = input("Desea hacer otra consulta?(SI/NO)")
+            if consultar.lower() != "si":
+                print("Volviendo al menu anterior...")
+                time.sleep(2)
+                return()
 
     def Mostrar_cantidad_jugadores_con_misma_altura_y_tienen_referencia_al_género_de_cada_uno(self):
         pass

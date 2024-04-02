@@ -1,7 +1,6 @@
 [
     {
-        "ID": 1,
-        "Jugador": "Lionel Andres Messi",
+        "Jugador_id": 1,
         "Aceleracion": 92,
         "Pases cortos": 92,
         "Potencia de tiro": 92,
@@ -14,8 +13,7 @@
         "Control de balon": 96
     },
     {
-        "ID": 2,
-        "Jugador": "Cristiano Ronaldo",
+        "Jugador_id": 2,
         "Aceleracion": 91,
         "Pases cortos": 82,
         "Potencia de tiro": 93,
@@ -28,8 +26,7 @@
         "Control de balon": 91
     },
     {
-        "ID": 3,
-        "Jugador": "Neymar Jr",
+        "Jugador_id": 3,
         "Aceleracion": 94,
         "Pases cortos": 91,
         "Potencia de tiro": 84,
@@ -42,8 +39,7 @@
         "Control de balon": 95
     },
     {
-        "ID": 4,
-        "Jugador": "Kylian Mbappe",
+        "Jugador_id": 4,
         "Aceleracion": 96,
         "Pases cortos": 84,
         "Potencia de tiro": 88,
@@ -56,8 +52,7 @@
         "Control de balon": 92
     },
     {
-        "ID": 5,
-        "Jugador": "Robert Lewandowski",
+        "Jugador_id": 5,
         "Aceleracion": 78,
         "Pases cortos": 75,
         "Potencia de tiro": 91,
@@ -70,8 +65,7 @@
         "Control de balon": 87
     },
     {
-        "ID": 6,
-        "Jugador": "Mohamed Salah",
+        "Jugador_id": 6,
         "Aceleracion": 93,
         "Pases cortos": 83,
         "Potencia de tiro": 88,
@@ -84,8 +78,7 @@
         "Control de balon": 89
     },
     {
-        "ID": 7,
-        "Jugador": "Sergio Ramos",
+        "Jugador_id": 7,
         "Aceleracion": 75,
         "Pases cortos": 80,
         "Potencia de tiro": 75,
@@ -98,8 +91,7 @@
         "Control de balon": 68
     },
     {
-        "ID": 8,
-        "Jugador": "Kevin De Bruyne",
+        "Jugador_id": 8,
         "Aceleracion": 78,
         "Pases cortos": 92,
         "Potencia de tiro": 88,
@@ -112,8 +104,7 @@
         "Control de balon": 91
     },
     {
-        "ID": 9,
-        "Jugador": "Luis Suarez",
+        "Jugador_id": 9,
         "Aceleracion": 76,
         "Pases cortos": 86,
         "Potencia de tiro": 89,
@@ -126,8 +117,7 @@
         "Control de balon": 88
     },
     {
-        "ID": 10,
-        "Jugador": "Virgil van Dijk",
+        "Jugador_id": 10,
         "Aceleracion": 74,
         "Pases cortos": 79,
         "Potencia de tiro": 65,
@@ -140,8 +130,7 @@
         "Control de balon": 60
     },
     {
-        "ID": 11,
-        "Jugador": "Antoine Griezmann",
+        "Jugador_id": 11,
         "Aceleracion": 86,
         "Pases cortos": 88,
         "Potencia de tiro": 86,
@@ -154,8 +143,7 @@
         "Control de balon": 89
     },
     {
-        "ID": 12,
-        "Jugador": "Harry Kane",
+        "Jugador_id": 12,
         "Aceleracion": 76,
         "Pases cortos": 84,
         "Potencia de tiro": 90,
@@ -168,8 +156,7 @@
         "Control de balon": 85
     },
     {
-        "ID": 13,
-        "Jugador": "Eden Hazard",
+        "Jugador_id": 13,
         "Aceleracion": 92,
         "Pases cortos": 87,
         "Potencia de tiro": 82,
@@ -182,8 +169,7 @@
         "Control de balon": 94
     },
     {
-        "ID": 14,
-        "Jugador": "Paul Pogba",
+        "Jugador_id": 14,
         "Aceleracion": 79,
         "Pases cortos": 87,
         "Potencia de tiro": 86,
@@ -196,8 +182,7 @@
         "Control de balon": 89
     },
     {
-        "ID": 15,
-        "Jugador": "Sadio Mane",
+        "Jugador_id": 15,
         "Aceleracion": 94,
         "Pases cortos": 84,
         "Potencia de tiro": 86,
@@ -210,8 +195,7 @@
         "Control de balon": 90
     },
     {
-        "ID": 16,
-        "Jugador": "Toni Kroos",
+        "Jugador_id": 16,
         "Aceleracion": 61,
         "Pases cortos": 91,
         "Potencia de tiro": 85,
@@ -224,8 +208,7 @@
         "Control de balon": 90
     },
     {
-        "ID": 17,
-        "Jugador": "Karim Benzema",
+        "Jugador_id": 17,
         "Aceleracion": 78,
         "Pases cortos": 83,
         "Potencia de tiro": 87,
@@ -238,8 +221,7 @@
         "Control de balon": 89
     },
     {
-        "ID": 18,
-        "Jugador": "Manuel Neuer",
+        "Jugador_id": 18,
         "Aceleracion": 57,
         "Pases cortos": 85,
         "Potencia de tiro": 62,
@@ -252,8 +234,7 @@
         "Control de balon": 35
     },
     {
-        "ID": 19,
-        "Jugador": "Gareth Bale",
+        "Jugador_id": 19,
         "Aceleracion": 95,
         "Pases cortos": 85,
         "Potencia de tiro": 89,
@@ -266,8 +247,7 @@
         "Control de balon": 89
     },
     {
-        "ID": 20,
-        "Jugador": "Marta Vieira da Silva",
+        "Jugador_id": 20,
         "Aceleracion": 93,
         "Pases cortos": 85,
         "Potencia de tiro": 86,
@@ -280,8 +260,7 @@
         "Control de balon": 98
     },
     {
-        "ID": 21,
-        "Jugador": "Alex Morgan",
+        "Jugador_id": 21,
         "Aceleracion": 92,
         "Pases cortos": 84,
         "Potencia de tiro": 87,
@@ -294,8 +273,7 @@
         "Control de balon": 87
     },
     {
-        "ID": 22,
-        "Jugador": "Ada Hegerberg",
+        "Jugador_id": 22,
         "Aceleracion": 85,
         "Pases cortos": 85,
         "Potencia de tiro": 88,
@@ -308,8 +286,7 @@
         "Control de balon": 87
     },
     {
-        "ID": 23,
-        "Jugador": "Megan Rapinoe",
+        "Jugador_id": 23,
         "Aceleracion": 87,
         "Pases cortos": 86,
         "Potencia de tiro": 88,
@@ -322,8 +299,7 @@
         "Control de balon": 91
     },
     {
-        "ID": 24,
-        "Jugador": "Sam Kerr",
+        "Jugador_id": 24,
         "Aceleracion": 93,
         "Pases cortos": 82,
         "Potencia de tiro": 88,
@@ -336,8 +312,7 @@
         "Control de balon": 85
     },
     {
-        "ID": 25,
-        "Jugador": "Wendie Renard",
+        "Jugador_id": 25,
         "Aceleracion": 68,
         "Pases cortos": 75,
         "Potencia de tiro": 60,
@@ -350,8 +325,7 @@
         "Control de balon": 60
     },
     {
-        "ID": 26,
-        "Jugador": "Amandine Henry",
+        "Jugador_id": 26,
         "Aceleracion": 78,
         "Pases cortos": 86,
         "Potencia de tiro": 80,
@@ -364,8 +338,7 @@
         "Control de balon": 88
     },
     {
-        "ID": 27,
-        "Jugador": "Pernille Harder",
+        "Jugador_id": 27,
         "Aceleracion": 85,
         "Pases cortos": 82,
         "Potencia de tiro": 89,
@@ -378,8 +351,7 @@
         "Control de balon": 87
     },
     {
-        "ID": 28,
-        "Jugador": "Fran Kirby",
+        "Jugador_id": 28,
         "Aceleracion": 91,
         "Pases cortos": 84,
         "Potencia de tiro": 87,
@@ -392,8 +364,7 @@
         "Control de balon": 92
     },
     {
-        "ID": 29,
-        "Jugador": "Lucy Bronze",
+        "Jugador_id": 29,
         "Aceleracion": 88,
         "Pases cortos": 80,
         "Potencia de tiro": 72,
