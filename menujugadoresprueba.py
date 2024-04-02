@@ -1,6 +1,7 @@
 import json
 import time
 import re
+#VALIDACIONES  #VALIDACIONES  #VALIDACIONES  #VALIDACIONES  #VALIDACIONES  #VALIDACIONES  #VALIDACIONES  #VALIDACIONES
 
 class Menu:
     def __init__(self):
@@ -118,9 +119,9 @@ class Menu:
             if opcion == "2":
                 self.Mostrar_todos_los_jugadores_que_se_encuentren_en_un_rango_de_edad()
             if opcion == "3":
-                self.Mostrar_cantidad_jugadores_con_misma_altura_y_tienen_referencia_al_género_de_cada_uno()
+                self.Mostrar_cantidad_jugadores_con_misma_altura_y_tienen_referencia_al_genero_de_cada_uno()
             if opcion == "4":
-                self.Mostrar_los_jugadores_de_Club_específico()
+                self.Mostrar_los_jugadores_de_club_específico()
             if opcion == "5":
                 self.Mostrar_cantidad_jugadores_acuerdo_con_la_posición_en_el_campo_considerando_unicamente_los_de_género_femenino()
             if opcion == "6":
@@ -652,7 +653,6 @@ class Menu:
             return()
 
     def leer_informacion_jugador(self):
-
         while True:
             with open("jugadores.json", "r") as nombre_file:
                 ver_nombre = json.load(nombre_file)
@@ -692,6 +692,8 @@ class Menu:
                     print("\nVolviendo al gestor de jugadores...")
                     time.sleep(2)
                     return ()
+
+
 
     def modificar_datos_jugador(self):
         while True:
@@ -1056,14 +1058,59 @@ class Menu:
                 time.sleep(2)
                 return()
 
-    def Mostrar_cantidad_jugadores_con_misma_altura_y_tienen_referencia_al_género_de_cada_uno(self):
+    def Mostrar_cantidad_jugadores_con_misma_altura_y_tienen_referencia_al_genero_de_cada_uno(self):
         pass
 
-    def Mostrar_los_jugadores_de_Club_específico(self):
-        pass
+    def Mostrar_los_jugadores_de_club_específico(self):
+        while True:
+            preguntar_club = input("Ingrese el nombre del club que desea saber que jugadores pertenecen: ")
+
+            with open("jugadores.json", "r") as file:
+                jugadores = json.load(file)
+
+            jugadores_del_club = []
+
+            for jugador in jugadores:
+                if jugador["Club militante"] == preguntar_club:
+                    jugadores_del_club.append(jugador["Nombre"])
+
+            if jugadores_del_club:
+                print(f"El jugadores del club {preguntar_club} son:")
+                for jugador in jugadores_del_club:
+                    print(jugador)
+            else:
+                print(f"No se encontraron jugadores del club {preguntar_club}")
+
+            consultar = input("Desea hacer otra consulta?(SI/NO)")
+            if consultar.lower() != "si":
+                print("Volviendo al menu anterior...")
+                time.sleep(2)
+                return()
 
     def Mostrar_cantidad_jugadores_acuerdo_con_la_posición_en_el_campo_considerando_unicamente_los_de_género_femenino(self):
-        pass
+        while True:
+            print("Recuerde son JUGADORAS, en vez de DELANTERO, sera DELANTERA")
+            preguntar_posicion = input("Ingrese la posicion en el campo(SE CONSIDERA UNICAMENTE EL GENERO FEMENINO): ")
+
+            with open("jugadores.json", "r") as file:
+                jugadores = json.load(file)
+
+            cantidad_jugadoras = 0
+
+            for jugador in jugadores:
+                if jugador["Genero"] == "Femenino" and jugador["Posicion en campo"] == preguntar_posicion:
+                    cantidad_jugadoras += 1
+
+            if cantidad_jugadoras == 0:
+                print(f"No se encontraron jugadores de la posicion {preguntar_posicion}")
+            else:
+                print(f"La cantidad de jugadoras de genero femenino en la posicion de {preguntar_posicion} es de: {cantidad_jugadoras}")
+
+            consultar = input("Desea hacer otra consulta?(SI/NO)")
+            if consultar.lower() != "si":
+                print("Volviendo al menu anterior...")
+                time.sleep(2)
+                return()
 
     def Mostrar_top_diez_jugadores_mayor_altura_con_mejor_agilidad_la_información_muestra_nombre_genero_origen_altura_agilidad(self):
         pass
