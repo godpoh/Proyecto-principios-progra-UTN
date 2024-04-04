@@ -1,6 +1,7 @@
 import json
 import time
 import re
+#VALIDACIONES  #VALIDACIONES  #VALIDACIONES  #VALIDACIONES  #VALIDACIONES  #VALIDACIONES  #VALIDACIONES  #VALIDACIONES
 
 class Menu:
     def __init__(self):
@@ -98,7 +99,41 @@ class Menu:
                 print("Opcion invalida, intentelo de nuevo.")
 
     def consultas_avanzadas(self):
-        pass
+        while True:
+            print("\n-----------------------------------------------Consultas Avanzadas-----------------------------------------------")
+            print("1-Mostrar la cantidad de jugadores de acuerdo al origen")
+            print("2-Mostrar todos los jugadores que se encuentren en un rango de edad")
+            print("3-Mostrar la cantidad de jugadores de acuerdo con la altura que tienen y con referencia al genero de cada uno")
+            print("4-Mostrar los jugadores de Club específico")
+            print("5-Mostrar la cantidad de jugadores de acuerdo con la posición en el campo que posee, considerando unicamente los de genero femenino")
+            print("6-Mostrar el top 10 de los jugadores con mayor altura y con mejor agilidad, la informacion que se muestra es el nombre, genero, origen, altura y agilidad")
+            print("7-Mostrar la cantidad de jugadores cuya velocidad esté en un rango específico")
+            print("8-Determinar el promedio de control de balón para jugadores en una posición específica")
+            print("9-Volver al Menu Principal")
+            print("--------------------------------------------------------------------------------------------------------------------")
+
+            opcion = input("Seleccione una opcion y digitela: ")
+
+            if opcion == "1":
+                self.Mostrar_cantidad_jugadores_mismo_origen()
+            if opcion == "2":
+                self.Mostrar_todos_los_jugadores_que_se_encuentren_en_un_rango_de_edad()
+            if opcion == "3":
+                self.Mostrar_cantidad_jugadores_con_misma_altura_y_tienen_referencia_al_genero_de_cada_uno()
+            if opcion == "4":
+                self.Mostrar_los_jugadores_de_club_específico()
+            if opcion == "5":
+                self.Mostrar_cantidad_jugadores_acuerdo_con_la_posición_en_el_campo_considerando_unicamente_los_de_género_femenino()
+            if opcion == "6":
+                self.Mostrar_top_diez_jugadores_mayor_altura_con_mejor_agilidad_la_información_muestra_nombre_genero_origen_altura_agilidad()
+            if opcion == "7":
+                self.Mostrar_cantidad_jugadores_cuya_velocidad_este_en_un_rango_específico()
+            if opcion == "8":
+                self.Determinar_promedio_control_balon_para_jugadores_en_una_posición_específica()
+            if opcion == "9":
+                print("Volviendo al menu principal...")
+                time.sleep(2)
+                return()
 
     def salir(self):
         print("Saliendo del sistema.")
@@ -301,7 +336,6 @@ class Menu:
                     jugador1 = jugador
                 elif jugador["nombre"] == nombre2:
                     jugador2 = jugador
-
 
             if jugador1 is None or jugador2 is None:
                 print("Uno o ambos jugadores no se encontraron, intente de nuevo")
@@ -563,15 +597,15 @@ class Menu:
 
             # Crear un diccionario con los datos del nuevo jugador
             nuevo_jugador = {
-                "nombre": nombre_jugador,
-                "fecha_nacimiento": fecha_nacimiento,
-                "origen": origen,
-                "genero": genero,
-                "altura": altura,
-                "peso": peso,
-                "posicion_campo": posicion_campo,
-                "club_militante": club_militante,
-                "reconocimientos": reconocimientos
+                "Nombre": nombre_jugador,
+                "Fecha de nacimiento": fecha_nacimiento,
+                "Origen": origen,
+                "Genero": genero,
+                "Altura": altura,
+                "Peso": peso,
+                "Posicion en campo": posicion_campo,
+                "Club militante": club_militante,
+                "Reconocimientos": reconocimientos
             }
 
             nuevo_jugador_estadisticas = {
@@ -619,7 +653,6 @@ class Menu:
             return()
 
     def leer_informacion_jugador(self):
-
         while True:
             with open("jugadores.json", "r") as nombre_file:
                 ver_nombre = json.load(nombre_file)
@@ -659,6 +692,8 @@ class Menu:
                     print("\nVolviendo al gestor de jugadores...")
                     time.sleep(2)
                     return ()
+
+
 
     def modificar_datos_jugador(self):
         while True:
@@ -969,19 +1004,113 @@ class Menu:
 #CONSULTAS AVANZADAS #CONSULTAS AVANZADAS #CONSULTAS AVANZADAS #CONSULTAS AVANZADAS #CONSULTAS AVANZADAS
 
     def Mostrar_cantidad_jugadores_mismo_origen(self):
-        pass
+        while True:
+            origen_buscar = input("Ingrese el origen para mostrar la cantidad de jugadores: ")
+
+            with open("jugadores.json", "r") as file:
+                jugadores = json.load(file)
+
+            jugadores_mismo_origen = {}
+
+            for jugador in jugadores:
+                if jugador["origen"] == origen_buscar:
+                    if origen_buscar in jugadores_mismo_origen:
+                        jugadores_mismo_origen[origen_buscar] += 1
+                    else:
+                        jugadores_mismo_origen[origen_buscar] = 1
+
+            if origen_buscar in jugadores_mismo_origen:
+                print(f"La cantidad de jugadores provenientes de {origen_buscar}: {jugadores_mismo_origen.get(origen_buscar, 0)}")
+            else:
+                print(f"No se encontraron los jugadores provenientes de {origen_buscar}")
+
+            consultar = input("Desea hacer otra consulta?(SI/NO)")
+            if consultar.lower() != "si":
+                print("Volviendo al menu anterior...")
+                time.sleep(2)
+                return()
 
     def Mostrar_todos_los_jugadores_que_se_encuentren_en_un_rango_de_edad(self):
+        while True:
+
+            edad_buscar = int(input("Ingrese la edad para mostrar la cantidad de jugadores: "))
+
+            with open("jugadores", "r") as file:
+                jugadores = json.load(file)
+
+            jugadores_misma_edad = {}
+
+            for jugador in jugadores:
+                if jugador["edad"] == edad_buscar:
+                    if edad_buscar in jugadores_misma_edad:
+                        jugadores_misma_edad[edad_buscar] += 1
+                    else:
+                        jugadores_misma_edad[edad_buscar] = 1
+
+            if edad_buscar in jugadores_misma_edad:
+                print(f"La cantidad de jugadores de la edad de {edad_buscar}: {jugadores_misma_edad.get(edad_buscar)}")
+            else:
+                print(f"No se encontraron los jugadores provenientes de {edad_buscar}")
+
+            consultar = input("Desea hacer otra consulta?(SI/NO)")
+            if consultar.lower() != "si":
+                print("Volviendo al menu anterior...")
+                time.sleep(2)
+                return()
+
+    def Mostrar_cantidad_jugadores_con_misma_altura_y_tienen_referencia_al_genero_de_cada_uno(self):
         pass
 
-    def Mostrar_cantidad_jugadores_con_misma_altura_y_tienen_referencia_al_género_de_cada_uno(self):
-        pass
+    def Mostrar_los_jugadores_de_club_específico(self):
+        while True:
+            preguntar_club = input("Ingrese el nombre del club que desea saber que jugadores pertenecen: ")
 
-    def Mostrar_los_jugadores_de_Club_específico(self):
-        pass
+            with open("jugadores.json", "r") as file:
+                jugadores = json.load(file)
+
+            jugadores_del_club = []
+
+            for jugador in jugadores:
+                if jugador["Club militante"] == preguntar_club:
+                    jugadores_del_club.append(jugador["Nombre"])
+
+            if jugadores_del_club:
+                print(f"El jugadores del club {preguntar_club} son:")
+                for jugador in jugadores_del_club:
+                    print(jugador)
+            else:
+                print(f"No se encontraron jugadores del club {preguntar_club}")
+
+            consultar = input("Desea hacer otra consulta?(SI/NO)")
+            if consultar.lower() != "si":
+                print("Volviendo al menu anterior...")
+                time.sleep(2)
+                return()
 
     def Mostrar_cantidad_jugadores_acuerdo_con_la_posición_en_el_campo_considerando_unicamente_los_de_género_femenino(self):
-        pass
+        while True:
+            print("Recuerde son JUGADORAS, en vez de DELANTERO, sera DELANTERA")
+            preguntar_posicion = input("Ingrese la posicion en el campo(SE CONSIDERA UNICAMENTE EL GENERO FEMENINO): ")
+
+            with open("jugadores.json", "r") as file:
+                jugadores = json.load(file)
+
+            cantidad_jugadoras = 0
+
+            for jugador in jugadores:
+                if jugador["Genero"] == "Femenino" and jugador["Posicion en campo"] == preguntar_posicion:
+                    cantidad_jugadoras += 1
+
+            if cantidad_jugadoras == 0:
+                print(f"No se encontraron jugadores de la posicion {preguntar_posicion}")
+            else:
+                print(f"La cantidad de jugadoras de genero femenino en la posicion de {preguntar_posicion} es de: {cantidad_jugadoras}")
+
+            consultar = input("Desea hacer otra consulta?(SI/NO)")
+            if consultar.lower() != "si":
+                print("Volviendo al menu anterior...")
+                time.sleep(2)
+                return()
 
     def Mostrar_top_diez_jugadores_mayor_altura_con_mejor_agilidad_la_información_muestra_nombre_genero_origen_altura_agilidad(self):
         pass
