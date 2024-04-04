@@ -1,19 +1,18 @@
 import json
 import time
 import re
-#VALIDACIONES  #VALIDACIONES  #VALIDACIONES  #VALIDACIONES  #VALIDACIONES  #VALIDACIONES  #VALIDACIONES  #VALIDACIONES
 
 class Menu:
     def __init__(self):
-        self.opciones_principales = {
-            '1': self.gestion_jugadores,
-            '2': self.visualizar_lista_jugadores,
-            '3': self.estadisticas_jugadores,
-            '4': self.consultas_avanzadas,
-            '5': self.salir
+        self.main_options = {
+            '1': self.player_managment,
+            '2': self.view_player_list,
+            '3': self.players_statistics,
+            '4': self.advanced_queries,
+            '5': self.exit
         }
 
-    def mostrar_menu_principal(self):
+    def show_main_menu(self):
         print("\n------------Menu Principal------------")
         print("1-Gestion de Jugadores")
         print("2-Visualizar lista de jugadores")
@@ -22,8 +21,8 @@ class Menu:
         print("5-Salir del sistema.")
         print("--------------------------------------")
 
-    #Menu principal Menu principal Menu principal Menu principal Menu principal Menu principal
-    def gestion_jugadores(self):
+#Menu principal Menu principal Menu principal Menu principal Menu principal Menu principal
+    def player_managment(self):
         while True:
             print("\n------------Gestion de Jugadores------------")
             print("1-Insertar un nuevo jugador")
@@ -32,24 +31,24 @@ class Menu:
             print("4-Eliminar un jugador de la base de datos")
             print("5-Regresar al menu principal")
             print("--------------------------------------------")
-            opciones = input("Ingrese el digito de la opcion(1-5): ")
+            option = input("Ingrese el digito de la opcion(1-5): ")
 
-            if opciones == '1':
+            if option == '1':
                 self.insertar_nuevo_jugador()
-            elif opciones == '2':
+            elif option == '2':
                 self.leer_informacion_jugador()
-            elif opciones == '3':
+            elif option == '3':
                 self.modificar_datos_jugador()
-            elif opciones == '4':
+            elif option == '4':
                 self.eliminar_jugador()
-            elif opciones == '5':
+            elif option == '5':
                 print("Volviendo al menu principal")
                 time.sleep(2)
                 return
             else:
                 print("Valor no valido, vuelva a intentarlo")
 
-    def visualizar_lista_jugadores(self):
+    def view_player_list(self):
         while True:
             print("\nSeleccione un filtro para visualizar la lista de jugadores")
             print("1-Por posicion de campo")
@@ -59,46 +58,46 @@ class Menu:
             print("5-Regresar al Menu Principal")
             print("----------------------------------------------------------")
 
-            opcion = input("Ingrese el numero de la opcion deseada: ")
+            option = input("Ingrese el numero de la opcion deseada: ")
 
-            if opcion == '1':
+            if option == '1':
                 self.filtrar_por_posicion_campo()
-            elif opcion == '2':
+            elif option == '2':
                 self.filtrar_por_origen()
-            elif opcion == '3':
+            elif option == '3':
                 self.filtrar_por_reconocimientos()
-            elif opcion == '4':
+            elif option == '4':
                 self.visualizar_todos_jugadores()
-            elif opcion == '5':
+            elif option == '5':
                 print("Volviendo al menu principal")
                 time.sleep(2)
                 return
             else:
                 print("Opcion invalida, porfavor seleccione una opcion valida.")
 
-    def estadisticas_jugadores(self):
+    def players_statistics(self):
         while True:
             print("\nEstadisticas de jugadores: ")
             print("1-Ver las estadisticas de un jugador")
             print("2-Comparar las estadisticas de dos jugadores")
             print("3-Volver al menu principal")
 
-            opcion = input("Seleccione una opcion y digitela: ")
+            option = input("Seleccione una opcion y digitela: ")
 
-            if opcion == '1':
+            if option == '1':
                 self.ver_estadisticas_jugador()
 
-            elif opcion == '2':
+            elif option == '2':
                 self.comparar_estadisticas()
 
-            elif opcion == '3':
+            elif option == '3':
                 print("Volviendo al menu principal")
                 time.sleep(2)
                 return()
             else:
                 print("Opcion invalida, intentelo de nuevo.")
 
-    def consultas_avanzadas(self):
+    def advanced_queries(self):
         while True:
             print("\n-----------------------------------------------Consultas Avanzadas-----------------------------------------------")
             print("1-Mostrar la cantidad de jugadores de acuerdo al origen")
@@ -112,66 +111,71 @@ class Menu:
             print("9-Volver al Menu Principal")
             print("--------------------------------------------------------------------------------------------------------------------")
 
-            opcion = input("Seleccione una opcion y digitela: ")
+            option = input("Seleccione una opcion y digitela: ")
 
-            if opcion == "1":
-                self.Mostrar_cantidad_jugadores_mismo_origen()
-            if opcion == "2":
-                self.Mostrar_todos_los_jugadores_que_se_encuentren_en_un_rango_de_edad()
-            if opcion == "3":
-                self.Mostrar_cantidad_jugadores_con_misma_altura_y_tienen_referencia_al_genero_de_cada_uno()
-            if opcion == "4":
-                self.Mostrar_los_jugadores_de_club_específico()
-            if opcion == "5":
-                self.Mostrar_cantidad_jugadores_acuerdo_con_la_posición_en_el_campo_considerando_unicamente_los_de_género_femenino()
-            if opcion == "6":
-                self.Mostrar_top_diez_jugadores_mayor_altura_con_mejor_agilidad_la_información_muestra_nombre_genero_origen_altura_agilidad()
-            if opcion == "7":
-                self.Mostrar_cantidad_jugadores_cuya_velocidad_este_en_un_rango_específico()
-            if opcion == "8":
-                self.Determinar_promedio_control_balon_para_jugadores_en_una_posición_específica()
-            if opcion == "9":
+            if option == "1":
+                self.mostrar_cantidad_jugadores_mismo_origen()
+            if option == "2":
+                self.mostrar_todos_los_jugadores_que_se_encuentren_en_un_rango_de_edad()
+            if option == "3":
+                self.mostrar_cantidad_jugadores_con_misma_altura_y_tienen_referencia_al_genero_de_cada_uno()
+            if option == "4":
+                self.mostrar_los_jugadores_de_club_específico()
+            if option == "5":
+                self.mostrar_cantidad_jugadores_acuerdo_con_la_posición_en_el_campo_considerando_unicamente_los_de_género_femenino()
+            if option == "6":
+                self.mostrar_top_diez_jugadores_mayor_altura_con_mejor_agilidad_la_información_muestra_nombre_genero_origen_altura_agilidad()
+            if option == "7":
+                self.mostrar_cantidad_jugadores_cuya_velocidad_este_en_un_rango_específico()
+            if option == "8":
+                self.determinar_promedio_control_balon_para_jugadores_en_una_posición_específica()
+            if option == "9":
                 print("Volviendo al menu principal...")
                 time.sleep(2)
                 return()
 
-    def salir(self):
+    def exit(self):
         print("Saliendo del sistema.")
         exit()
 
     def main(self):
         while True:
-            self.mostrar_menu_principal()
-            opcion = input("Seleccione una opción: ")
-            accion = self.opciones_principales.get(opcion)
+            self.show_main_menu()
+            option = input("Seleccione una opción: ")
+            accion = self.main_options.get(option)
             if accion:
                 accion()
             else:
                 print("\nError: Opción no válida. Por favor, seleccione una opción válida.\n")
                 time.sleep(1)
 
+    def back_to_menu(self):
+        option = input("Desea realizar otra consulta? (SI/NO): ")
+        if option.lower() != 'si':
+            print("Volviendo al menu anterior...")
+            time.sleep(2)
+            return False
+        return True
+
 #visualizar_lista_jugadores #visualizar_lista_jugadores #visualizar_lista_jugadores #visualizar_lista_jugadores #visualizar_lista_jugadores
     def filtrar_por_posicion_campo(self):
         while True:
             print("IMPORTANTE: Deben ser solo LETRAS, ademas ambas iniciales deben empezar con MAYUSCULAS ej: Delantero o Extremo Derecho.")
-            filtrar = input("Ingrese la posicion que desea filtrar de los jugadores,(SI desea volver al menu anterior digite (EXIT): ")
-            if filtrar.lower() == "exit":
+            filter = input("Ingrese la posicion que desea filtrar de los jugadores,(SI desea volver al menu anterior digite (EXIT): ")
+            if filter.lower() == "exit":
                 return()
-            if not filtrar.replace(" ","").isalpha() or not filtrar.istitle():
+            if not filter.replace(" ","").isalpha() or not filter.istitle():
                 continue
             try:
                 with open("jugadores.json", "r") as jugadores_file:
                     jugadores = json.load(jugadores_file)
                     # esta primera (jugador_expresion) es una variable de iteracion que se utiliza para recorrer cada elemento de la lista jugadores.
-                    filtrar_jugadores = [jugador_expresion for jugador_expresion in jugadores if jugador_expresion["posicion_campo"] == filtrar]
+                    filtrar_jugadores = [jugador_expresion for jugador_expresion in jugadores if jugador_expresion["Posicion en campo"] == filter]
                     if jugadores:
                         print("Jugadores encontrados: ")
                         for jugador_expresion in filtrar_jugadores:
                             print(json.dumps(jugador_expresion, indent=4))
-                        opcion = input("Desea realizar otra consulta? (SI/NO): ")
-                        if opcion.lower() != 'si':
-                            print("Volviendo al menu anterior...")
-                            time.sleep(2)
+                        if not self.back_to_menu():
                             break
                     else:
                         print("No se encontraron jugadores de la posicion especificida")
@@ -185,22 +189,22 @@ class Menu:
         while True:
             print(
                 "IMPORTANTE: Deben ser solo LETRAS, ademas ambas iniciales deben empezar con MAYUSCULAS ej: Belgica o Costa Rica.")
-            filtrar = input("Ingrese el pais de origen que desea filtrar de los jugadores,(SI desea volver al menu anterior digite (EXIT):: ")
-            if filtrar.lower() == "exit":
+            filter = input("Ingrese el pais de origen que desea filtrar de los jugadores,(SI desea volver al menu anterior digite (EXIT): ")
+            if filter.lower() == "exit":
                 return()
-            if not filtrar.replace(" ","").isalpha() or not filtrar.istitle():
+            if not filter.replace(" ","").isalpha() or not filter.istitle():
                 continue
             try:
                 with open("jugadores.json", "r") as jugadores_file:
                     jugadores = json.load(jugadores_file)
                     # esta primera (jugador_expresion) es una variable de iteracion que se utiliza para recorrer cada elemento de la lista jugadores.
-                    filtrar_jugadores = [jugador_expresion for jugador_expresion in jugadores if jugador_expresion["origen"] == filtrar]
+                    filtrar_jugadores = [jugador_expresion for jugador_expresion in jugadores if jugador_expresion["Origen"] == filter]
                     if jugadores:
                         print("Jugadores encontrados: ")
                         for jugador_expresion in filtrar_jugadores:
                             print(json.dumps(jugador_expresion, indent=4))
-                        opcion = input("Desea realizar otra consulta? (SI/NO): ")
-                        if opcion.lower() != 'si':
+                        option = input("Desea realizar otra consulta? (SI/NO): ")
+                        if option.lower() != 'si':
                             print("Volviendo al menu anterior...")
                             time.sleep(2)
                             break
@@ -216,8 +220,8 @@ class Menu:
         while True:
             print("IMPORTANTE: Deben ser solo NUMEROS, (Ej: 10, 20, 2)")
             try:
-                filtrar = int(input("Ingrese los reconocimientos que desea filtrar de los jugadores(SI desea volver al menu anterior digite (000):: "))
-                if filtrar == 000:
+                filter = int(input("Ingrese los reconocimientos que desea filtrar de los jugadores(SI desea volver al menu anterior digite (000):: "))
+                if filter == 000:
                     return()
             except ValueError:
                 print("Error: Debe ingresar un NUMERO entero")
@@ -227,7 +231,7 @@ class Menu:
                 with open("jugadores.json", "r") as jugadores_file:
                     jugadores = json.load(jugadores_file)
                     # esta primera (jugador_expresion) es una variable de iteracion que se utiliza para recorrer cada elemento de la lista jugadores.
-                    filtrar_jugadores = [jugador_expresion for jugador_expresion in jugadores if jugador_expresion["reconocimientos"] == filtrar]
+                    filtrar_jugadores = [jugador_expresion for jugador_expresion in jugadores if jugador_expresion["Reconocimientos"] == filter]
                     if jugadores:
                         print("Jugadores encontrados: ")
                         for jugador_expresion in filtrar_jugadores:
@@ -669,9 +673,9 @@ class Menu:
 
             jugador_existente = False
             for jugador in ver_nombre:
-                if jugador["nombre"] == preguntar_nombre:
+                if jugador["Nombre"] == preguntar_nombre:
                     for jugadorr in ver_ID:
-                        if jugadorr["Jugador"] == preguntar_nombre:
+                        if jugadorr["Jugador_id"] == preguntar_nombre:
                             jugador_existente = True
 # En vez de key y value puede ser cualquier parametro, para mas legibilidad asi, tambien podria ser (for nombre, informacion in jugador.items():
                             print("\nInformacion del jugador:")
@@ -692,8 +696,6 @@ class Menu:
                     print("\nVolviendo al gestor de jugadores...")
                     time.sleep(2)
                     return ()
-
-
 
     def modificar_datos_jugador(self):
         while True:
@@ -1003,7 +1005,7 @@ class Menu:
 
 #CONSULTAS AVANZADAS #CONSULTAS AVANZADAS #CONSULTAS AVANZADAS #CONSULTAS AVANZADAS #CONSULTAS AVANZADAS
 
-    def Mostrar_cantidad_jugadores_mismo_origen(self):
+    def mostrar_cantidad_jugadores_mismo_origen(self):
         while True:
             origen_buscar = input("Ingrese el origen para mostrar la cantidad de jugadores: ")
 
@@ -1030,7 +1032,7 @@ class Menu:
                 time.sleep(2)
                 return()
 
-    def Mostrar_todos_los_jugadores_que_se_encuentren_en_un_rango_de_edad(self):
+    def mostrar_todos_los_jugadores_que_se_encuentren_en_un_rango_de_edad(self):
         while True:
 
             edad_buscar = int(input("Ingrese la edad para mostrar la cantidad de jugadores: "))
@@ -1058,10 +1060,10 @@ class Menu:
                 time.sleep(2)
                 return()
 
-    def Mostrar_cantidad_jugadores_con_misma_altura_y_tienen_referencia_al_genero_de_cada_uno(self):
+    def mostrar_cantidad_jugadores_con_misma_altura_y_tienen_referencia_al_genero_de_cada_uno(self):
         pass
 
-    def Mostrar_los_jugadores_de_club_específico(self):
+    def mostrar_los_jugadores_de_club_específico(self):
         while True:
             preguntar_club = input("Ingrese el nombre del club que desea saber que jugadores pertenecen: ")
 
@@ -1087,7 +1089,7 @@ class Menu:
                 time.sleep(2)
                 return()
 
-    def Mostrar_cantidad_jugadores_acuerdo_con_la_posición_en_el_campo_considerando_unicamente_los_de_género_femenino(self):
+    def mostrar_cantidad_jugadores_acuerdo_con_la_posición_en_el_campo_considerando_unicamente_los_de_género_femenino(self):
         while True:
             print("Recuerde son JUGADORAS, en vez de DELANTERO, sera DELANTERA")
             preguntar_posicion = input("Ingrese la posicion en el campo(SE CONSIDERA UNICAMENTE EL GENERO FEMENINO): ")
@@ -1112,13 +1114,13 @@ class Menu:
                 time.sleep(2)
                 return()
 
-    def Mostrar_top_diez_jugadores_mayor_altura_con_mejor_agilidad_la_información_muestra_nombre_genero_origen_altura_agilidad(self):
+    def mostrar_top_diez_jugadores_mayor_altura_con_mejor_agilidad_la_información_muestra_nombre_genero_origen_altura_agilidad(self):
         pass
 
-    def Mostrar_cantidad_jugadores_cuya_velocidad_este_en_un_rango_específico(self):
+    def dostrar_cantidad_jugadores_cuya_velocidad_este_en_un_rango_específico(self):
         pass
 
-    def Determinar_promedio_control_balon_para_jugadores_en_una_posición_específica(self):
+    def determinar_promedio_control_balon_para_jugadores_en_una_posición_específica(self):
         pass
 
 
