@@ -394,3 +394,33 @@ menu.main()
         "Regates": 96,
         "Control de balon": 96
     },
+
+            # # Solicitar al usuario el nombre del jugador
+        # nombre_jugador = input("Ingrese el nombre del jugador: ")
+        #
+        # with open('jugadores.json', "r") as f:
+        #     jugadores = json.load(f)
+        # with open('estadistica_jugador.json', "r") as f:
+        #     estadisticas = json.load(f)
+        #
+        # # Buscar el jugador por nombre
+        # jugador_encontrado = None
+        # for jugador in jugadores:
+        #     if jugador['Nombre'] == nombre_jugador:
+        #         jugador_encontrado = jugador
+        #         break
+        #
+        # # Si no se encuentra el jugador, imprimir un mensaje y salir
+        # if jugador_encontrado is None:
+        #     print("El jugador no se encuentra en la base de datos.")
+        #     return
+        #
+        # # Buscar las estadísticas del jugador por su ID
+        # for estadistica in estadisticas:
+        #     if estadistica['Jugador_id'] == jugador_encontrado['id']:
+        #         print("Estadísticas de", nombre_jugador)
+        #         print(json.dumps(estadistica, indent=4))
+        #         return
+        #
+        # # Si no se encuentran las estadísticas del jugador, imprimir un mensaje
+        # print("No se encontraron estadísticas para este jugador.")

@@ -162,8 +162,13 @@ class Menu:
             except ValueError:
                 print("Error: Debe ingresar un numero entero")
 
-    def validate_string_input(self):
-        pass
+    def validate_string_input(prompt):
+        while True:
+            input_string = input(prompt)
+            if not input_string.replace(" ", "").isalpha() or not input_string.istitle():
+                print("Error: Deben ser solo LETRAS, ademas ambas iniciales deben empezar con MAYUSCULAS")
+                continue
+            return input_string
 
     def validate_players_json(self):
         try:
@@ -262,7 +267,7 @@ class Menu:
                 if not self.validate_players_json():
                     break
                 players = self.load_players_json()
-                # esta primera (jugador_expresion) es una variable de iteracion que se utiliza para recorrer cada elemento de la lista jugadores.
+#esta primera (jugador_expresion) es una variable de iteracion que se utiliza para recorrer cada elemento de la lista jugadores.
                 filter_player = [player_expression for player_expression in players if player_expression["Reconocimientos"] == filter]
                 if players:
                     print("Jugadores encontrados: ")
@@ -277,63 +282,52 @@ class Menu:
 
 #Visualizar estadisticas jugadores #Visualizar estadisticas jugadores #Visualizar estadisticas jugadores #Visualizar estadisticas jugadores #Visualizar estadisticas jugadores
     def view_player_statistics(self):
+        while True:
+            name_player = Menu.validate_string_input("Ingrese el nombre del jugador: ")
 
-        name_player = input("Ingrese el nombre del jugador")
+            players = self.load_players_json()
+            statistics = self.load_statistics_json()
 
-        players = self.load_players_json()
-        statistics = self.load_statistics_json()
+            player_found = None
+            for player in players:
+                if player["Nombre"] == name_player:
+                    player_found = player
+                    break
 
+            if player_found is None:
+                print("El jugador no se encuentra en la base de datos")
+                if not self.back_to_menu():
+                    break
 
+            found_statistics = False
+            for statistic in statistics:
+                if statistic['Jugador_id'] == player_found['id']:
+                    print("Estadisticas de", name_player)
+                    print(json.dumps(statistic, indent=4))
+                    found_statistics = True
+                    if not self.back_to_menu():
+                        return
 
-
-        # # Solicitar al usuario el nombre del jugador
-        # nombre_jugador = input("Ingrese el nombre del jugador: ")
-        #
-        # with open('jugadores.json', "r") as f:
-        #     jugadores = json.load(f)
-        # with open('estadistica_jugador.json', "r") as f:
-        #     estadisticas = json.load(f)
-        #
-        # # Buscar el jugador por nombre
-        # jugador_encontrado = None
-        # for jugador in jugadores:
-        #     if jugador['Nombre'] == nombre_jugador:
-        #         jugador_encontrado = jugador
-        #         break
-        #
-        # # Si no se encuentra el jugador, imprimir un mensaje y salir
-        # if jugador_encontrado is None:
-        #     print("El jugador no se encuentra en la base de datos.")
-        #     return
-        #
-        # # Buscar las estadísticas del jugador por su ID
-        # for estadistica in estadisticas:
-        #     if estadistica['Jugador_id'] == jugador_encontrado['id']:
-        #         print("Estadísticas de", nombre_jugador)
-        #         print(json.dumps(estadistica, indent=4))
-        #         return
-        #
-        # # Si no se encuentran las estadísticas del jugador, imprimir un mensaje
-        # print("No se encontraron estadísticas para este jugador.")
-
+            if not found_statistics:
+                print("No se encontraron las estadisticas de este jugador", name_player)
+                if not self.back_to_menu():
+                    break
     def compare_statistics(self):
         while True:
             while True:
-                nombre1 = input("Ingrese el nombre del primer jugador, si desea volver al menu anterior digite (salir): ")
-                if nombre1.lower() == "salir":
-                    print("Volviendo al menu anterior")
-                    time.sleep(2)
+                name1 = input("Ingrese el nombre del primer jugador, si desea volver al menu anterior digite (salir): ")
+                if name1.lower() == "exit":
                     return
 
-                if not nombre1.replace(" ", "").isalpha() or not nombre1.istitle():
+                if not name1.replace(" ", "").isalpha() or not name1.istitle():
                     print("Error: El nombre de jugador debe iniciar con MAYUSCULA y solo se permiten letras.")
                     continue
                 else:
                     break
 
             while True:
-                nombre2 = input("Ingrese el nombre del segundo jugador: ")
-                if not nombre2.replace(" ", "").isalpha() or not nombre2.istitle():
+                name2 = input("Ingrese el nombre del segundo jugador: ")
+                if not name2.replace(" ", "").isalpha() or not name2.istitle():
                     print("Error: El nombre de jugador debe iniciar con MAYUSCULA y solo se permiten letras.")
                     continue
                 else:
@@ -342,31 +336,31 @@ class Menu:
             with open("jugadores.json", "r") as file:
                 estadistica = json.load(file)
 
-            jugador1 = None
-            jugador2 = None
+            player1 = None
+            player2 = None
 
             for jugador in estadistica:
-                if jugador["Nombre"] == nombre1:
-                    jugador1 = jugador
-                elif jugador["Nombre"] == nombre2:
-                    jugador2 = jugador
+                if jugador["Nombre"] == name1:
+                    player1 = jugador
+                elif jugador["Nombre"] == name2:
+                    player2 = jugador
 
-            if jugador1 is None or jugador2 is None:
+            if player1 is None or player2 is None:
                 print("Uno o ambos jugadores no se encontraron, intentelo de nuevo.")
                 if not self.back_to_menu():
                     break
                 continue
 
-            if jugador1["Posicion en campo"] != jugador2["Posicion en campo"]:
+            if player1["Posicion en campo"] != player2["Posicion en campo"]:
                 print("Los jugadores no poseen la misma posicion de campo y no son comparables")
                 if not self.back_to_menu():
                     break
                 continue
 
             print("\nEstadisticas del primer jugador: ")
-            print(json.dumps(jugador1, indent=4))
+            print(json.dumps(player1, indent=4))
             print("\nEstadisticas del segundo jugador: ")
-            print(json.dumps(jugador2, indent=4))
+            print(json.dumps(player2, indent=4))
             if not self.back_to_menu():
                 break
 #Gestion de jugadores Gestion de jugadores Gestion de jugadores Gestion de jugadores
