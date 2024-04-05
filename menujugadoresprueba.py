@@ -279,28 +279,36 @@ class Menu:
 #Visualizar estadisticas jugadores #Visualizar estadisticas jugadores #Visualizar estadisticas jugadores #Visualizar estadisticas jugadores #Visualizar estadisticas jugadores
     def view_player_statistics(self):
         while True:
-            jugador_encontrado = False
+            player_found = False
             while True:
-                nombre_jugador = input("Ingrese el nombre del jugador cuyas estadisticas desea ver: ")
-                if not nombre_jugador.replace(" ", "").isalpha() or not nombre_jugador.istitle():
+                name_player = input("Ingrese el nombre del jugador cuyas estadisticas desea ver: ")
+                if not name_player.replace(" ", "").isalpha() or not name_player.istitle():
                     print("Error: El nombre de jugador debe iniciar con MAYUSCULA y solo se permiten letras.")
                     continue
                 else:
                     break
+            while True:
+                player_id = input("Ingrese el ID del jugador")
+                if not player_id.isnumeric():
+                    print("Error: El ID del jugador debe ser un numero entero")
+                    continue
+                else:
+                    break
 
-            if not self.validate_statistics_json():
+            if not self.validate_statistics_json or not self.validate_players_json():
                 break
             statistics = self.load_statistics_json()
+            players = self.load_players_json()
 
-            for nombre in statistics():
-                if nombre["Jugador"] == nombre_jugador:
-                    jugador_encontrado = True
+            for player in players:
+                if player["Jugador_id"] == int(player_id) and player["Nombre"] == name_player:
+                    player_found = True
                     print("\nEstadisticas de Jugador: ")
-                    print(json.dumps(nombre, indent=4))
+                    print(json.dumps(player, indent=4))
                     if not self.back_to_menu():
                         break
 
-            if not jugador_encontrado:
+            if not player_found:
                 print("El jugador no fue encontrado o no existe.")
                 if not self.back_to_menu():
                     break
