@@ -106,13 +106,13 @@ class Menu:
 
             option = input("Seleccione una opcion y digitela: ")
             if option == "1":
-                self.mostrar_cantidad_jugadores_mismo_origen()
+                self.show_number_player_same_origen()
             if option == "2":
-                self.mostrar_todos_los_jugadores_que_se_encuentren_en_un_rango_de_edad()
+                self.show_all_players_in_an_age_range()
             if option == "3":
-                self.mostrar_cantidad_jugadores_con_misma_altura_y_tienen_referencia_al_genero_de_cada_uno()
+                self.show_number_players_with_same_height_and_reference_to_gender_each_one()
             if option == "4":
-                self.mostrar_los_jugadores_de_club_específico()
+                self.show_all_players_in_a_specific_club()
             if option == "5":
                 self.mostrar_cantidad_jugadores_acuerdo_con_la_posición_en_el_campo_considerando_unicamente_los_de_género_femenino()
             if option == "6":
@@ -932,7 +932,7 @@ class Menu:
 
 #CONSULTAS AVANZADAS #CONSULTAS AVANZADAS #CONSULTAS AVANZADAS #CONSULTAS AVANZADAS #CONSULTAS AVANZADAS
 
-    def mostrar_cantidad_jugadores_mismo_origen(self):
+    def show_number_player_same_origen(self):
         while True:
             origen_buscar = input("Ingrese el origen para mostrar la cantidad de jugadores: ")
 
@@ -956,17 +956,16 @@ class Menu:
             if not self.back_to_menu():
                 break
 
-    def mostrar_todos_los_jugadores_que_se_encuentren_en_un_rango_de_edad(self):
+    def show_all_players_in_an_age_range(self):
         while True:
             edad_buscar = int(input("Ingrese la edad para mostrar la cantidad de jugadores: "))
-
             with open("jugadores", "r") as file:
                 jugadores = json.load(file)
 
             jugadores_misma_edad = {}
 
             for jugador in jugadores:
-                if jugador["edad"] == edad_buscar:
+                if jugador["Edad"] == edad_buscar:
                     if edad_buscar in jugadores_misma_edad:
                         jugadores_misma_edad[edad_buscar] += 1
                     else:
@@ -976,14 +975,13 @@ class Menu:
                 print(f"La cantidad de jugadores de la edad de {edad_buscar}: {jugadores_misma_edad.get(edad_buscar)}")
             else:
                 print(f"No se encontraron los jugadores provenientes de {edad_buscar}")
-
             if not self.back_to_menu():
                 break
 
-    def mostrar_cantidad_jugadores_con_misma_altura_y_tienen_referencia_al_genero_de_cada_uno(self):
+    def show_number_players_with_same_height_and_reference_to_gender_each_one(self):
         pass
 
-    def mostrar_los_jugadores_de_club_específico(self):
+    def show_all_players_in_a_specific_club(self):
         while True:
             preguntar_club = input("Ingrese el nombre del club que desea saber que jugadores pertenecen: ")
 
@@ -1009,8 +1007,9 @@ class Menu:
                 time.sleep(2)
                 return()
 
-    def mostrar_cantidad_jugadores_acuerdo_con_la_posición_en_el_campo_considerando_unicamente_los_de_género_femenino(self):
+    def show_number_of_players_accordance_position_on_field_considering_only_gender_female(self):
         while True:
+
             print("Recuerde son JUGADORAS, en vez de DELANTERO, sera DELANTERA")
             preguntar_posicion = input("Ingrese la posicion en el campo(SE CONSIDERA UNICAMENTE EL GENERO FEMENINO): ")
 
@@ -1037,6 +1036,7 @@ class Menu:
     def mostrar_top_diez_jugadores_mayor_altura_con_mejor_agilidad_la_información_muestra_nombre_genero_origen_altura_agilidad(self):
         pass
 
+        show_top_ten_players_highest_with_best_agility_information_
     def dostrar_cantidad_jugadores_cuya_velocidad_este_en_un_rango_específico(self):
         pass
 
