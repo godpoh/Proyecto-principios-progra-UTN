@@ -206,11 +206,7 @@ class Menu:
     def filter_by_field_position(self):
         while True:
             print("IMPORTANTE: Deben ser solo LETRAS, ademas ambas iniciales deben empezar con MAYUSCULAS ej: Delantero o Extremo Derecho.")
-            filter = input("Ingrese la posicion que desea filtrar de los jugadores,(SI desea volver al menu anterior digite (EXIT): ")
-            if filter.lower() == "exit":
-                return
-            if not filter.replace(" ","").isalpha() or not filter.istitle():
-                continue
+            filter = Menu.validate_string_input("Ingrese la posicion que desea filtrar de los jugadores: ")
             try:
                 if not self.validate_players_json():
                     break
@@ -231,11 +227,7 @@ class Menu:
     def filter_by_origen(self):
         while True:
             print("IMPORTANTE: Deben ser solo LETRAS, ademas ambas iniciales deben empezar con MAYUSCULAS ej: Belgica o Costa Rica.")
-            filter = input("Ingrese el pais de origen que desea filtrar de los jugadores,(SI desea volver al menu anterior digite (EXIT): ")
-            if filter.lower() == "exit":
-                return
-            if not filter.replace(" ","").isalpha() or not filter.istitle():
-                continue
+            filter = Menu.validate_string_input("Ingrese el pais de origen que desea filtrar de los jugadores: ")
             try:
                 if not self.validate_players_json():
                     break
@@ -257,9 +249,7 @@ class Menu:
         while True:
             print("IMPORTANTE: Deben ser solo NUMEROS, (Ej: 10, 20, 2)")
             try:
-                filter = int(input("Ingrese los reconocimientos que desea filtrar de los jugadores(SI desea volver al menu anterior digite (000):: "))
-                if filter == 000:
-                    return
+                filter = int(input("Ingrese los reconocimientos que desea filtrar de los jugadores: "))
             except ValueError:
                 print("Error: Debe ingresar un NUMERO entero")
                 continue
@@ -314,24 +304,8 @@ class Menu:
                     break
     def compare_statistics(self):
         while True:
-            while True:
-                name1 = input("Ingrese el nombre del primer jugador, si desea volver al menu anterior digite (salir): ")
-                if name1.lower() == "exit":
-                    return
-
-                if not name1.replace(" ", "").isalpha() or not name1.istitle():
-                    print("Error: El nombre de jugador debe iniciar con MAYUSCULA y solo se permiten letras.")
-                    continue
-                else:
-                    break
-
-            while True:
-                name2 = input("Ingrese el nombre del segundo jugador: ")
-                if not name2.replace(" ", "").isalpha() or not name2.istitle():
-                    print("Error: El nombre de jugador debe iniciar con MAYUSCULA y solo se permiten letras.")
-                    continue
-                else:
-                    break
+            name1 = Menu.validate_string_input("Ingrese el nombre del primer jugador: ")
+            name2 = Menu.validate_string_input("Ingrese el nombre del segundo jugador: ")
 
             with open("jugadores.json", "r") as file:
                 estadistica = json.load(file)
@@ -367,21 +341,14 @@ class Menu:
     def insert_new_player(self):
         while True:
             # Solicitar al usuario que ingrese los datos del nuevo jugador
-            nombre_jugador = input("Ingrese el nombre del jugador que desea ingresar (Ej: Lionel Andres Messi) o (SALIR, regresar al menu de gestion): ")
-
-            if nombre_jugador.lower() == "salir":
-                return
-
-            if not nombre_jugador.replace(" ", "").isalpha() or not nombre_jugador.istitle():
-                print("\nError: El nombre debe contener solo letras y comenzar con mayuscula Ej: Lionel Andres.")
-                continue
+            nombre_jugador = Menu.validate_string_input("Ingrese el nombre del jugador que desea ingresar (Ej: Lionel Andres Messi): ")
 
             with open("jugadores.json", "r") as jugadores_file:
                 jugadores_no_repetir_nombre = json.load(jugadores_file)
 
             nombre_existente = False
             for jugador in jugadores_no_repetir_nombre:
-                if jugador.get("nombre") == nombre_jugador:
+                if jugador.get("Nombre") == nombre_jugador:
                     nombre_existente = True
 
             if nombre_existente:
@@ -400,18 +367,10 @@ class Menu:
                 else:
                     print("Error: El formato de la fecha de nacimiento no es válido. Debe ser en el formato 'dd de mes de año'. Por ejemplo, '28 de octubre de 1991'.")
 
-            while True:
-                origen = input("Ingrese el origen del jugador (Ej: Costa Rica): ")
-                if not origen.replace(" ", "").isalpha() or not origen.istitle():
-                    print("\nError: El nombre debe contener solo letras y debe empezar con mayuscula.")
-                    continue
-                else:
-                    break
+            origen = Menu.validate_int_input("Ingrese el origen del jugador (Ej: Costa Rica): ")
 
             while True:
-                genero = input("Ingrese el género del jugador (Masculino/Femenino/Otro): ")
-                if not genero.isalpha():
-                    print("\nError: El genero debe contener solo letras")
+                genero = Menu.validate_int_input("Ingrese el género del jugador (Masculino/Femenino/Otro): ")
                 if not (genero == "Masculino" or genero == "Femenino" or genero == "Otro"):
                     print("\nError: Debe ser Masculino o Femenino")
                     continue
@@ -442,17 +401,8 @@ class Menu:
                     print("Error: Ingrese solo NUMEROS decimales o enteros en el formato adecuado (Ej: 82.5 o 90 KGS)")
                     continue
 
-            posicion_campo = input("Ingrese la posición en el campo del jugador (Ej: Delantero): ")
-            if not posicion_campo.isalpha() and not posicion_campo.istitle():
-                print("\nError: El campo debe ser en letras y las iniciales MAYUSCULAS ej: Delantero o Extremo Derecho.")
-                continue
-
-            club_militante = input("Ingrese el club militante del jugador (Ej: Inter Miami): ")
-            if club_militante.replace(" ", "").isalpha() and club_militante.istitle():
-                pass
-            else:
-                print("\nError: Debe contener solo letras.")
-                continue
+            posicion_campo = Menu.validate_int_input("Ingrese la posición en el campo del jugador (Ej: Delantero): ")
+            club_militante = Menu.validate_int_input("Ingrese el club militante del jugador (Ej: Inter Miami): ")
 
             reconocimientos = input("Ingrese los reconocimientos del jugador (Ej: 13): ")
             try:
@@ -488,7 +438,7 @@ class Menu:
                     print("\nError: El nombre del jugador debe de ser el mismo")
                     continue
                 break
-            aceleracion = Menu.validate_int_input("Ingrese la aceleracion del jugador (Ej: 42-99): ",42, 49)
+            aceleracion = Menu.validate_int_input("Ingrese la aceleracion del jugador (Ej: 42-99): ",42, 99)
             pases_cortos = Menu.validate_int_input("Ingrese la estadistica de pases cortos del jugador(Ej: 42-99): ", 42, 99)
             potencia_tiro = Menu.validate_int_input("Ingrese la potencia de tiro del jugador (Ej: 42-99): ", 42, 99)
             pases_largos = Menu.validate_int_input("Ingrese la estadistica de pases largos del jugador(Ej: 42-99): ", 42, 99)
@@ -600,19 +550,11 @@ class Menu:
 
             print("\nIMPORTANTE: El NOMBRE del jugador DEBE ser EXACTO (Ej: Lionel Andres Messi)...")
 
-            pedir_nombre_jugador = input("Ingrese el nombre del jugador que desea modificar(SI desea volver al menu anterior digite EXIT): ")
-            if pedir_nombre_jugador.lower() == "exit":
-                print("Volviendo al menu anterior...")
-                time.sleep(2)
-                return ()
-
-            if not pedir_nombre_jugador.replace(" ","").isalpha():
-                print("El nombre del jugador debe ser en LETRAS y el ID del jugador en NUMEROS...")
-                continue
+            pedir_nombre_jugador = Menu.validate_int_input("Ingrese el nombre del jugador que desea modificar: ")
 
             nombre_existente = False
             for nombre in informacion_jugadores:
-                if nombre["nombre"] == pedir_nombre_jugador:
+                if nombre["Nombre"] == pedir_nombre_jugador:
                     for jugadorr in estadisticas_jugadores:
                         if jugadorr["Jugador"] == pedir_nombre_jugador:
                             nombre_existente = True
@@ -620,13 +562,8 @@ class Menu:
                             print(json.dumps(nombre, indent=4))
                             print("\nInformacion estadistica del jugador:")
                             print(json.dumps(jugadorr, indent=4))
-                            while True:
-                                nuevo_nombre = input("Ingrese el nuevo nombre, si no desea cambiar este dato digite el mismo dato: ")
-                                if not nuevo_nombre.replace(" ", "").isalpha() or not nuevo_nombre.istitle():
-                                    print("\nError: El nombre debe contener solo letras y debe empezar con mayuscula.")
-                                    continue
-                                else:
-                                    break
+
+                            nuevo_nombre = Menu.validate_int_input("Ingrese el nuevo nombre, si no desea cambiar este dato digite el mismo dato: ")
 
                             while True:
                                 nueva_fecha_nacimiento = input("Ingrese la nueva fecha de nacimiento, si no desea cambiar este dato digite el mismo dato: ")
@@ -670,21 +607,9 @@ class Menu:
                                     print("Error: Ingrese solo números decimales en el formato adecuado (Ej: 72, 72.5 KGS)")
                                     continue
 
-                            while True:
-                                nueva_posicion_campo = input("Ingrese la nueva posicion de campo, si no desea cambiar este dato digite el mismo dato: ")
-                                if not nueva_posicion_campo.replace(" ", "").isalpha or not nueva_posicion_campo.istitle():
-                                    print("Error: Debe empezar con MAYUSCULA y deben ser solo letras ")
-                                    continue
-                                else:
-                                    break
+                            nueva_posicion_campo = Menu.validate_int_input("Ingrese la nueva posicion de campo, si no desea cambiar este dato digite el mismo dato: ")
 
-                            while True:
-                                nuevo_club_militante = input("Ingrese el nuevo club militante, si no desea cambiar este dato digite el mismo dato: ")
-                                if not nuevo_club_militante.replace(" ", "").isalpha() or not nuevo_club_militante.istitle():
-                                    print("Error: Debe empezar con MAYUSCULA y deben ser solo letras ")
-                                    continue
-                                else:
-                                    break
+                            nuevo_club_militante = Menu.validate_int_input("Ingrese el nuevo club militante, si no desea cambiar este dato digite el mismo dato: ")
 
                             while True:
                                 nuevo_reconocimiento = input("Ingrese el nuevo(s) reconocimientos, si no desea cambiar este dato digite el mismo dato: ")
@@ -743,17 +668,7 @@ class Menu:
                                 else:
                                     break
 
-                            while True:
-                                nueva_potencia_tiro = input("Ingrese la nueva estadistica de potencia de tiro, si no desea cambiar este dato digite el mismo dato: ")
-                                if not nueva_potencia_tiro.isnumeric() or nueva_potencia_tiro.isalpha():
-                                    print("Error: Debe ser NUMEROS enteros")
-                                    continue
-                                nueva_potencia_tiro = int(nueva_potencia_tiro)
-                                if nueva_potencia_tiro < 42 or nueva_potencia_tiro > 99:
-                                    print("\nError: El valor no DEBE ser MENOR a 42 y MAYOR a 99")
-                                    continue
-                                else:
-                                    break
+                            nueva_potencia_tiro = self.validate_int_input("Ingrese la nueva estadistica de potencia de tiro, si no desea cambiar este dato digite el mismo dato: ",42, 49)
 
                             while True:
                                 nuevo_pases_largos = input("Ingrese la nueva estadistica de pases largos, si no desea cambiar este dato digite el mismo dato: ")
