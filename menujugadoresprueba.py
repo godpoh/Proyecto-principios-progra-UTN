@@ -32,15 +32,14 @@ class Menu:
             print("5-Regresar al menu principal")
             print("--------------------------------------------")
             option = input("Ingrese el digito de la opcion(1-5): ")
-
             if option == '1':
-                self.insertar_nuevo_jugador()
+                self.insert_new_player()
             elif option == '2':
-                self.leer_informacion_jugador()
+                self.read_player_information()
             elif option == '3':
-                self.modificar_datos_jugador()
+                self.modify_player_data()
             elif option == '4':
-                self.eliminar_jugador()
+                self.remove_player()
             elif option == '5':
                 print("Volviendo al menu principal")
                 time.sleep(2)
@@ -59,16 +58,13 @@ class Menu:
             print("----------------------------------------------------------")
 
             option = input("Ingrese el numero de la opcion deseada: ")
-
             if option == '1':
-                self.filtrar_por_posicion_campo()
+                self.filter_by_field_posicion()
             elif option == '2':
-                self.filtrar_por_origen()
+                self.filter_by_origen()
             elif option == '3':
-                self.filtrar_por_reconocimientos()
+                self.filter_by_recognitions()
             elif option == '4':
-                self.visualizar_todos_jugadores()
-            elif option == '5':
                 print("Volviendo al menu principal")
                 time.sleep(2)
                 return
@@ -83,13 +79,10 @@ class Menu:
             print("3-Volver al menu principal")
 
             option = input("Seleccione una opcion y digitela: ")
-
             if option == '1':
-                self.ver_estadisticas_jugador()
-
+                self.view_player_statistics()
             elif option == '2':
-                self.comparar_estadisticas()
-
+                self.compare_statistics()
             elif option == '3':
                 print("Volviendo al menu principal")
                 time.sleep(2)
@@ -112,7 +105,6 @@ class Menu:
             print("--------------------------------------------------------------------------------------------------------------------")
 
             option = input("Seleccione una opcion y digitela: ")
-
             if option == "1":
                 self.mostrar_cantidad_jugadores_mismo_origen()
             if option == "2":
@@ -132,7 +124,7 @@ class Menu:
             if option == "9":
                 print("Volviendo al menu principal...")
                 time.sleep(2)
-                return()
+                return
 
     def exit(self):
         print("Saliendo del sistema.")
@@ -150,7 +142,7 @@ class Menu:
                 time.sleep(1)
 
     def back_to_menu(self):
-        option = input("Desea realizar otra consulta? (SI/NO): ")
+        option = input("Desea realizar otra accion? (SI/NO): ")
         if option.lower() != 'si':
             print("Volviendo al menu anterior...")
             time.sleep(2)
@@ -158,7 +150,7 @@ class Menu:
         return True
 
 #visualizar_lista_jugadores #visualizar_lista_jugadores #visualizar_lista_jugadores #visualizar_lista_jugadores #visualizar_lista_jugadores
-    def filtrar_por_posicion_campo(self):
+    def filter_by_field_posicion(self):
         while True:
             print("IMPORTANTE: Deben ser solo LETRAS, ademas ambas iniciales deben empezar con MAYUSCULAS ej: Delantero o Extremo Derecho.")
             filter = input("Ingrese la posicion que desea filtrar de los jugadores,(SI desea volver al menu anterior digite (EXIT): ")
@@ -185,13 +177,12 @@ class Menu:
             except json.decoder.JSONDecodeError:
                 print("El archivo jugadores.json no contiene datos legibles")
 
-    def filtrar_por_origen(self):
+    def filter_by_origen(self):
         while True:
-            print(
-                "IMPORTANTE: Deben ser solo LETRAS, ademas ambas iniciales deben empezar con MAYUSCULAS ej: Belgica o Costa Rica.")
+            print("IMPORTANTE: Deben ser solo LETRAS, ademas ambas iniciales deben empezar con MAYUSCULAS ej: Belgica o Costa Rica.")
             filter = input("Ingrese el pais de origen que desea filtrar de los jugadores,(SI desea volver al menu anterior digite (EXIT): ")
             if filter.lower() == "exit":
-                return()
+                return
             if not filter.replace(" ","").isalpha() or not filter.istitle():
                 continue
             try:
@@ -203,10 +194,7 @@ class Menu:
                         print("Jugadores encontrados: ")
                         for jugador_expresion in filtrar_jugadores:
                             print(json.dumps(jugador_expresion, indent=4))
-                        option = input("Desea realizar otra consulta? (SI/NO): ")
-                        if option.lower() != 'si':
-                            print("Volviendo al menu anterior...")
-                            time.sleep(2)
+                        if not self.back_to_menu():
                             break
                     else:
                         print("No se encontraron jugadores del origen especificido")
@@ -216,7 +204,7 @@ class Menu:
             except json.decoder.JSONDecodeError:
                 print("El archivo jugadores.json no contiene datos legibles")
 
-    def filtrar_por_reconocimientos(self):
+    def filter_by_recognitions(self):
         while True:
             print("IMPORTANTE: Deben ser solo NUMEROS, (Ej: 10, 20, 2)")
             try:
@@ -226,7 +214,6 @@ class Menu:
             except ValueError:
                 print("Error: Debe ingresar un NUMERO entero")
                 continue
-
             try:
                 with open("jugadores.json", "r") as jugadores_file:
                     jugadores = json.load(jugadores_file)
@@ -236,40 +223,17 @@ class Menu:
                         print("Jugadores encontrados: ")
                         for jugador_expresion in filtrar_jugadores:
                             print(json.dumps(jugador_expresion, indent=4))
-                        opcion = input("Desea realizar otra consulta? (SI/NO): ")
-                        if opcion.lower() != 'si':
-                            print("Volviendo al menu anterior...")
-                            time.sleep(2)
+                        if not self.back_to_menu():
                             break
                     else:
                         print("No se encontraron jugadores con los reconocimientos especificidos")
-
             except FileNotFoundError:
                 print("No existe el archivo")
             except json.decoder.JSONDecodeError:
                 print("El archivo jugadores.json no contiene datos legibles")
 
-    def visualizar_todos_jugadores(self):
-        try:
-            with open("jugadores.json", "r") as file:
-                jugadores_datos = json.load(file)
-                print(json.dumps(jugadores_datos, indent=4))
-        except FileNotFoundError:
-            print("El archivo 'jugadores.json' no se encontró.")
-        except json.JSONDecodeError:
-            print("El archivo 'jugadores.json' no contiene datos JSON válidos.")
-        while True:
-            opcion = input("Para volver al menu anterior digite (exit): ")
-            if opcion.lower() == 'exit':
-                print("Volviendo al menu.")
-                time.sleep(2)
-                return
-            else:
-                print("Por favor, digite (exit).")
-
 #Visualizar estadisticas jugadores #Visualizar estadisticas jugadores #Visualizar estadisticas jugadores #Visualizar estadisticas jugadores #Visualizar estadisticas jugadores
-
-    def ver_estadisticas_jugador(self):
+    def view_player_statistics(self):
         while True:
             jugador_encontrado = False
             while True:
@@ -288,32 +252,21 @@ class Menu:
                     jugador_encontrado = True
                     print("\nEstadisticas de Jugador: ")
                     print(json.dumps(nombre, indent=4))
-
-                    opcion = input("Desea consultar a otro jugador?(SI/NO): ")
-                    if opcion.lower() != "si":
-                        print("Volviendo al menu anterior")
-                        time.sleep(2)
-                        return ()
-                    else:
+                    if not self.back_to_menu():
                         break
 
             if not jugador_encontrado:
                 print("El jugador no fue encontrado o no existe.")
-                opcion = input("Desea consultar a otro jugador?(SI/NO): ")
-                if opcion.lower() != "si":
-                    print("Volviendo al menu anterior")
-                    time.sleep(2)
-                    return ()
-
-    def comparar_estadisticas(self):
+                if not self.back_to_menu():
+                    break
+    def compare_statistics(self):
         while True:
             while True:
-                nombre1 = input("Ingrese el nombre del primer jugador, si desea volver al menu anterior digite (EXIT): ")
-
+                nombre1 = input("Ingrese el nombre del primer jugador, si desea volver al menu anterior digite (salir): ")
                 if nombre1.lower() == "salir":
                     print("Volviendo al menu anterior")
                     time.sleep(2)
-                    return()
+                    return
 
                 if not nombre1.replace(" ", "").isalpha() or not nombre1.istitle():
                     print("Error: El nombre de jugador debe iniciar con MAYUSCULA y solo se permiten letras.")
@@ -336,53 +289,37 @@ class Menu:
             jugador2 = None
 
             for jugador in estadistica:
-                if jugador["nombre"] == nombre1:
+                if jugador["Nombre"] == nombre1:
                     jugador1 = jugador
-                elif jugador["nombre"] == nombre2:
+                elif jugador["Nombre"] == nombre2:
                     jugador2 = jugador
 
             if jugador1 is None or jugador2 is None:
-                print("Uno o ambos jugadores no se encontraron, intente de nuevo")
-                opcion = input("Desea hacer otra comparacion?(SI/NO): ")
-                if opcion.lower() != "si":
-                    print("Volviendo al menu anterior")
-                    time.sleep(2)
-                    return ()
-
+                print("Uno o ambos jugadores no se encontraron, intentelo de nuevo.")
+                if not self.back_to_menu():
+                    break
                 continue
 
-            if jugador1["posicion_campo"] != jugador2["posicion_campo"]:
+            if jugador1["Posicion en campo"] != jugador2["Posicion en campo"]:
                 print("Los jugadores no poseen la misma posicion de campo y no son comparables")
-                opcion = input("Desea hacer otra comparacion?(SI/NO): ")
-                if opcion.lower() != "si":
-                    print("Volviendo al menu anterior")
-                    time.sleep(2)
-                    return()
-
+                if not self.back_to_menu():
+                    break
                 continue
 
             print("\nEstadisticas del primer jugador: ")
             print(json.dumps(jugador1, indent=4))
             print("\nEstadisticas del segundo jugador: ")
             print(json.dumps(jugador2, indent=4))
-
-            opcion = input("Desea hacer otra comparacion?(SI/NO): ")
-            if opcion.lower() != "si":
-                print("Volviendo al menu anterior")
-                time.sleep(2)
-                return ()
-
-            continue
-
+            if not self.back_to_menu():
+                break
 #Gestion de jugadores Gestion de jugadores Gestion de jugadores Gestion de jugadores
-
-    def insertar_nuevo_jugador(self):
+    def insert_new_player(self):
         while True:
             # Solicitar al usuario que ingrese los datos del nuevo jugador
             nombre_jugador = input("Ingrese el nombre del jugador que desea ingresar (Ej: Lionel Andres Messi) o (SALIR, regresar al menu de gestion): ")
 
             if nombre_jugador.lower() == "salir":
-                return()
+                return
 
             if not nombre_jugador.replace(" ", "").isalpha() or not nombre_jugador.istitle():
                 print("\nError: El nombre debe contener solo letras y comenzar con mayuscula Ej: Lionel Andres.")
@@ -656,11 +593,10 @@ class Menu:
             time.sleep(2)
             return()
 
-    def leer_informacion_jugador(self):
+    def read_player_information(self):
         while True:
             with open("jugadores.json", "r") as nombre_file:
                 ver_nombre = json.load(nombre_file)
-
             with open("estadistica_jugador.json", "r") as ID_file:
                 ver_ID = json.load(ID_file)
 
@@ -691,13 +627,10 @@ class Menu:
 
             if not jugador_existente:
                 print("\nNo se encontro el jugador que se especifico, intentelo de nuevo...")
-                repetir = input("Desea consultar la informacion de otro jugador? (SI/NO): ")
-                if repetir.lower() != "si":
-                    print("\nVolviendo al gestor de jugadores...")
-                    time.sleep(2)
-                    return ()
+                if not self.back_to_menu():
+                    break
 
-    def modificar_datos_jugador(self):
+    def modify_player_data(self):
         while True:
             with open("jugadores.json", "r") as informacion_jugadores_file:
                 informacion_jugadores = json.load(informacion_jugadores_file)
@@ -949,16 +882,13 @@ class Menu:
                                 json.dump(estadisticas_jugadores, estadisticas_jugadores_file, indent=4)
 
                             print("Datos del jugador actualizados correctamente")
-                            consultar = input("Desea modificar otro jugador?(SI/NO)")
-                            if consultar.lower() != "si":
-                                print("Volviendo al menu anterior...")
-                                time.sleep(2)
-                                return()
+                            if not self.back_to_menu():
+                                break
 
             if not nombre_existente:
                 print("No se encontro al jugador con el ID y nombre especificados...")
 
-    def eliminar_jugador(self):
+    def remove_player(self):
         while True:
             nombre_jugador = input("Ingrese el nombre del jugador que desea eliminar, si desea volver al menu anterior ingrese (EXIT): ")
 
@@ -997,11 +927,8 @@ class Menu:
 
             print(f"El jugador {nombre_jugador} se ha eliminado con exito")
 
-            consultar = input("Desea modificar otro jugador?(SI/NO)")
-            if consultar.lower() != "si":
-                print("Volviendo al menu anterior...")
-                time.sleep(2)
-                return ()
+            if not self.back_to_menu():
+                break
 
 #CONSULTAS AVANZADAS #CONSULTAS AVANZADAS #CONSULTAS AVANZADAS #CONSULTAS AVANZADAS #CONSULTAS AVANZADAS
 
@@ -1026,15 +953,11 @@ class Menu:
             else:
                 print(f"No se encontraron los jugadores provenientes de {origen_buscar}")
 
-            consultar = input("Desea hacer otra consulta?(SI/NO)")
-            if consultar.lower() != "si":
-                print("Volviendo al menu anterior...")
-                time.sleep(2)
-                return()
+            if not self.back_to_menu():
+                break
 
     def mostrar_todos_los_jugadores_que_se_encuentren_en_un_rango_de_edad(self):
         while True:
-
             edad_buscar = int(input("Ingrese la edad para mostrar la cantidad de jugadores: "))
 
             with open("jugadores", "r") as file:
@@ -1054,11 +977,8 @@ class Menu:
             else:
                 print(f"No se encontraron los jugadores provenientes de {edad_buscar}")
 
-            consultar = input("Desea hacer otra consulta?(SI/NO)")
-            if consultar.lower() != "si":
-                print("Volviendo al menu anterior...")
-                time.sleep(2)
-                return()
+            if not self.back_to_menu():
+                break
 
     def mostrar_cantidad_jugadores_con_misma_altura_y_tienen_referencia_al_genero_de_cada_uno(self):
         pass
@@ -1122,7 +1042,6 @@ class Menu:
 
     def determinar_promedio_control_balon_para_jugadores_en_una_posición_específica(self):
         pass
-
 
 iniciador = Menu()
 iniciador.main()
