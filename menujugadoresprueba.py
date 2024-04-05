@@ -114,13 +114,13 @@ class Menu:
             if option == "4":
                 self.show_all_players_in_a_specific_club()
             if option == "5":
-                self.mostrar_cantidad_jugadores_acuerdo_con_la_posición_en_el_campo_considerando_unicamente_los_de_género_femenino()
+                self.show_number_of_players_accordance_position_on_field_considering_only_gender_female()
             if option == "6":
-                self.mostrar_top_diez_jugadores_mayor_altura_con_mejor_agilidad_la_información_muestra_nombre_genero_origen_altura_agilidad()
+                self.show_top_ten_players_highest_with_best_agility_information_sample_name_gender_origin_height_agility()
             if option == "7":
-                self.mostrar_cantidad_jugadores_cuya_velocidad_este_en_un_rango_específico()
+                self.show_number_players_whose_speed_is_in_specific_range()
             if option == "8":
-                self.determinar_promedio_control_balon_para_jugadores_en_una_posición_específica()
+                self.determinate_average_ball_control_for_players_in_a_specific_position()
             if option == "9":
                 print("Volviendo al menu principal...")
                 time.sleep(2)
@@ -142,6 +142,7 @@ class Menu:
                 time.sleep(1)
 
     def back_to_menu(self):
+        print("IMPORTANTE: Si se digita algo diferente de 'SI' se tomara como un 'NO'")
         option = input("Desea realizar otra accion? (SI/NO): ")
         if option.lower() != 'si':
             print("Volviendo al menu anterior...")
@@ -237,7 +238,7 @@ class Menu:
         while True:
             jugador_encontrado = False
             while True:
-                nombre_jugador = input("Ingrese el nombre de jugador cuyas estadisticas desea ver: ")
+                nombre_jugador = input("Ingrese el nombre del jugador cuyas estadisticas desea ver: ")
                 if not nombre_jugador.replace(" ", "").isalpha() or not nombre_jugador.istitle():
                     print("Error: El nombre de jugador debe iniciar con MAYUSCULA y solo se permiten letras.")
                     continue
@@ -619,11 +620,8 @@ class Menu:
                                 print(f"{key}: {value}")
                             for key, value in jugadorr.items():
                                 print(f"{key}: {value}")
-                            repetir = input("Desea consultar la informacion de otro jugador? (SI/NO): ")
-                            if repetir.lower() != "si":
-                                print("\nVolviendo al gestor de jugadores...")
-                                time.sleep(2)
-                                return ()
+                            if not self.back_to_menu():
+                                break
 
             if not jugador_existente:
                 print("\nNo se encontro el jugador que se especifico, intentelo de nuevo...")
@@ -891,7 +889,6 @@ class Menu:
     def remove_player(self):
         while True:
             nombre_jugador = input("Ingrese el nombre del jugador que desea eliminar, si desea volver al menu anterior ingrese (EXIT): ")
-
             if nombre_jugador.lower() == "exit":
                 print("Volviendo al menu anterior")
                 time.sleep(2)
@@ -926,7 +923,6 @@ class Menu:
                 json.dump(estadisticas_actualizadas, estadistica_jugador_file, indent=4)
 
             print(f"El jugador {nombre_jugador} se ha eliminado con exito")
-
             if not self.back_to_menu():
                 break
 
@@ -935,14 +931,13 @@ class Menu:
     def show_number_player_same_origen(self):
         while True:
             origen_buscar = input("Ingrese el origen para mostrar la cantidad de jugadores: ")
-
             with open("jugadores.json", "r") as file:
                 jugadores = json.load(file)
 
             jugadores_mismo_origen = {}
 
             for jugador in jugadores:
-                if jugador["origen"] == origen_buscar:
+                if jugador["Origen"] == origen_buscar:
                     if origen_buscar in jugadores_mismo_origen:
                         jugadores_mismo_origen[origen_buscar] += 1
                     else:
@@ -952,7 +947,6 @@ class Menu:
                 print(f"La cantidad de jugadores provenientes de {origen_buscar}: {jugadores_mismo_origen.get(origen_buscar, 0)}")
             else:
                 print(f"No se encontraron los jugadores provenientes de {origen_buscar}")
-
             if not self.back_to_menu():
                 break
 
@@ -978,13 +972,14 @@ class Menu:
             if not self.back_to_menu():
                 break
 
+                #SE DEBE CALCULAR MEDIANTE LA FECHA DE NACIMIENTO(SE VE RUDO)
+
     def show_number_players_with_same_height_and_reference_to_gender_each_one(self):
         pass
 
     def show_all_players_in_a_specific_club(self):
         while True:
             preguntar_club = input("Ingrese el nombre del club que desea saber que jugadores pertenecen: ")
-
             with open("jugadores.json", "r") as file:
                 jugadores = json.load(file)
 
@@ -1000,16 +995,11 @@ class Menu:
                     print(jugador)
             else:
                 print(f"No se encontraron jugadores del club {preguntar_club}")
-
-            consultar = input("Desea hacer otra consulta?(SI/NO)")
-            if consultar.lower() != "si":
-                print("Volviendo al menu anterior...")
-                time.sleep(2)
-                return()
+            if not self.back_to_menu():
+                break
 
     def show_number_of_players_accordance_position_on_field_considering_only_gender_female(self):
         while True:
-
             print("Recuerde son JUGADORAS, en vez de DELANTERO, sera DELANTERA")
             preguntar_posicion = input("Ingrese la posicion en el campo(SE CONSIDERA UNICAMENTE EL GENERO FEMENINO): ")
 
@@ -1026,21 +1016,16 @@ class Menu:
                 print(f"No se encontraron jugadores de la posicion {preguntar_posicion}")
             else:
                 print(f"La cantidad de jugadoras de genero femenino en la posicion de {preguntar_posicion} es de: {cantidad_jugadoras}")
+            if not self.back_to_menu():
+                break
 
-            consultar = input("Desea hacer otra consulta?(SI/NO)")
-            if consultar.lower() != "si":
-                print("Volviendo al menu anterior...")
-                time.sleep(2)
-                return()
-
-    def mostrar_top_diez_jugadores_mayor_altura_con_mejor_agilidad_la_información_muestra_nombre_genero_origen_altura_agilidad(self):
+    def show_top_ten_players_highest_with_best_agility_information_sample_name_gender_origin_height_agility(self):
         pass
 
-        show_top_ten_players_highest_with_best_agility_information_
-    def dostrar_cantidad_jugadores_cuya_velocidad_este_en_un_rango_específico(self):
+    def show_number_players_whose_speed_is_in_specific_range(self):
         pass
 
-    def determinar_promedio_control_balon_para_jugadores_en_una_posición_específica(self):
+    def determinate_average_ball_control_for_players_in_a_specific_position(self):
         pass
 
 iniciador = Menu()
