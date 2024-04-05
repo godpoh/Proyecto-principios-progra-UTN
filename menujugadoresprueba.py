@@ -150,6 +150,18 @@ class Menu:
             return False
         return True
 
+    def validate_int_input(prompt, minValue, maxValue):
+        while True:
+            user_input = input(prompt)
+            try:
+                user_input = int(user_input)
+                if minValue <= user_input <= maxValue:
+                    return user_input
+                else:
+                    print(f"El valor debe de estar entre {minValue} y {maxValue}")
+            except ValueError:
+                print("Error: Debe ingresar un numero entero")
+
 #visualizar_lista_jugadores #visualizar_lista_jugadores #visualizar_lista_jugadores #visualizar_lista_jugadores #visualizar_lista_jugadores
     def filter_by_field_posicion(self):
         while True:
@@ -423,7 +435,7 @@ class Menu:
                 idx = int(idx)
                 id_existente = False
                 for jugador in jugadores_id_y_nombres:
-                    if jugador.get("ID") == idx:
+                    if jugador.get("id") == idx:
                         id_existente = True
                         break
 
@@ -438,107 +450,19 @@ class Menu:
                 print("\nError: El nombre del jugador debe de ser el mismo")
                 continue
 
-            aceleracion = input("Ingrese la aceleracion del jugador (Ej: 42-99): ")
-            try:
-                aceleracion = int(aceleracion)
-                if aceleracion < 42 or aceleracion > 99:
-                    print("\nError: El valor no debe ser menor a 42 y mayor a 99")
-                    continue
-            except ValueError:
-                    print("\nError: Debe ingresar un número entero.")
-                    continue
-
-            pases_cortos = input("Ingrese la estadistica de pases cortos del jugador(Ej: 42-99): ")
-            pases_cortos = int(pases_cortos)
-            try:
-                if pases_cortos < 42 or pases_cortos > 99:
-                    print("\nError: El valor no debe ser menor a 42 y mayor a 99")
-                    continue
-            except ValueError:
-                    print("\nError: Debe ingresar un número entero.")
-                    continue
-
-            potencia_tiro = input("Ingrese la potencia de tiro del jugador (Ej: 42-99): ")
-            potencia_tiro = int(potencia_tiro)
-            try:
-                if potencia_tiro < 42 or potencia_tiro > 100:
-                    print("\nError: El valor no debe ser menor a 42 y mayor a 99")
-                    continue
-            except ValueError:
-                    print("\nError: Debe ingresar un número entero.")
-                    continue
-
-            pases_largos = input("Ingrese la estadistica de pases largos del jugador(Ej: 42-99): ")
-            pases_largos = int(pases_largos)
-            try:
-                if pases_largos < 42 or pases_largos > 99:
-                    print("\nError: El valor no debe ser menor a 42 y mayor a 99")
-                    continue
-            except ValueError:
-                    print("\nError: Debe ingresar un número entero.")
-                    continue
-
-            velocidad = input("Ingrese la velocidad del jugador(Ej: 42-99): ")
-            velocidad = int(velocidad)
-            try:
-                if velocidad < 42 or velocidad > 99:
-                    print("\nError: El valor no debe ser menor a 42 y mayor a 99")
-                    continue
-            except ValueError:
-                    print("\nError: Debe ingresar un número entero.")
-                    continue
-
-            agilidad = input("Ingrese la agilidad del jugador(Ej: 42-99): ")
-            agilidad = int(agilidad)
-            try:
-                if agilidad < 42 or agilidad > 99:
-                    print("\nError: El valor no debe ser menor a 42 y mayor a 99")
-                    continue
-            except ValueError:
-                    print("\nError: Debe ingresar un número entero.")
-                    continue
-
-            resistencia = input("Ingrese la resistencia del jugador(Ej: 42-99): ")
-            resistencia = int(resistencia)
-            try:
-                if resistencia < 42 or resistencia > 99:
-                    print("\nError: El valor no debe ser menor a 0 y mayor a 100")
-                    continue
-            except ValueError:
-                    print("\nError: Debe ingresar un número entero.")
-                    continue
-
-            salto = input("Ingrese el salto del jugador(Ej: 42-99): ")
-            salto = int(salto)
-            try:
-                if salto < 42 or salto > 99:
-                    print("\nError: El valor no debe ser menor a 42 y mayor a 99")
-                    continue
-            except ValueError:
-                    print("\nError: Debe ingresar un número entero.")
-                    continue
-
-            regates = input("Ingrese la estadistica de regate del jugador(Ej: 42-99): ")
-            regates = int(regates)
-            try:
-                if regates < 42 or regates > 99:
-                    print("\nError: El valor no debe ser menor a 42 y mayor a 99")
-                    continue
-            except ValueError:
-                    print("\nError: Debe ingresar un número entero.")
-                    continue
-            control_balon = input("Ingrese la estadistica de control de balon del jugador(Ej: 42-99): ")
-            control_balon = int(control_balon)
-            try:
-                if control_balon < 42 or control_balon > 99:
-                    print("\nError: El valor no debe ser menor a 42 y mayor a 99")
-                    continue
-            except ValueError:
-                    print("\nError: Debe ingresar un número entero.")
-                    continue
+            aceleracion = Menu.validate_int_input("Ingrese la aceleracion del jugador (Ej: 42-99): ",42, 49)
+            pases_cortos = Menu.validate_int_input("Ingrese la estadistica de pases cortos del jugador(Ej: 42-99): ", 42, 99)
+            potencia_tiro = Menu.validate_int_input("Ingrese la potencia de tiro del jugador (Ej: 42-99): ", 42, 99)
+            pases_largos = Menu.validate_int_input("Ingrese la estadistica de pases largos del jugador(Ej: 42-99): ", 42, 99)
+            velocidad = Menu.validate_int_input("Ingrese la velocidad del jugador(Ej: 42-99): ", 42, 99)
+            agilidad = Menu.validate_int_input("Ingrese la agilidad del jugador(Ej: 42-99): ", 42, 99)
+            resistencia = Menu.validate_int_input("Ingrese la resistencia del jugador(Ej: 42-99): ", 42, 99)
+            salto = Menu.validate_int_input("Ingrese el salto del jugador(Ej: 42-99): ", 42, 99)
+            regates = Menu.validate_int_input("Ingrese la estadistica de regate del jugador(Ej: 42-99): ",42, 99)
+            control_balon = Menu.validate_int_input("Ingrese la estadistica de control de balon del jugador(Ej: 42-99): ", 42, 99)
 
             # Crear un diccionario con los datos del nuevo jugador
-            nuevo_jugador = {
+            new_player = {
                 "Nombre": nombre_jugador,
                 "Fecha de nacimiento": fecha_nacimiento,
                 "Origen": origen,
@@ -550,7 +474,7 @@ class Menu:
                 "Reconocimientos": reconocimientos
             }
 
-            nuevo_jugador_estadisticas = {
+            new_player_statistics = {
                 "ID": idx,
                 "Jugador": jugador,
                 "Aceleracion": aceleracion,
@@ -573,7 +497,7 @@ class Menu:
                 jugadores = []
 
             # Agregar el nuevo jugador a la lista de jugadores
-            jugadores.append(nuevo_jugador)
+            jugadores.append(new_player)
 
             # Escribir los datos actualizados de los jugadores en el archivo JSON
             with open("jugadores.json", "w") as file:
@@ -585,7 +509,7 @@ class Menu:
             except FileNotFoundError:
                 estadistica = []
 
-            estadistica.append(nuevo_jugador_estadisticas)
+            estadistica.append(new_player_statistics)
 
             with open("estadistica_jugador.json", "w") as file:
                 json.dump(estadistica, file, indent=4)
