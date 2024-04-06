@@ -479,37 +479,37 @@ class Menu:
 
     def read_player_information(self):
         while True:
-            ver_nombre = self.load_players_json()
+            see_name = self.load_players_json()
 
             print("\nIMPORTANTE: El NOMBRE del jugador DEBE ser EXACTO (Ej: Lionel Andres Messi)...")
-            preguntar_nombre = Menu.validate_string_input("Ingrese el nombre del jugador que desea consultar informacion: ")
+            ask_name = Menu.validate_string_input("Ingrese el nombre del jugador que desea consultar informacion: ")
 
-            jugador_existente = False
-            for jugador in ver_nombre:
-                if jugador["name"] == preguntar_nombre:
-                    jugador_existente = True
+            existing_name = False
+            for player in see_name:
+                if player["name"] == ask_name:
+                    existing_name = True
 # En vez de key y value puede ser cualquier parametro, para mas legibilidad asi, tambien podria ser (for nombre, informacion in jugador.items():
                     print("\nInformacion del jugador:")
-                    for key, value in jugador.items():
+                    for key, value in player.items():
                         print(f"{key}: {value}")
 
-            if not jugador_existente:
+            if not existing_name:
                 print("\nNo se encontro el jugador que se especifico, intentelo de nuevo...")
                 if not self.back_to_menu():
                     break
 
     def modify_player_data(self):
         while True:
-            informacion_jugadores = self.load_players_json()
+            player_information = self.load_players_json()
 
             print("\nIMPORTANTE: El NOMBRE del jugador DEBE ser EXACTO (Ej: Lionel Andres Messi)...")
 
             ask_player_name = Menu.validate_string_input("Ingrese el nombre del jugador que desea modificar: ")
 
-            nombre_existente = False
-            for namee in informacion_jugadores:
+            existing_name = False
+            for namee in player_information:
                 if namee["name"] == ask_player_name:
-                    nombre_existente = True
+                    existing_name = True
                     print("\nInformacion basica del jugador:")
                     print(json.dumps(namee, indent=4))
 
@@ -579,13 +579,13 @@ class Menu:
                     namee["awards"] = new_awards
 
                     with open("players_data.json.json", "w") as informacion_jugadores_file:
-                        json.dump(informacion_jugadores, informacion_jugadores_file, indent=4)
+                        json.dump(player_information, informacion_jugadores_file, indent=4)
 
                     print("Los cambios se han aplicado correctamente...")
                     if not self.back_to_menu():
                         break
 
-            if not nombre_existente:
+            if not existing_name:
                 print("No se encontro al jugador con el ID y nombre especificados...")
 
     def remove_player(self):
