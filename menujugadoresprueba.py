@@ -690,7 +690,7 @@ class Menu:
             number_players = 0
 
             for player in players:
-                if player["Genero"] == "Femenino" and player["Posicion en campo"] == ask_position:
+                if player["gender"] == "Femenino" and player["position_in_field"] == ask_position:
                     number_players += 1
 
             if number_players == 0:
