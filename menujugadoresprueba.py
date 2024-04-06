@@ -485,14 +485,15 @@ class Menu:
             ask_name = Menu.validate_string_input("Ingrese el nombre del jugador que desea consultar informacion: ")
 
             existing_name = False
-            for player in see_name:
+            for player in see_name["players"]:
                 if player["name"] == ask_name:
                     existing_name = True
 # En vez de key y value puede ser cualquier parametro, para mas legibilidad asi, tambien podria ser (for nombre, informacion in jugador.items():
                     print("\nInformacion del jugador:")
                     for key, value in player.items():
                         print(f"{key}: {value}")
-
+                    if not self.back_to_menu():
+                        return
             if not existing_name:
                 print("\nNo se encontro el jugador que se especifico, intentelo de nuevo...")
                 if not self.back_to_menu():
@@ -507,7 +508,7 @@ class Menu:
             ask_player_name = Menu.validate_string_input("Ingrese el nombre del jugador que desea modificar: ")
 
             existing_name = False
-            for namee in player_information:
+            for namee in player_information["players"]:
                 if namee["name"] == ask_player_name:
                     existing_name = True
                     print("\nInformacion basica del jugador:")
@@ -558,16 +559,20 @@ class Menu:
                             continue
 
                     new_position_in_field = Menu.validate_string_input("Ingrese la nueva posicion de campo, si no desea cambiar este dato digite el mismo dato: ")
+
                     new_militant_club = Menu.validate_string_input("Ingrese el nuevo club militante, si no desea cambiar este dato digite el mismo dato: ")
 
-                    while True:
-                        new_awards = input("Ingrese el nuevo(s) reconocimientos, si no desea cambiar este dato digite el mismo dato: ")
-                        if not new_awards.isnumeric():
-                            print("Error: Debe ser NUMEROS enteros")
-                            continue
-                        else:
-                            new_awards = int(new_awards)
-                            break
+                    new_awards = Menu.validate_int_input("Ingrese el nuevo(s) reconocimientos, si no desea cambiar este dato digite el mismo dato: ", 1, 100)
+                    acceleration = Menu.validate_int_input("Ingrese la nueva estadistica de aceleracion, si no desea cambiar este dato digite el mismo dato: ",42, 99)
+                    new_short_passes = Menu.validate_int_input("Ingrese la nueva estadistica de pases cortos, si no desea cambiar este dato digite el mismo dato: ", 42, 99)
+                    new_power_of_shot = Menu.validate_int_input("Ingrese la nueva estadistica de potencia de tiro, si no desea cambiar este dato digite el mismo dato: ", 42, 99)
+                    new_long_passes = Menu.validate_int_input("Ingrese la nueva estadistica de pases largos, si no desea cambiar este dato digite el mismo dato: ", 42, 99)
+                    new_speed = Menu.validate_int_input("Ingrese la nueva estadistica de velocidad, si no desea cambiar este dato digite el mismo dato: ", 42, 99)
+                    new_agility = Menu.validate_int_input("Ingrese la nueva estadistica de agilidad, si no desea cambiar este dato digite el mismo dato: ", 42, 99)
+                    new_resistance = Menu.validate_int_input("Ingrese la nueva estadistica de resistencia, si no desea cambiar este dato digite el mismo dato: ",42 , 99)
+                    new_jump = Menu.validate_int_input("Ingrese la nueva estadistica de salto, si no desea cambiar este dato digite el mismo dato: ", 42, 99)
+                    new_dribbling = Menu.validate_int_input("Ingrese la nueva estadistica de regate, si no desea cambiar este dato digite el mismo dato: ", 42, 99)
+                    new_ball_control = Menu.validate_int_input("Ingrese la nueva estadistica de control de balon, si no desea cambiar este dato digite el mismo dato: ", 42, 99)
 
                     namee["name"] = new_name
                     namee["date_of_birth"] = new_date_of_birth
@@ -577,9 +582,16 @@ class Menu:
                     namee["position_in_field"] = new_position_in_field
                     namee["club_militant"] = new_militant_club
                     namee["awards"] = new_awards
-
-                    with open("players_data.json.json", "w") as informacion_jugadores_file:
-                        json.dump(player_information, informacion_jugadores_file, indent=4)
+                    namee["acceleration"] = acceleration
+                    namee["short_passes"] = new_short_passes
+                    namee["power_of_shot="] = new_power_of_shot
+                    namee["long_passes"] = new_long_passes
+                    namee["speed"] = new_speed
+                    namee["agility"] = new_agility
+                    namee["resistance"] = new_resistance
+                    namee["jump"] = new_jump
+                    namee["dribbling"] = new_dribbling
+                    namee["ball_control"] = new_ball_control
 
                     print("Los cambios se han aplicado correctamente...")
                     if not self.back_to_menu():
@@ -587,7 +599,8 @@ class Menu:
 
             if not existing_name:
                 print("No se encontro al jugador con el ID y nombre especificados...")
-
+                if not self.back_to_menu():
+                    break
     def remove_player(self):
         while True:
             name_player = Menu.validate_string_input("Ingrese el nombre del jugador que desea eliminar, si desea volver al menu anterior ingrese: ")
