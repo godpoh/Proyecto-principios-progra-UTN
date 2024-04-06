@@ -182,42 +182,55 @@ class Menu:
                 continue
             return input_string
 
-    def validate_players_json(self):
+    def load_players_json(self):
         try:
             with open("players_data.json.json", "r") as players_file:
                 return json.load(players_file)
-            return True
         except FileNotFoundError:
             print("El archivo players_data.json.json no se ha encontrado")
-            return False
+            return None
         except json.decoder.JSONDecodeError:
             print("El archivo players_data.json.json no contiene datos legibles")
-            return False
+            return None
 
-    def load_players_json(self):
-        with open("players_data.json.json", "r") as players_file:
-            return json.load(players_file)
+    def get_player_statistics(self, player_found):
+        player_statistics = {
+            "acceleration": player_found["acceleration"],
+            "short_passes": player_found["short_passes"],
+            "power_of_shot": player_found["power_of_shot"],
+            "long_passes": player_found["long_passes"],
+            "speed": player_found["speed"],
+            "agility": player_found["agility"],
+            "resistance": player_found["resistance"],
+            "jump": player_found["jump"],
+            "dribbling": player_found["dribbling"],
+            "ball_control": player_found["ball_control"]
+        }
+        return player_statistics
 
 
 #visualizar_lista_jugadores #visualizar_lista_jugadores #visualizar_lista_jugadores #visualizar_lista_jugadores #visualizar_lista_jugadores
     def filter_by_field_position(self):
         while True:
             print("IMPORTANTE: Deben ser solo LETRAS, ademas ambas iniciales deben empezar con MAYUSCULAS ej: Delantero o Extremo Derecho.")
-            filter = Menu.validate_string_input("Ingrese la posicion que desea filtrar de los jugadores: ")
+            position_filter = Menu.validate_string_input("Ingrese la posicion que desea filtrar de los jugadores: ")
             try:
-                if not self.validate_players_json():
-                    break
                 players = self.load_players_json()
 #esta primera(jugador_expresion)es una variable de iteracion que se utiliza para recorrer cada elemento de la lista jugadores.
-                filter_players = [player_expression for player_expression in players if player_expression["position_in_field"] == filter]
                 if players:
-                    print("Jugadores encontrados: ")
-                    for player_expression in filter_players:
-                        print(json.dumps(player_expression, indent=4))
-                    if not self.back_to_menu():
-                        break
+                    filter_players = [player_expression for player_expression in players["players"] if player_expression["position_in_field"] == position_filter]
+
+                    if players:
+                        print("Jugadores encontrados: ")
+                        for player_expression in filter_players:
+                            print(json.dumps(player_expression, indent=4))
+                    else:
+                        print("No se encontraron jugadores de la posicion especificida")
                 else:
-                    print("No se encontraron jugadores de la posicion especificida")
+                    print("No se encontraron datos de jugadores en el archivo")
+
+                if not self.back_to_menu():
+                    break
             except FileNotFoundError:
                 print("No existe el archivo")
                 break
@@ -226,11 +239,11 @@ class Menu:
             print("IMPORTANTE: Deben ser solo LETRAS, ademas ambas iniciales deben empezar con MAYUSCULAS ej: Belgica o Costa Rica.")
             filter = Menu.validate_string_input("Ingrese el pais de origen que desea filtrar de los jugadores: ")
             try:
-                if not self.validate_players_json():
+                if not self.load_players_json():
                     break
                 players = self.load_players_json()
 # esta primera (jugador_expresion) es una variable de iteracion que se utiliza para recorrer cada elemento de la lista jugadores.
-                filter_players = [player_expression for player_expression in players if player_expression["origin"] == filter]
+                filter_players = [player_expression for player_expression in players["players"] if player_expression["origin"] == filter]
                 if players:
                     print("Jugadores encontrados: ")
                     for player_expression in filter_players:
@@ -244,14 +257,12 @@ class Menu:
 
     def filter_by_recognitions(self):
         print("IMPORTANTE: Deben ser solo NUMEROS, (Ej: 10, 20, 2)")
-        filter = Menu.validate_int_input(input("Ingrese los reconocimientos que desea filtrar de los jugadores: "), 0, 50)
+        filter = Menu.validate_int_input("Ingrese los reconocimientos que desea filtrar de los jugadores: ", 0, 50)
         while True:
             try:
-                if not self.validate_players_json():
-                    break
                 players = self.load_players_json()
 #esta primera (jugador_expresion) es una variable de iteracion que se utiliza para recorrer cada elemento de la lista jugadores.
-                filter_player = [player_expression for player_expression in players if player_expression["awards"] == filter]
+                filter_player = [player_expression for player_expression in players["players"] if player_expression["awards"] == filter]
                 if players:
                     print("Jugadores encontrados: ")
                     for player_expression in filter_player:
@@ -269,10 +280,9 @@ class Menu:
             name_player = Menu.validate_string_input("Ingrese el nombre del jugador: ")
 
             players = self.load_players_json()
-            statistics = self.load_statistics_json()
 
             player_found = None
-            for player in players:
+            for player in players["players"]:
                 if player["name"] == name_player:
                     player_found = player
                     break
@@ -282,30 +292,23 @@ class Menu:
                 if not self.back_to_menu():
                     break
 
-            found_statistics = False
-            for statistic in statistics:
-                if statistic['id'] == player_found['id']:
-                    print("Estadisticas de", name_player)
-                    print(json.dumps(statistic, indent=4))
-                    found_statistics = True
-                    if not self.back_to_menu():
-                        return
+            print("Estadisticas de ",name_player)
+            player_statistics = self.get_player_statistics(player_found)
+            print(json.dumps(player_statistics, indent=4))
+            if not self.back_to_menu():
+                break
 
-            if not found_statistics:
-                print("No se encontraron las estadisticas de este jugador", name_player)
-                if not self.back_to_menu():
-                    break
     def compare_statistics(self):
         while True:
             name1 = Menu.validate_string_input("Ingrese el nombre del primer jugador: ")
             name2 = Menu.validate_string_input("Ingrese el nombre del segundo jugador: ")
 
-            statistics = self.load_players_json()
+            players = self.load_players_json()
 
             player1 = None
             player2 = None
 
-            for player in statistics:
+            for player in players["players"]:
                 if player["name"] == name1:
                     player1 = player
                 elif player["name"] == name2:
@@ -324,9 +327,13 @@ class Menu:
                 continue
 
             print("\nEstadisticas del primer jugador: ")
-            print(json.dumps(player1, indent=4))
+            player_statistics1 = self.get_player_statistics(player1)
+            print(json.dumps(player_statistics1, indent=4))
+
             print("\nEstadisticas del segundo jugador: ")
-            print(json.dumps(player2, indent=4))
+            player_statistics2 = self.get_player_statistics(player2)
+            print(json.dumps(player_statistics2, indent=4))
+
             if not self.back_to_menu():
                 break
 #Gestion de jugadores Gestion de jugadores Gestion de jugadores Gestion de jugadores
@@ -335,11 +342,10 @@ class Menu:
             # Solicitar al usuario que ingrese los datos del nuevo jugador
             name_player = Menu.validate_string_input("Ingrese el nombre del jugador que desea ingresar (Ej: Lionel Andres Messi): ")
 
-            with open("players_data.json.json", "r") as jugadores_file:
-                player_dont_repit_name = json.load(jugadores_file)
+            player_dont_repit_name = self.load_players_json()
 
             existing_name = False
-            for player in player_dont_repit_name:
+            for player in player_dont_repit_name["players"]:
                 if player.get("name") == name_player:
                     existing_name = True
 
@@ -403,13 +409,12 @@ class Menu:
                     print("\nError: El ID debe ser un número entero.")
                     continue
 
-                with open("estadistica_jugador.json", "r") as file:
-                    players_id_name = json.load(file)
+                players_id_name = self.load_players_json()
 
                 idx = int(idx)
                 existing_id = False
-                for player in players_id_name:
-                    if player.get("Jugador_id") == idx:
+                for player in players_id_name["players"]:
+                    if player.get("id") == idx:
                         existing_id = True
                         break
 
@@ -417,13 +422,6 @@ class Menu:
                     print("\nError: Este ID ya está en uso. Por favor, ingrese un ID diferente.")
                 else:
                     break  # El ID es valido y unico
-
-            while True:
-                player = input("Ingrese el nombre del jugador nuevamente (Debe ser exactamente igual): ")
-                if not player == name_player:
-                    print("\nError: El nombre del jugador debe de ser el mismo")
-                    continue
-                break
 
             aceleration = Menu.validate_int_input("Ingrese la aceleracion del jugador (Ej: 42-99): ",42, 99)
             short_passes = Menu.validate_int_input("Ingrese la estadistica de pases cortos del jugador(Ej: 42-99): ", 42, 99)
@@ -463,16 +461,17 @@ class Menu:
 
             # Leer los datos actuales de los jugadores desde el archivo JSON
             try:
-                jugadores = self.load_players_json()
+                players_insert = self.load_players_json()
+                players = players_insert.get("players", [])
             except FileNotFoundError:
-                jugadores = []
+                players = []
 
             # Agregar el nuevo jugador a la lista de jugadores
-            jugadores.append(new_player)
+            players.append(new_player)
 
             # Escribir los datos actualizados de los jugadores en el archivo JSON
             with open("players_data.json.json", "w") as file:
-                json.dump(jugadores, file, indent=4)
+                json.dump({"players": players}, file, indent=4)
 
             print("\nNuevo jugador agregado con éxito.")
             if not self.back_to_menu():
@@ -617,7 +616,7 @@ class Menu:
 
             players_same_origin = {}
 
-            for player in players:
+            for player in players["players"]:
                 if player["origin"] == search_origin:
                     if search_origin in players_same_origin:
                         players_same_origin[search_origin] += 1
@@ -633,28 +632,6 @@ class Menu:
 
     def show_all_players_in_an_age_range(self):
         pass
-        # while True:
-        #     search_age = Menu.validate_int_input(input("Ingrese la edad para mostrar la cantidad de jugadores: "),16, 100)
-        #     with open("jugadores", "r") as file:
-        #         jugadores = json.load(file)
-        #
-        #     jugadores_misma_edad = {}
-        #
-        #     for jugador in jugadores:
-        #         if jugador["edad"] == search_age:
-        #             if search_age in jugadores_misma_edad:
-        #                 jugadores_misma_edad[search_age] += 1
-        #             else:
-        #                 jugadores_misma_edad[search_age] = 1
-        #
-        #     if search_age in jugadores_misma_edad:
-        #         print(f"La cantidad de jugadores de la edad de {search_age}: {jugadores_misma_edad.get(search_age)}")
-        #     else:
-        #         print(f"No se encontraron los jugadores provenientes de {search_age}")
-        #     if not self.back_to_menu():
-        #         break
-
-                #SE DEBE CALCULAR MEDIANTE LA FECHA DE NACIMIENTO(SE VE RUDO)
 
     def show_number_players_with_same_height_and_reference_to_gender_each_one(self):
         pass
@@ -664,10 +641,9 @@ class Menu:
             ask_club = Menu.validate_string_input("Ingrese el nombre del club que desea saber que jugadores pertenecen: ")
             
             players = self.load_players_json()
-
             players_of_club = []
 
-            for player in players:
+            for player in players["players"]:
                 if player["club_militant"] == ask_club:
                     players_of_club.append(player["name"])
 
