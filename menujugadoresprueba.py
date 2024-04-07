@@ -184,13 +184,13 @@ class Menu:
 
     def load_players_json(self):
         try:
-            with open("players_data.json.json", "r") as players_file:
+            with open("players_data.json", "r") as players_file:
                 return json.load(players_file)
         except FileNotFoundError:
-            print("El archivo players_data.json.json no se ha encontrado")
+            print("El archivo players_data.json no se ha encontrado")
             return None
         except json.decoder.JSONDecodeError:
-            print("El archivo players_data.json.json no contiene datos legibles")
+            print("El archivo players_data.json no contiene datos legibles")
             return None
 
     def get_player_statistics(self, player_found):
@@ -470,7 +470,7 @@ class Menu:
             players.append(new_player)
 
             # Escribir los datos actualizados de los jugadores en el archivo JSON
-            with open("players_data.json.json", "w") as file:
+            with open("players_data.json", "w") as file:
                 json.dump({"players": players}, file, indent=4)
 
             print("\nNuevo jugador agregado con éxito.")
@@ -480,6 +480,7 @@ class Menu:
     def read_player_information(self):
         while True:
             see_name = self.load_players_json()
+
 
             print("\nIMPORTANTE: El NOMBRE del jugador DEBE ser EXACTO (Ej: Lionel Andres Messi)...")
             ask_name = Menu.validate_string_input("Ingrese el nombre del jugador que desea consultar informacion: ")
@@ -502,17 +503,18 @@ class Menu:
     def modify_player_data(self):
         while True:
             player_information = self.load_players_json()
+            players = player_information.get("players", [])
 
             print("\nIMPORTANTE: El NOMBRE del jugador DEBE ser EXACTO (Ej: Lionel Andres Messi)...")
 
             ask_player_name = Menu.validate_string_input("Ingrese el nombre del jugador que desea modificar: ")
 
             existing_name = False
-            for namee in player_information["players"]:
-                if namee["name"] == ask_player_name:
+            for player in players:
+                if player["name"] == ask_player_name:
                     existing_name = True
                     print("\nInformacion basica del jugador:")
-                    print(json.dumps(namee, indent=4))
+                    print(json.dumps(player, indent=4))
 
                     new_name = Menu.validate_string_input("Ingrese el nuevo nombre, si no desea cambiar este dato digite el mismo dato: ")
 
@@ -574,51 +576,55 @@ class Menu:
                     new_dribbling = Menu.validate_int_input("Ingrese la nueva estadistica de regate, si no desea cambiar este dato digite el mismo dato: ", 42, 99)
                     new_ball_control = Menu.validate_int_input("Ingrese la nueva estadistica de control de balon, si no desea cambiar este dato digite el mismo dato: ", 42, 99)
 
-                    namee["name"] = new_name
-                    namee["date_of_birth"] = new_date_of_birth
-                    namee["gender"] = new_gender
-                    namee["height"] = new_height
-                    namee["weight"] = new_weight
-                    namee["position_in_field"] = new_position_in_field
-                    namee["club_militant"] = new_militant_club
-                    namee["awards"] = new_awards
-                    namee["acceleration"] = acceleration
-                    namee["short_passes"] = new_short_passes
-                    namee["power_of_shot="] = new_power_of_shot
-                    namee["long_passes"] = new_long_passes
-                    namee["speed"] = new_speed
-                    namee["agility"] = new_agility
-                    namee["resistance"] = new_resistance
-                    namee["jump"] = new_jump
-                    namee["dribbling"] = new_dribbling
-                    namee["ball_control"] = new_ball_control
+                    player["name"] = new_name
+                    player["date_of_birth"] = new_date_of_birth
+                    player["gender"] = new_gender
+                    player["height"] = new_height
+                    player["weight"] = new_weight
+                    player["position_in_field"] = new_position_in_field
+                    player["club_militant"] = new_militant_club
+                    player["awards"] = new_awards
+                    player["acceleration"] = acceleration
+                    player["short_passes"] = new_short_passes
+                    player["power_of_shot="] = new_power_of_shot
+                    player["long_passes"] = new_long_passes
+                    player["speed"] = new_speed
+                    player["agility"] = new_agility
+                    player["resistance"] = new_resistance
+                    player["jump"] = new_jump
+                    player["dribbling"] = new_dribbling
+                    player["ball_control"] = new_ball_control
 
+                    with open("players_data.json", "w") as ifile:
+                        json.dump({"players": players}, ifile, indent=4)
                     print("Los cambios se han aplicado correctamente...")
                     if not self.back_to_menu():
                         break
 
             if not existing_name:
-                print("No se encontro al jugador con el ID y nombre especificados...")
+                print("No se encontro al jugador con el nombre especificado...")
                 if not self.back_to_menu():
                     break
     def remove_player(self):
         while True:
-            name_player = Menu.validate_string_input("Ingrese el nombre del jugador que desea eliminar, si desea volver al menu anterior ingrese: ")
+            name_player = Menu.validate_string_input("Ingrese el nombre del jugador que desea eliminar: ")
 
-            players = self.load_players_json()
+            players_data = self.load_players_json()
+            players = players_data.get("players", [])
 
-            updated_players = [jugador for jugador in players if jugador["nombre"] != name_player]
+            updated_players = [player for player in players if player["name"] != name_player]
 
             if len(updated_players) == len(players):
                 print(f"El jugador {name_player} no se encontro en la lista")
-                continue
+                if not self.back_to_menu():
+                    return
+            else:
 
-            with open("players_data.json.json", "w") as players_file:
-                json.dump(updated_players, players_file, indent=4)
-
-            print(f"El jugador {name_player} se ha eliminado con exito")
-            if not self.back_to_menu():
-                break
+                with open("players_data.json", "w") as players_file:
+                    json.dump({"players": updated_players}, players_file, indent=4)
+                print(f"El jugador {name_player} se ha eliminado con exito")
+                if not self.back_to_menu():
+                    break
 
 #CONSULTAS AVANZADAS #CONSULTAS AVANZADAS #CONSULTAS AVANZADAS #CONSULTAS AVANZADAS #CONSULTAS AVANZADAS
     def show_number_player_same_origen(self):
