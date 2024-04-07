@@ -151,6 +151,8 @@ class Menu:
             return False
         return True
 
+#VALIDACIONES #VALIDACIONES #VALIDACIONES #VALIDACIONES #VALIDACIONES #VALIDACIONES #VALIDACIONES #VALIDACIONES #VALIDACIONES
+
     def validate_float_input(prompt, minValue, maxValue):
         while True:
             user_input = input(prompt)
@@ -221,7 +223,6 @@ class Menu:
         }
         return player_statistics
 
-
 #visualizar_lista_jugadores #visualizar_lista_jugadores #visualizar_lista_jugadores #visualizar_lista_jugadores #visualizar_lista_jugadores
     def filter_by_field_position(self):
         while True:
@@ -287,7 +288,7 @@ class Menu:
             except FileNotFoundError:
                 print("No existe el archivo")
 
-#Visualizar estadisticas jugadores #Visualizar estadisticas jugadores #Visualizar estadisticas jugadores #Visualizar estadisticas jugadores #Visualizar estadisticas jugadores
+#estadisticas jugadores #estadisticas jugadores #estadisticas jugadores #estadisticas jugadores
     def view_player_statistics(self):
         while True:
             name_player = Menu.validate_string_input("Ingrese el nombre del jugador: ")
@@ -391,10 +392,18 @@ class Menu:
 
             height = Menu.validate_float_input("Ingrese la altura del jugador (Ej: 1.82) (Min:1.4, Max:2.1 MTS): ", 1.4, 2.1)
             weight = Menu.validate_float_input("Ingrese el peso del jugador (Ej: 82.5kgs) (Min:50, Max:130 KGS): ", 50, 130)
+            while True:
+                position_in_field = Menu.validate_string_input("Ingrese la posición en el campo del jugador (Ej: Delantero): ")
+                pattern_position = r"^(Portero|Portera|Defensa|Centrocampista|Defensa Central|Defensa Lateral|Mediapunta|Mediocentro defensivo|Interior Derecho|Interior Izquierdo|Delantero|Delantera|Delantero Centro|Delantera Centro|Segunda Punta|Extremo Izquierdo|Extremo Derecha|Segunda Punta)$"
 
-            position_in_field = Menu.validate_string_input("Ingrese la posición en el campo del jugador (Ej: Delantero): ")
+                if re.match(pattern_position, position_in_field):
+                    break
+                else:
+                    print("Error: La posicion ingresada no es valida")
+                    print("Las posiciones validas son: Portero|Portera|Defensa|Centrocampista|Defensa Central|Defensa Lateral|Mediapunta|Mediocentro defensivo|Interior Derecho|Interior Izquierdo|Delantero|Delantera|Delantero Centro|Delantera Centro|Segunda Punta|Extremo Izquierdo|Extremo Derecha|Segunda Punta")
+                    continue
 
-            club_militant = Menu.validate_string_input_min("Ingrese el club militante del jugador (Ej: Inter Miami/PSG): ")
+            club_militant = Menu.validate_string_input_min("Ingrese el club militante del jugador (Ej: Inter Miami): ")
             awards = Menu.validate_int_input("Ingrese los reconocimientos del jugador (Ej: 13): ", 0, 50)
 
             while True:
@@ -453,7 +462,6 @@ class Menu:
                 "ball_control": ball_control
             }
 
-            # Leer los datos actuales de los jugadores desde el archivo JSON
             try:
                 players_insert = self.load_players_json()
                 players = players_insert.get("players", [])
@@ -533,7 +541,18 @@ class Menu:
 
                     new_height = Menu.validate_float_input("Ingrese la nueva altura, si no desea cambiar este dato digite el mismo dato: ", 1.4, 2.1)
                     new_weight = Menu.validate_float_input("Ingrese el nuevo peso, si no desea cambiar este dato digite el mismo dato: ",50, 130)
-                    new_position_in_field = Menu.validate_string_input("Ingrese la nueva posicion de campo, si no desea cambiar este dato digite el mismo dato: ")
+                    while True:
+                        new_position_in_field = Menu.validate_string_input(
+                            "Ingrese la posición en el campo del jugador (Ej: Delantero): ")
+                        pattern_position = r"^(Portero|Portera|Defensa|Centrocampista|Defensa Central|Defensa Lateral|Mediapunta|Mediocentro defensivo|Interior Derecho|Interior Izquierdo|Delantero|Delantera|Delantero Centro|Delantera Centro|Segunda Punta|Extremo Izquierdo|Extremo Derecha|Segunda Punta)$"
+
+                        if re.match(pattern_position, new_position_in_field):
+                            break
+                        else:
+                            print("Error: La posicion ingresada no es valida")
+                            print(
+                                "Las posiciones validas son: Portero|Portera|Defensa|Centrocampista|Defensa Central|Defensa Lateral|Mediapunta|Mediocentro defensivo|Interior Derecho|Interior Izquierdo|Delantero|Delantera|Delantero Centro|Delantera Centro|Segunda Punta|Extremo Izquierdo|Extremo Derecha|Segunda Punta")
+                            continue
                     new_militant_club = Menu.validate_string_input_min("Ingrese el nuevo club militante, si no desea cambiar este dato digite el mismo dato: ")
                     new_awards = Menu.validate_int_input("Ingrese el nuevo(s) reconocimientos, si no desea cambiar este dato digite el mismo dato: ", 1, 100)
                     acceleration = Menu.validate_int_input("Ingrese la nueva estadistica de aceleracion, si no desea cambiar este dato digite el mismo dato: ",42, 99)
