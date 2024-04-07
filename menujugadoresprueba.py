@@ -183,6 +183,18 @@ class Menu:
                 continue
             return input_string
 
+    def validate_string_input_min(prompt):
+        while True:
+            input_string = input(prompt)
+            words = input_string.split()
+            if not all(len(word) >= 3 for word in words):
+                print("Error: Cada palabra debe tener almenos 3 letras")
+                continue
+            if not input_string.replace(" ", "").isalpha() or not input_string.istitle():
+                print("Error: Deben ser solo LETRAS, ademas ambas iniciales deben empezar con MAYUSCULAS")
+                continue
+            return input_string
+
     def load_players_json(self):
         try:
             with open("players_data.json", "r") as players_file:
@@ -341,7 +353,7 @@ class Menu:
     def insert_new_player(self):
         while True:
             # Solicitar al usuario que ingrese los datos del nuevo jugador
-            name_player = Menu.validate_string_input("Ingrese el nombre del jugador que desea ingresar (Ej: Lionel Andres Messi): ")
+            name_player = Menu.validate_string_input_min("Ingrese el nombre del jugador que desea ingresar (Ej: Lionel Andres Messi): ")
 
             player_dont_repit_name = self.load_players_json()
 
@@ -356,9 +368,7 @@ class Menu:
 
             while True:
                 date_of_birth = input("Ingrese la fecha de nacimiento, debe de usar este formato DIA/MES/AÑO Ej: 25/07/1991: ")
-
                 pattern_date = r"^(0[1-9]|[1-2][0-9]|3[0-1])/(0[1-9]|1[0-2])/((19[0-9]{2}|200[0-8]))$"
-
                 if re.match(pattern_date, date_of_birth):
                     try:
                         datetime.strptime(date_of_birth, '%d/%m/%Y')
@@ -367,42 +377,24 @@ class Menu:
                         print("Error: La fecha no es valida, debe de usar este formato DIA/MES/AÑO Ej: 10/07/1991 Ademas los dias deben concordar con el mes y esta limitado del AÑO 1900 a 2008")
                 else:
                     print("Error: La fecha no es valida, debe de usar este formato DIA/MES/AÑO Ej: 10/07/1991, Ademas los dias deben concordar con el mes y esta limitado del AÑO 1900 a 2008. ")
+
             origin = Menu.validate_string_input("Ingrese el origen del jugador (Ej: Costa Rica): ")
 
             while True:
                 gender = Menu.validate_string_input("Ingrese el género del jugador (Masculino/Femenino/Otro): ")
                 if not (gender == "Masculino" or gender == "Femenino" or gender == "Otro"):
-                    print("\nError: Debe ser Masculino o Femenino")
+                    print("\nError: Debe ser Masculino/Femenino/Otro")
                     continue
                 else:
                     break
 
-            while True:
-                try:
-                    height = float(input("Ingrese la altura del jugador (Ej: 1.82) (Min:1.0, Max:2.1 MTS): "))
-                    if height < 1.0 or height > 2.1:
-                        print("\nError: Debe ser una altura entre 1.0 y 2.1 MTS")
-                        continue
-                    else:
-                        break
-                except ValueError:
-                    print("Error: Ingrese solo NUMEROS decimales en el formato adecuado (Ej: 1.82)")
-                    continue
 
-            while True:
-                try:
-                    weight = float(input("Ingrese el peso del jugador (Ej: 82.5kgs) (Min:50, Max:130 KGS): "))
-                    if weight < 50 or weight > 130:
-                        print("\nError: Debe ser un peso entre 50 y 130kgs")
-                        continue
-                    else:
-                        break
-                except ValueError:
-                    print("Error: Ingrese solo NUMEROS decimales o enteros en el formato adecuado (Ej: 82.5 o 90 KGS)")
-                    continue
+            height = Menu.validate_float_input("Ingrese la altura del jugador (Ej: 1.82) (Min:1.4, Max:2.1 MTS): ", 1.4, 2.1)
+            weight = Menu.validate_float_input("Ingrese el peso del jugador (Ej: 82.5kgs) (Min:50, Max:130 KGS): ", 50, 130)
 
             position_in_field = Menu.validate_string_input("Ingrese la posición en el campo del jugador (Ej: Delantero): ")
-            club_militant = Menu.validate_string_input("Ingrese el club militante del jugador (Ej: Inter Miami): ")
+
+            club_militant = Menu.validate_string_input_min("Ingrese el club militante del jugador (Ej: Inter Miami/PSG): ")
             awards = Menu.validate_int_input("Ingrese los reconocimientos del jugador (Ej: 13): ", 0, 50)
 
             while True:
@@ -483,7 +475,6 @@ class Menu:
         while True:
             see_name = self.load_players_json()
 
-
             print("\nIMPORTANTE: El NOMBRE del jugador DEBE ser EXACTO (Ej: Lionel Andres Messi)...")
             ask_name = Menu.validate_string_input("Ingrese el nombre del jugador que desea consultar informacion: ")
 
@@ -509,7 +500,7 @@ class Menu:
 
             print("\nIMPORTANTE: El NOMBRE del jugador DEBE ser EXACTO (Ej: Lionel Andres Messi)...")
 
-            ask_player_name = Menu.validate_string_input("Ingrese el nombre del jugador que desea modificar: ")
+            ask_player_name = Menu.validate_string_input_min("Ingrese el nombre del jugador que desea modificar: ")
 
             existing_name = False
             for player in players:
@@ -522,9 +513,7 @@ class Menu:
 
                     while True:
                         new_date_of_birth = input("Ingrese la nueva fecha de nacimiento, debe de usar este formato DIA/MES/AÑO Ej: 25/07/1991: ")
-
                         pattern_date = r"^(0[1-9]|[1-2][0-9]|3[0-1])/(0[1-9]|1[0-2])/((19[0-9]{2}|200[0-8]))$"
-
                         if re.match(pattern_date, new_date_of_birth):
                             try:
                                 datetime.strptime(new_date_of_birth, '%d/%m/%Y')
@@ -540,35 +529,12 @@ class Menu:
                             break
                         else:
                             print("Debe ser exactamente (Masculino/Femenino/Otro), respetando la mayuscula inicial")
-
-                    while True:
-                        try:
-                            new_height = float(input("Ingrese la nueva altura, si no desea cambiar este dato digite el mismo dato: "))
-                            if new_height < 1.0 or new_height > 2.1:
-                                print("Error: Ingrese solo NUMEROS, ademas debe ser decimal, con un limite (Min:1.0, Max:2.1 MTS), (Ej: 1.82) : ")
-                                continue
-                            else:
-                                break
-                        except ValueError:
-                            print("Error: Ingrese solo NUMEROS decimales en el formato adecuado (Ej: 1.82)")
                             continue
 
-                    while True:
-                        try:
-                            new_weight = float(input("Ingrese el nuevo peso, si no desea cambiar este dato digite el mismo dato: "))
-                            if new_weight < 50 or new_weight > 130:
-                                print("Error: Ingrese solo NUMEROS, ademas debe ser decimal, con un limite (Min:50, Max:130 KGS), (Ej: 72) : ")
-                                continue
-                            else:
-                                break
-                        except ValueError:
-                            print("Error: Ingrese solo números decimales en el formato adecuado (Ej: 72, 72.5 KGS)")
-                            continue
-
+                    new_height = Menu.validate_float_input("Ingrese la nueva altura, si no desea cambiar este dato digite el mismo dato: ", 1.4, 2.1)
+                    new_weight = Menu.validate_float_input("Ingrese el nuevo peso, si no desea cambiar este dato digite el mismo dato: ",50, 130)
                     new_position_in_field = Menu.validate_string_input("Ingrese la nueva posicion de campo, si no desea cambiar este dato digite el mismo dato: ")
-
-                    new_militant_club = Menu.validate_string_input("Ingrese el nuevo club militante, si no desea cambiar este dato digite el mismo dato: ")
-
+                    new_militant_club = Menu.validate_string_input_min("Ingrese el nuevo club militante, si no desea cambiar este dato digite el mismo dato: ")
                     new_awards = Menu.validate_int_input("Ingrese el nuevo(s) reconocimientos, si no desea cambiar este dato digite el mismo dato: ", 1, 100)
                     acceleration = Menu.validate_int_input("Ingrese la nueva estadistica de aceleracion, si no desea cambiar este dato digite el mismo dato: ",42, 99)
                     new_short_passes = Menu.validate_int_input("Ingrese la nueva estadistica de pases cortos, si no desea cambiar este dato digite el mismo dato: ", 42, 99)
