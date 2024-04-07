@@ -632,7 +632,7 @@ class Menu:
             players = self.load_players_json()
 
             min_age = Menu.validate_int_input("Ingrese la edad minima del rango: ", 16, 124)
-            max_age = Menu.validate_int_input("Ingrese la edad maximo del rango: ", 16, 124)
+            max_age = Menu.validate_int_input("Ingrese la edad maximo del rango: ", min_age, 124)
 
 
             for player in players["players"]:
@@ -698,7 +698,29 @@ class Menu:
         pass
 
     def show_number_players_whose_speed_is_in_specific_range(self):
-        pass
+        while True:
+            players_speed_range = []
+
+            players = self.load_players_json()
+
+            speed_min = Menu.validate_int_input("Ingrese la velocidad minima del rango: ", 42, 99)
+            speed_max = Menu.validate_int_input("Ingrese la velocidad maxima del rango: ",speed_min, 99)
+
+            for player in players["players"]:
+                if speed_min <= player["speed"] <= speed_max:
+                    players_speed_range.append(player)
+
+            if players_speed_range:
+                print("Jugadores con rango de velocidad de", speed_min, "a ", speed_max)
+                for player in players_speed_range:
+                    print(json.dumps(player, indent=4))
+                if not self.back_to_menu():
+                    return
+            else:
+                print("No se encontraron jugadores con ese rango de velocidad")
+                if not self.back_to_menu():
+                    return
+
 
     def determinate_average_ball_control_for_players_in_a_specific_position(self):
         pass
