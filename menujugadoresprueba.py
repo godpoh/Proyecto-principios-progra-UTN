@@ -153,13 +153,28 @@ class Menu:
 
 #VALIDACIONES #VALIDACIONES #VALIDACIONES #VALIDACIONES #VALIDACIONES #VALIDACIONES #VALIDACIONES #VALIDACIONES #VALIDACIONES
 
+    def calculate_age(date_of_birth):
+        current_date = datetime.now()
+        date_of_birthh = datetime.strptime(date_of_birth, "%d/%m/%Y")
+        age = current_date.year - date_of_birthh.year - ((current_date.month, current_date.day) < (date_of_birthh.month, date_of_birthh.day))
+        return age
+
+    def validate_gender(prompt):
+        while True:
+            user_input = input(prompt)
+            if not (user_input == "Masculino" or user_input == "Femenino" or user_input == "Other"):
+                print("\nError: Debe ser Masculino/Femenino/Otro")
+                continue
+            else:
+                return user_input
+
     def validate_position_in_field(prompt):
         while True:
             user_input = input(prompt)
             pattern_position = r"^(Portero|Portera|Defensa|Centrocampista|Defensa Central|Defensa Lateral|Mediapunta|Mediocentro defensivo|Interior Derecho|Interior Izquierdo|Delantero|Delantera|Delantero Centro|Delantera Centro|Segunda Punta|Extremo Izquierdo|Extremo Derecha|Segunda Punta)$"
 
             if re.match(pattern_position, user_input):
-                break
+                return user_input
             else:
                 print("Error: La posicion ingresada no es valida")
                 print("Las posiciones validas son: Portero|Portera|Defensa|Centrocampista|Defensa Central|Defensa Lateral|Mediapunta|Mediocentro defensivo|Interior Derecho|Interior Izquierdo|Delantero|Delantera|Delantero Centro|Delantera Centro|Segunda Punta|Extremo Izquierdo|Extremo Derecha|Segunda Punta")
@@ -173,7 +188,7 @@ class Menu:
             if re.match(pattern_birth, user_input):
                 try:
                     datetime.strptime(user_input, "%d/%m/%Y")
-                    break
+                    return user_input
                 except ValueError:
                     print("Error: La fecha no es valida, debe de usar este formato DIA/MES/AÑO Ej: 10/07/1991 Ademas los dias deben concordar con el mes y esta limitado del AÑO 1900 a 2008")
             else:
@@ -184,7 +199,7 @@ class Menu:
             user_input = input(prompt)
             words = user_input.split()
             if all(len(word) < 4 for word in words):
-                print("Error: El valor minimo deben ser 4 letras, ADEMAS entre cada palabra deben de haber otras 4 (Ej: Rober Parl Romm)")
+                print("Error: El valor minimo deben ser 4 letras, ADEMAS entre cada palabra deben de haber otras 4 (Ej: Costa Rica/Omen )")
                 continue
             if not user_input.replace(" ", "").isalpha() or not user_input.istitle():
                 print("Error: Deben ser solo letras y empezar con MAYUSCULAS")
@@ -407,15 +422,7 @@ class Menu:
 
             date_of_birth = Menu.validate_date_of_birth("Ingrese la fecha de nacimiento, debe de usar este formato DIA/MES/AÑO Ej: 25/07/1991: ")
             origin = Menu.validate_string_input_origin("Ingrese el origen del jugador (Ej: Costa Rica): ")
-
-            while True:
-                gender = Menu.validate_string_input("Ingrese el género del jugador (Masculino/Femenino/Otro): ")
-                if not (gender == "Masculino" or gender == "Femenino" or gender == "Otro"):
-                    print("\nError: Debe ser Masculino/Femenino/Otro")
-                    continue
-                else:
-                    break
-
+            gender = Menu.validate_gender("Ingrese el género del jugador (Masculino/Femenino/Otro): ")
             height = Menu.validate_float_input("Ingrese la altura del jugador (Ej: 1.82) (Min:1.4, Max:2.1 MTS): ", 1.4, 2.1)
             weight = Menu.validate_float_input("Ingrese el peso del jugador (Ej: 82.5kgs) (Min:50, Max:130 KGS): ", 50, 130)
             position_in_field = Menu.validate_position_in_field("Ingrese la posición en el campo del jugador (Ej: Delantero): ")
@@ -452,7 +459,6 @@ class Menu:
             jump = Menu.validate_int_input("Ingrese el salto del jugador(Ej: 42-99): ", 42, 99)
             dribbling = Menu.validate_int_input("Ingrese la estadistica de regate del jugador(Ej: 42-99): ",42, 99)
             ball_control = Menu.validate_int_input("Ingrese la estadistica de control de balon del jugador(Ej: 42-99): ", 42, 99)
-
             # Crear un diccionario con los datos del nuevo jugador
             new_player = {
                 "id": idx,
@@ -465,7 +471,6 @@ class Menu:
                 "position_in_field": position_in_field,
                 "club_militant": club_militant,
                 "awards": awards,
-                "player": player,
                 "aceleration": aceleration,
                 "short_passes": short_passes,
                 "power_of_shot": power_of_shot,
@@ -478,18 +483,14 @@ class Menu:
                 "ball_control": ball_control
             }
 
-            try:
-                players_insert = self.load_players_json()
-                players = players_insert.get("players", [])
-            except FileNotFoundError:
-                players = []
+            players = self.load_players_json()
 
             # Agregar el nuevo jugador a la lista de jugadores
-            players.append(new_player)
+            players["players"].append(new_player)
 
             # Escribir los datos actualizados de los jugadores en el archivo JSON
             with open("players_data.json", "w") as file:
-                json.dump({"players": players}, file, indent=4)
+                json.dump(players, file, indent=4)
 
             print("\nNuevo jugador agregado con éxito.")
             if not self.back_to_menu():
@@ -534,15 +535,7 @@ class Menu:
 
                     new_name = Menu.validate_string_input_min("Ingrese el nuevo nombre, si no desea cambiar este dato digite el mismo dato: ")
                     new_date_of_birth = Menu.validate_date_of_birth("Ingrese la nueva fecha de nacimiento, debe de usar este formato DIA/MES/AÑO Ej: 25/07/1991: ")
-
-                    while True:
-                        new_gender = input("Ingrese el nuevo genero, si no desea cambiar este dato digite el mismo dato(Masculino/Femenino/Otro): ")
-                        if new_gender in ["Masculino", "Femenino", "Otro"]:
-                            break
-                        else:
-                            print("Debe ser exactamente (Masculino/Femenino/Otro), respetando la mayuscula inicial")
-                            continue
-
+                    new_gender = Menu.validate_gender("Ingrese el nuevo genero, si no desea cambiar este dato digite el mismo dato(Masculino/Femenino/Otro): ")
                     new_height = Menu.validate_float_input("Ingrese la nueva altura, si no desea cambiar este dato digite el mismo dato: ", 1.4, 2.1)
                     new_weight = Menu.validate_float_input("Ingrese el nuevo peso, si no desea cambiar este dato digite el mismo dato: ",50, 130)
                     new_position_in_field = Menu.validate_position_in_field("Ingrese la posición en el campo del jugador (Ej: Delantero): ")
@@ -633,7 +626,30 @@ class Menu:
                 break
 
     def show_all_players_in_an_age_range(self):
-        pass
+        while True:
+            players_in_range = []
+
+            players = self.load_players_json()
+
+            min_age = Menu.validate_int_input("Ingrese la edad minima del rango: ", 16, 124)
+            max_age = Menu.validate_int_input("Ingrese la edad maximo del rango: ", 16, 124)
+
+
+            for player in players["players"]:
+                age = Menu.calculate_age(player["date_of_birth"])
+                if min_age <= age <= max_age:
+                    players_in_range.append(player)
+
+            if players_in_range:
+                print("Jugadores en el rango de edad de", min_age, " a ", max_age, "años")
+                for player in players_in_range:
+                    print(json.dumps(player, indent=4))
+                if not self.back_to_menu():
+                    return
+            else:
+                print("No se encontraron los jugadores en el rango de edad de especificado")
+                if not self.back_to_menu():
+                    return
 
     def show_number_players_with_same_height_and_reference_to_gender_each_one(self):
         pass
