@@ -153,6 +153,44 @@ class Menu:
 
 #VALIDACIONES #VALIDACIONES #VALIDACIONES #VALIDACIONES #VALIDACIONES #VALIDACIONES #VALIDACIONES #VALIDACIONES #VALIDACIONES
 
+    def validate_position_in_field(prompt):
+        while True:
+            user_input = input(prompt)
+            pattern_position = r"^(Portero|Portera|Defensa|Centrocampista|Defensa Central|Defensa Lateral|Mediapunta|Mediocentro defensivo|Interior Derecho|Interior Izquierdo|Delantero|Delantera|Delantero Centro|Delantera Centro|Segunda Punta|Extremo Izquierdo|Extremo Derecha|Segunda Punta)$"
+
+            if re.match(pattern_position, user_input):
+                break
+            else:
+                print("Error: La posicion ingresada no es valida")
+                print("Las posiciones validas son: Portero|Portera|Defensa|Centrocampista|Defensa Central|Defensa Lateral|Mediapunta|Mediocentro defensivo|Interior Derecho|Interior Izquierdo|Delantero|Delantera|Delantero Centro|Delantera Centro|Segunda Punta|Extremo Izquierdo|Extremo Derecha|Segunda Punta")
+                continue
+
+    def validate_date_of_birth(prompt):
+        while True:
+            user_input = input(prompt)
+            pattern_birth = r"^(0[1-9]|[1-2][0-9]|3[0-1])/(0[1-9]|1[0-2])/((19[0-9]{2}|200[0-8]))$"
+
+            if re.match(pattern_birth, user_input):
+                try:
+                    datetime.strptime(user_input, "%d/%m/%Y")
+                    break
+                except ValueError:
+                    print("Error: La fecha no es valida, debe de usar este formato DIA/MES/AÑO Ej: 10/07/1991 Ademas los dias deben concordar con el mes y esta limitado del AÑO 1900 a 2008")
+            else:
+                print("Error: La fecha no es valida, debe de usar este formato DIA/MES/AÑO Ej: 10/07/1991, Ademas los dias deben concordar con el mes y esta limitado del AÑO 1900 a 2008. ")
+
+    def validate_string_input_origin(prompt):
+        while True:
+            user_input = input(prompt)
+            words = user_input.split()
+            if all(len(word) < 4 for word in words):
+                print("Error: El valor minimo deben ser 4 letras, ADEMAS entre cada palabra deben de haber otras 4 (Ej: Rober Parl Romm)")
+                continue
+            if not user_input.replace(" ", "").isalpha() or not user_input.istitle():
+                print("Error: Deben ser solo letras y empezar con MAYUSCULAS")
+                continue
+            return user_input
+
     def validate_float_input(prompt, minValue, maxValue):
         while True:
             user_input = input(prompt)
@@ -367,19 +405,8 @@ class Menu:
                 print("\nError: Este nombre ya esta en uso. Por favor, ingrese un nombre diferente.")
                 continue
 
-            while True:
-                date_of_birth = input("Ingrese la fecha de nacimiento, debe de usar este formato DIA/MES/AÑO Ej: 25/07/1991: ")
-                pattern_date = r"^(0[1-9]|[1-2][0-9]|3[0-1])/(0[1-9]|1[0-2])/((19[0-9]{2}|200[0-8]))$"
-                if re.match(pattern_date, date_of_birth):
-                    try:
-                        datetime.strptime(date_of_birth, '%d/%m/%Y')
-                        break
-                    except ValueError:
-                        print("Error: La fecha no es valida, debe de usar este formato DIA/MES/AÑO Ej: 10/07/1991 Ademas los dias deben concordar con el mes y esta limitado del AÑO 1900 a 2008")
-                else:
-                    print("Error: La fecha no es valida, debe de usar este formato DIA/MES/AÑO Ej: 10/07/1991, Ademas los dias deben concordar con el mes y esta limitado del AÑO 1900 a 2008. ")
-
-            origin = Menu.validate_string_input("Ingrese el origen del jugador (Ej: Costa Rica): ")
+            date_of_birth = Menu.validate_date_of_birth("Ingrese la fecha de nacimiento, debe de usar este formato DIA/MES/AÑO Ej: 25/07/1991: ")
+            origin = Menu.validate_string_input_origin("Ingrese el origen del jugador (Ej: Costa Rica): ")
 
             while True:
                 gender = Menu.validate_string_input("Ingrese el género del jugador (Masculino/Femenino/Otro): ")
@@ -389,20 +416,9 @@ class Menu:
                 else:
                     break
 
-
             height = Menu.validate_float_input("Ingrese la altura del jugador (Ej: 1.82) (Min:1.4, Max:2.1 MTS): ", 1.4, 2.1)
             weight = Menu.validate_float_input("Ingrese el peso del jugador (Ej: 82.5kgs) (Min:50, Max:130 KGS): ", 50, 130)
-            while True:
-                position_in_field = Menu.validate_string_input("Ingrese la posición en el campo del jugador (Ej: Delantero): ")
-                pattern_position = r"^(Portero|Portera|Defensa|Centrocampista|Defensa Central|Defensa Lateral|Mediapunta|Mediocentro defensivo|Interior Derecho|Interior Izquierdo|Delantero|Delantera|Delantero Centro|Delantera Centro|Segunda Punta|Extremo Izquierdo|Extremo Derecha|Segunda Punta)$"
-
-                if re.match(pattern_position, position_in_field):
-                    break
-                else:
-                    print("Error: La posicion ingresada no es valida")
-                    print("Las posiciones validas son: Portero|Portera|Defensa|Centrocampista|Defensa Central|Defensa Lateral|Mediapunta|Mediocentro defensivo|Interior Derecho|Interior Izquierdo|Delantero|Delantera|Delantero Centro|Delantera Centro|Segunda Punta|Extremo Izquierdo|Extremo Derecha|Segunda Punta")
-                    continue
-
+            position_in_field = Menu.validate_position_in_field("Ingrese la posición en el campo del jugador (Ej: Delantero): ")
             club_militant = Menu.validate_string_input_min("Ingrese el club militante del jugador (Ej: Inter Miami): ")
             awards = Menu.validate_int_input("Ingrese los reconocimientos del jugador (Ej: 13): ", 0, 50)
 
@@ -507,7 +523,6 @@ class Menu:
             players = player_information.get("players", [])
 
             print("\nIMPORTANTE: El NOMBRE del jugador DEBE ser EXACTO (Ej: Lionel Andres Messi)...")
-
             ask_player_name = Menu.validate_string_input_min("Ingrese el nombre del jugador que desea modificar: ")
 
             existing_name = False
@@ -517,19 +532,8 @@ class Menu:
                     print("\nInformacion basica del jugador:")
                     print(json.dumps(player, indent=4))
 
-                    new_name = Menu.validate_string_input("Ingrese el nuevo nombre, si no desea cambiar este dato digite el mismo dato: ")
-
-                    while True:
-                        new_date_of_birth = input("Ingrese la nueva fecha de nacimiento, debe de usar este formato DIA/MES/AÑO Ej: 25/07/1991: ")
-                        pattern_date = r"^(0[1-9]|[1-2][0-9]|3[0-1])/(0[1-9]|1[0-2])/((19[0-9]{2}|200[0-8]))$"
-                        if re.match(pattern_date, new_date_of_birth):
-                            try:
-                                datetime.strptime(new_date_of_birth, '%d/%m/%Y')
-                                break
-                            except ValueError:
-                                print("Error: La fecha no es valida, debe de usar este formato DIA/MES/AÑO Ej: 10/07/1991, Ademas los dias deben concordar con el mes y esta limitado del AÑO 1900 a 2008")
-                        else:
-                            print("Error: La fecha no es valida, debe de usar este formato DIA/MES/AÑO Ej: 10/07/1991, Ademas los dias deben concordar con el mes y esta limitado del AÑO 1900 a 2008. ")
+                    new_name = Menu.validate_string_input_min("Ingrese el nuevo nombre, si no desea cambiar este dato digite el mismo dato: ")
+                    new_date_of_birth = Menu.validate_date_of_birth("Ingrese la nueva fecha de nacimiento, debe de usar este formato DIA/MES/AÑO Ej: 25/07/1991: ")
 
                     while True:
                         new_gender = input("Ingrese el nuevo genero, si no desea cambiar este dato digite el mismo dato(Masculino/Femenino/Otro): ")
@@ -541,18 +545,7 @@ class Menu:
 
                     new_height = Menu.validate_float_input("Ingrese la nueva altura, si no desea cambiar este dato digite el mismo dato: ", 1.4, 2.1)
                     new_weight = Menu.validate_float_input("Ingrese el nuevo peso, si no desea cambiar este dato digite el mismo dato: ",50, 130)
-                    while True:
-                        new_position_in_field = Menu.validate_string_input(
-                            "Ingrese la posición en el campo del jugador (Ej: Delantero): ")
-                        pattern_position = r"^(Portero|Portera|Defensa|Centrocampista|Defensa Central|Defensa Lateral|Mediapunta|Mediocentro defensivo|Interior Derecho|Interior Izquierdo|Delantero|Delantera|Delantero Centro|Delantera Centro|Segunda Punta|Extremo Izquierdo|Extremo Derecha|Segunda Punta)$"
-
-                        if re.match(pattern_position, new_position_in_field):
-                            break
-                        else:
-                            print("Error: La posicion ingresada no es valida")
-                            print(
-                                "Las posiciones validas son: Portero|Portera|Defensa|Centrocampista|Defensa Central|Defensa Lateral|Mediapunta|Mediocentro defensivo|Interior Derecho|Interior Izquierdo|Delantero|Delantera|Delantero Centro|Delantera Centro|Segunda Punta|Extremo Izquierdo|Extremo Derecha|Segunda Punta")
-                            continue
+                    new_position_in_field = Menu.validate_position_in_field("Ingrese la posición en el campo del jugador (Ej: Delantero): ")
                     new_militant_club = Menu.validate_string_input_min("Ingrese el nuevo club militante, si no desea cambiar este dato digite el mismo dato: ")
                     new_awards = Menu.validate_int_input("Ingrese el nuevo(s) reconocimientos, si no desea cambiar este dato digite el mismo dato: ", 1, 100)
                     acceleration = Menu.validate_int_input("Ingrese la nueva estadistica de aceleracion, si no desea cambiar este dato digite el mismo dato: ",42, 99)
