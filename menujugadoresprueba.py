@@ -1,6 +1,7 @@
 import json
 import time
 import re
+from datetime import datetime
 
 class Menu:
     def __init__(self):
@@ -292,7 +293,7 @@ class Menu:
                 if not self.back_to_menu():
                     break
 
-            print("Estadisticas de ",name_player)
+            print("Estadisticas de ", name_player)
             player_statistics = self.get_player_statistics(player_found)
             print(json.dumps(player_statistics, indent=4))
             if not self.back_to_menu():
@@ -354,17 +355,18 @@ class Menu:
                 continue
 
             while True:
-                date_of_birth = input("Ingrese la fecha de nacimiento del jugador (Ej: 28 de octubre de 1991): ")
+                date_of_birth = input("Ingrese la fecha de nacimiento, debe de usar este formato DIA/MES/AÑO Ej: 25/07/1991: ")
 
-                # Definir el patron regex para validar la fecha de nacimiento
-                patter_date = r"^\d{1,2} de (enero|febrero|marzo|abril|mayo|junio|julio|agosto|septiembre|octubre|noviembre|diciembre) de \d{4}$"
+                pattern_date = r"^(0[1-9]|[1-2][0-9]|3[0-1])/(0[1-9]|1[0-2])/((19[0-9]{2}|200[0-8]))$"
 
-                # Verificar si la entrada coincide con el patron regex
-                if re.match(patter_date, date_of_birth.lower()):
-                    break
+                if re.match(pattern_date, date_of_birth):
+                    try:
+                        datetime.strptime(date_of_birth, '%d/%m/%Y')
+                        break
+                    except ValueError:
+                        print("Error: La fecha no es valida, debe de usar este formato DIA/MES/AÑO Ej: 10/07/1991 Ademas los dias deben concordar con el mes y esta limitado del AÑO 1900 a 2008")
                 else:
-                    print("Error: El formato de la fecha de nacimiento no es válido. Debe ser en el formato 'dd de mes de año'. Por ejemplo, '28 de octubre de 1991'.")
-
+                    print("Error: La fecha no es valida, debe de usar este formato DIA/MES/AÑO Ej: 10/07/1991, Ademas los dias deben concordar con el mes y esta limitado del AÑO 1900 a 2008. ")
             origin = Menu.validate_string_input("Ingrese el origen del jugador (Ej: Costa Rica): ")
 
             while True:
@@ -519,15 +521,18 @@ class Menu:
                     new_name = Menu.validate_string_input("Ingrese el nuevo nombre, si no desea cambiar este dato digite el mismo dato: ")
 
                     while True:
-                        new_date_of_birth = input("Ingrese la nueva fecha de nacimiento, si no desea cambiar este dato digite el mismo dato: ")
-                        # Definir el patron regex para validar la fecha de nacimiento
-                        pattern_date = r"^\d{1,2} de (enero|febrero|marzo|abril|mayo|junio|julio|agosto|septiembre|octubre|noviembre|diciembre) de \d{4}$"
+                        new_date_of_birth = input("Ingrese la nueva fecha de nacimiento, debe de usar este formato DIA/MES/AÑO Ej: 25/07/1991: ")
 
-                        # Verificar si la entrada coincide con el patron regex
-                        if re.match(pattern_date, new_date_of_birth.lower()):
-                            break
+                        pattern_date = r"^(0[1-9]|[1-2][0-9]|3[0-1])/(0[1-9]|1[0-2])/((19[0-9]{2}|200[0-8]))$"
+
+                        if re.match(pattern_date, new_date_of_birth):
+                            try:
+                                datetime.strptime(new_date_of_birth, '%d/%m/%Y')
+                                break
+                            except ValueError:
+                                print("Error: La fecha no es valida, debe de usar este formato DIA/MES/AÑO Ej: 10/07/1991, Ademas los dias deben concordar con el mes y esta limitado del AÑO 1900 a 2008")
                         else:
-                            print("Error: El formato de la fecha de nacimiento no es válido. Debe ser en el formato 'dd de mes de año'. Por ejemplo, '28 de octubre de 1991'.")
+                            print("Error: La fecha no es valida, debe de usar este formato DIA/MES/AÑO Ej: 10/07/1991, Ademas los dias deben concordar con el mes y esta limitado del AÑO 1900 a 2008. ")
 
                     while True:
                         new_gender = input("Ingrese el nuevo genero, si no desea cambiar este dato digite el mismo dato(Masculino/Femenino/Otro): ")
@@ -704,5 +709,5 @@ class Menu:
     def determinate_average_ball_control_for_players_in_a_specific_position(self):
         pass
 
-iniciador = Menu()
-iniciador.main()
+iniciator = Menu()
+iniciator.main()
