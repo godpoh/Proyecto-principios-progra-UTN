@@ -98,10 +98,10 @@ class Menu:
             print("2-Mostrar todos los jugadores que se encuentren en un rango de edad")
             print("3-Mostrar la cantidad de jugadores de acuerdo con la altura que tienen y con referencia al genero de cada uno")
             print("4-Mostrar los jugadores de Club específico")
-            print("5-Mostrar la cantidad de jugadores de acuerdo con la posición en el campo que posee, considerando UNICAMENTE los de genero femenino")
+            print("5-Mostrar la cantidad de jugadores de acuerdo con la posicion en el campo que posee, considerando UNICAMENTE los de genero femenino")
             print("6-Mostrar el top 10 de los jugadores con mayor altura y con mejor agilidad, la informacion que se muestra es el nombre, genero, origen, altura y agilidad")
-            print("7-Mostrar la cantidad de jugadores cuya velocidad esté en un rango específico")
-            print("8-Determinar el promedio de control de balón para jugadores en una posición específica")
+            print("7-Mostrar la cantidad de jugadores cuya velocidad este en un rango especifico")
+            print("8-Determinar el promedio de control de balon para jugadores en una posicion especifica")
             print("9-Volver al Menu Principal")
             print("--------------------------------------------------------------------------------------------------------------------")
 
@@ -751,7 +751,27 @@ class Menu:
                     return
 
     def determinate_average_ball_control_for_players_in_a_specific_position(self):
-        pass
+        while True:
+            players = self.load_players_json()
+            specific_position = input("Ingrese la posicion especifica para determinar el promedio de control de balon:")
+
+            total_ball_control_for_players = 0
+            num_players = 0
+
+            for player in players["players"]:
+                if player["position_in_field"] == specific_position:
+                    num_players += 1
+                    total_ball_control_for_players += player["ball_control"]
+
+            if num_players == 0:
+                print("No hay jugadores en la posicion especificada")
+                return
+
+            average_control_ball = total_ball_control_for_players / num_players
+
+            print(f"El promedio de control de balon es de {average_control_ball}")
+            if not self.back_to_menu():
+                return
 
 iniciator = Menu()
 iniciator.main()
