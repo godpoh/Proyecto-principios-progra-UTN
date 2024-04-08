@@ -1,19 +1,22 @@
 import json
 import time
 import re
-#VALIDACIONES  #VALIDACIONES  #VALIDACIONES  #VALIDACIONES  #VALIDACIONES  #VALIDACIONES  #VALIDACIONES  #VALIDACIONES
+from datetime import datetime
+
 
 class Menu:
     def __init__(self):
-        self.opciones_principales = {
-            '1': self.gestion_jugadores,
-            '2': self.visualizar_lista_jugadores,
-            '3': self.estadisticas_jugadores,
-            '4': self.consultas_avanzadas,
-            '5': self.salir
+        self.main_options = {
+            '1': self.player_managment,
+            '2': self.view_player_list,
+            '3': self.players_statistics,
+            '4': self.advanced_queries,
+            '5': self.exit
         }
 
-    def mostrar_menu_principal(self):
+    # Menu principal Menu principal Menu principal Menu principal Menu principal Menu principal
+
+    def show_main_menu(self):
         print("\n------------Menu Principal------------")
         print("1-Gestion de Jugadores")
         print("2-Visualizar lista de jugadores")
@@ -22,8 +25,7 @@ class Menu:
         print("5-Salir del sistema.")
         print("--------------------------------------")
 
-    #Menu principal Menu principal Menu principal Menu principal Menu principal Menu principal
-    def gestion_jugadores(self):
+    def player_managment(self):
         while True:
             print("\n------------Gestion de Jugadores------------")
             print("1-Insertar un nuevo jugador")
@@ -32,442 +34,420 @@ class Menu:
             print("4-Eliminar un jugador de la base de datos")
             print("5-Regresar al menu principal")
             print("--------------------------------------------")
-            opciones = input("Ingrese el digito de la opcion(1-5): ")
-
-            if opciones == '1':
-                self.insertar_nuevo_jugador()
-            elif opciones == '2':
-                self.leer_informacion_jugador()
-            elif opciones == '3':
-                self.modificar_datos_jugador()
-            elif opciones == '4':
-                self.eliminar_jugador()
-            elif opciones == '5':
+            option = input("Ingrese el digito de la opcion(1-5): ")
+            if option == '1':
+                self.insert_new_player()
+            elif option == '2':
+                self.read_player_information()
+            elif option == '3':
+                self.modify_player_data()
+            elif option == '4':
+                self.remove_player()
+            elif option == '5':
                 print("Volviendo al menu principal")
                 time.sleep(2)
                 return
             else:
                 print("Valor no valido, vuelva a intentarlo")
 
-    def visualizar_lista_jugadores(self):
+    def view_player_list(self):
         while True:
             print("\nSeleccione un filtro para visualizar la lista de jugadores")
             print("1-Por posicion de campo")
             print("2-Por origen(PAIS)")
             print("3-Por reconocimientos(BALONES DE ORO, ETC)")
-            print("4-Mostrar todos los jugadores")
-            print("5-Regresar al Menu Principal")
+            print("4-Regresar al Menu Principal")
             print("----------------------------------------------------------")
 
-            opcion = input("Ingrese el numero de la opcion deseada: ")
-
-            if opcion == '1':
-                self.filtrar_por_posicion_campo()
-            elif opcion == '2':
-                self.filtrar_por_origen()
-            elif opcion == '3':
-                self.filtrar_por_reconocimientos()
-            elif opcion == '4':
-                self.visualizar_todos_jugadores()
-            elif opcion == '5':
+            option = input("Ingrese el numero de la opcion deseada: ")
+            if option == '1':
+                self.filter_by_field_position()
+            elif option == '2':
+                self.filter_by_origen()
+            elif option == '3':
+                self.filter_by_recognitions()
+            elif option == '4':
                 print("Volviendo al menu principal")
                 time.sleep(2)
                 return
             else:
                 print("Opcion invalida, porfavor seleccione una opcion valida.")
 
-    def estadisticas_jugadores(self):
+    def players_statistics(self):
         while True:
             print("\nEstadisticas de jugadores: ")
             print("1-Ver las estadisticas de un jugador")
             print("2-Comparar las estadisticas de dos jugadores")
             print("3-Volver al menu principal")
 
-            opcion = input("Seleccione una opcion y digitela: ")
-
-            if opcion == '1':
-                self.ver_estadisticas_jugador()
-
-            elif opcion == '2':
-                self.comparar_estadisticas()
-
-            elif opcion == '3':
+            option = input("Seleccione una opcion y digitela: ")
+            if option == '1':
+                self.view_player_statistics()
+            elif option == '2':
+                self.compare_statistics()
+            elif option == '3':
                 print("Volviendo al menu principal")
                 time.sleep(2)
-                return()
+                return
             else:
                 print("Opcion invalida, intentelo de nuevo.")
 
-    def consultas_avanzadas(self):
+    def advanced_queries(self):
         while True:
-            print("\n-----------------------------------------------Consultas Avanzadas-----------------------------------------------")
+            print(
+                "\n-----------------------------------------------Consultas Avanzadas-----------------------------------------------")
             print("1-Mostrar la cantidad de jugadores de acuerdo al origen")
             print("2-Mostrar todos los jugadores que se encuentren en un rango de edad")
-            print("3-Mostrar la cantidad de jugadores de acuerdo con la altura que tienen y con referencia al genero de cada uno")
+            print(
+                "3-Mostrar la cantidad de jugadores de acuerdo con la altura que tienen y con referencia al genero de cada uno")
             print("4-Mostrar los jugadores de Club específico")
-            print("5-Mostrar la cantidad de jugadores de acuerdo con la posición en el campo que posee, considerando unicamente los de genero femenino")
-            print("6-Mostrar el top 10 de los jugadores con mayor altura y con mejor agilidad, la informacion que se muestra es el nombre, genero, origen, altura y agilidad")
+            print(
+                "5-Mostrar la cantidad de jugadores de acuerdo con la posición en el campo que posee, considerando UNICAMENTE los de genero femenino")
+            print(
+                "6-Mostrar el top 10 de los jugadores con mayor altura y con mejor agilidad, la informacion que se muestra es el nombre, genero, origen, altura y agilidad")
             print("7-Mostrar la cantidad de jugadores cuya velocidad esté en un rango específico")
             print("8-Determinar el promedio de control de balón para jugadores en una posición específica")
             print("9-Volver al Menu Principal")
-            print("--------------------------------------------------------------------------------------------------------------------")
+            print(
+                "--------------------------------------------------------------------------------------------------------------------")
 
-            opcion = input("Seleccione una opcion y digitela: ")
-
-            if opcion == "1":
-                self.Mostrar_cantidad_jugadores_mismo_origen()
-            if opcion == "2":
-                self.Mostrar_todos_los_jugadores_que_se_encuentren_en_un_rango_de_edad()
-            if opcion == "3":
-                self.Mostrar_cantidad_jugadores_con_misma_altura_y_tienen_referencia_al_genero_de_cada_uno()
-            if opcion == "4":
-                self.Mostrar_los_jugadores_de_club_específico()
-            if opcion == "5":
-                self.Mostrar_cantidad_jugadores_acuerdo_con_la_posición_en_el_campo_considerando_unicamente_los_de_género_femenino()
-            if opcion == "6":
-                self.Mostrar_top_diez_jugadores_mayor_altura_con_mejor_agilidad_la_información_muestra_nombre_genero_origen_altura_agilidad()
-            if opcion == "7":
-                self.Mostrar_cantidad_jugadores_cuya_velocidad_este_en_un_rango_específico()
-            if opcion == "8":
-                self.Determinar_promedio_control_balon_para_jugadores_en_una_posición_específica()
-            if opcion == "9":
+            option = input("Seleccione una opcion y digitela: ")
+            if option == "1":
+                self.show_number_player_same_origen()
+            if option == "2":
+                self.show_all_players_in_an_age_range()
+            if option == "3":
+                self.show_number_players_with_same_height_and_reference_to_gender_each_one()
+            if option == "4":
+                self.show_all_players_in_a_specific_club()
+            if option == "5":
+                self.show_number_of_players_accordance_position_on_field_considering_only_gender_female()
+            if option == "6":
+                self.show_top_ten_players_highest_with_best_agility_information_sample_name_gender_origin_height_agility()
+            if option == "7":
+                self.show_number_players_whose_speed_is_in_specific_range()
+            if option == "8":
+                self.determinate_average_ball_control_for_players_in_a_specific_position()
+            if option == "9":
                 print("Volviendo al menu principal...")
                 time.sleep(2)
-                return()
+                return
 
-    def salir(self):
+    def exit(self):
         print("Saliendo del sistema.")
         exit()
 
     def main(self):
         while True:
-            self.mostrar_menu_principal()
-            opcion = input("Seleccione una opción: ")
-            accion = self.opciones_principales.get(opcion)
+            self.show_main_menu()
+            option = input("Seleccione una opción: ")
+            accion = self.main_options.get(option)
             if accion:
                 accion()
             else:
                 print("\nError: Opción no válida. Por favor, seleccione una opción válida.\n")
                 time.sleep(1)
 
-#visualizar_lista_jugadores #visualizar_lista_jugadores #visualizar_lista_jugadores #visualizar_lista_jugadores #visualizar_lista_jugadores
-    def filtrar_por_posicion_campo(self):
+    def back_to_menu(self):
+        print("IMPORTANTE: Si se digita algo diferente de 'SI' se tomara como un 'NO'")
+        option = input("Desea realizar otra accion? (SI/NO): ")
+        if option.lower() != 'si':
+            print("Volviendo al menu anterior...")
+            time.sleep(2)
+            return False
+        return True
+
+    # VALIDACIONES #VALIDACIONES #VALIDACIONES #VALIDACIONES #VALIDACIONES #VALIDACIONES #VALIDACIONES #VALIDACIONES #VALIDACIONES
+    def calculate_age(date_of_birth):
+        current_date = datetime.now()
+        date_of_birthh = datetime.strptime(date_of_birth, "%d/%m/%Y")
+        age = current_date.year - date_of_birthh.year - (
+                    (current_date.month, current_date.day) < (date_of_birthh.month, date_of_birthh.day))
+        return age
+
+    def validate_gender(prompt):
         while True:
-            print("IMPORTANTE: Deben ser solo LETRAS, ademas ambas iniciales deben empezar con MAYUSCULAS ej: Delantero o Extremo Derecho.")
-            filtrar = input("Ingrese la posicion que desea filtrar de los jugadores,(SI desea volver al menu anterior digite (EXIT): ")
-            if filtrar.lower() == "exit":
-                return()
-            if not filtrar.replace(" ","").isalpha() or not filtrar.istitle():
+            user_input = input(prompt)
+            if not (user_input == "Masculino" or user_input == "Femenino" or user_input == "Otro"):
+                print("\nError: Debe ser Masculino/Femenino/Otro")
                 continue
+            else:
+                return user_input
+
+    def validate_position_in_field(prompt):
+        while True:
+            user_input = input(prompt)
+            pattern_position = r"^(Portero|Portera|Defensa|Centrocampista|Defensa Central|Defensa Lateral|Mediapunta|Mediocentro defensivo|Interior Derecho|Interior Izquierdo|Delantero|Delantera|Delantero Centro|Delantera Centro|Segunda Punta|Extremo Izquierdo|Extremo Derecha|Segunda Punta)$"
+
+            if re.match(pattern_position, user_input):
+                return user_input
+            else:
+                print("Error: La posicion ingresada no es valida")
+                print(
+                    "Las posiciones validas son: Portero|Portera|Defensa|Centrocampista|Defensa Central|Defensa Lateral|Mediapunta|Mediocentro defensivo|Interior Derecho|Interior Izquierdo|Delantero|Delantera|Delantero Centro|Delantera Centro|Segunda Punta|Extremo Izquierdo|Extremo Derecha|Segunda Punta")
+                continue
+
+    def validate_date_of_birth(prompt):
+        while True:
+            user_input = input(prompt)
+            pattern_birth = r"^(0[1-9]|[1-2][0-9]|3[0-1])/(0[1-9]|1[0-2])/((19[0-9]{2}|200[0-8]))$"
+
+            if re.match(pattern_birth, user_input):
+                try:
+                    datetime.strptime(user_input, "%d/%m/%Y")
+                    return user_input
+                except ValueError:
+                    print(
+                        "Error: La fecha no es valida, debe de usar este formato DIA/MES/AÑO Ej: 10/07/1991 Ademas los dias deben concordar con el mes y esta limitado del AÑO 1900 a 2008")
+            else:
+                print(
+                    "Error: La fecha no es valida, debe de usar este formato DIA/MES/AÑO Ej: 10/07/1991, Ademas los dias deben concordar con el mes y esta limitado del AÑO 1900 a 2008. ")
+
+    def validate_string_input_origin(prompt):
+        while True:
+            user_input = input(prompt)
+            words = user_input.split()
+            if all(len(word) < 4 for word in words):
+                print(
+                    "Error: El valor minimo deben ser 4 letras, ADEMAS entre cada palabra deben de haber otras 4 (Ej: Costa Rica/Omen )")
+                continue
+            if not user_input.replace(" ", "").isalpha() or not user_input.istitle():
+                print("Error: Deben ser solo letras y empezar con MAYUSCULAS")
+                continue
+            return user_input
+
+    def validate_float_input(prompt, minValue, maxValue):
+        while True:
+            user_input = input(prompt)
             try:
-                with open("players_data.json", "r") as jugadores_file:
-                    jugadores = json.load(jugadores_file)
-                    # esta primera (jugador_expresion) es una variable de iteracion que se utiliza para recorrer cada elemento de la lista jugadores.
-                    filtrar_jugadores = [jugador_expresion for jugador_expresion in jugadores if jugador_expresion["posicion_campo"] == filtrar]
-                    if jugadores:
+                user_input = float(user_input)
+                if minValue <= user_input <= maxValue:
+                    return user_input
+                else:
+                    print(f"El valor debe de estar entre {minValue} y {maxValue}")
+            except ValueError:
+                print("Error: Debe ingresar un numero float")
+
+    def validate_int_input(prompt, minValue, maxValue):
+        while True:
+            user_input = input(prompt)
+            try:
+                user_input = int(user_input)
+                if minValue <= user_input <= maxValue:
+                    return user_input
+                else:
+                    print(f"El valor debe de estar entre {minValue} y {maxValue}")
+            except ValueError:
+                print("Error: Debe ingresar un numero entero")
+
+    def validate_string_input(prompt):
+        while True:
+            input_string = input(prompt)
+            if not input_string.replace(" ", "").isalpha() or not input_string.istitle():
+                print("Error: Deben ser solo LETRAS, ademas ambas iniciales deben empezar con MAYUSCULAS")
+                continue
+            return input_string
+
+    def validate_string_input_min(prompt):
+        while True:
+            input_string = input(prompt)
+            words = input_string.split()
+            if not all(len(word) >= 3 for word in words):
+                print("Error: Cada palabra debe tener almenos 3 letras")
+                continue
+            if not input_string.replace(" ", "").isalpha() or not input_string.istitle():
+                print("Error: Deben ser solo LETRAS, ademas ambas iniciales deben empezar con MAYUSCULAS")
+                continue
+            return input_string
+
+    def load_players_json(self):
+        try:
+            with open("players_data.json", "r") as players_file:
+                return json.load(players_file)
+        except FileNotFoundError:
+            print("El archivo players_data.json no se ha encontrado")
+            return None
+        except json.decoder.JSONDecodeError:
+            print("El archivo players_data.json no contiene datos legibles")
+            return None
+
+    def get_player_statistics(self, player_found):
+        player_statistics = {
+            "acceleration": player_found["acceleration"],
+            "short_passes": player_found["short_passes"],
+            "power_of_shot": player_found["power_of_shot"],
+            "long_passes": player_found["long_passes"],
+            "speed": player_found["speed"],
+            "agility": player_found["agility"],
+            "resistance": player_found["resistance"],
+            "jump": player_found["jump"],
+            "dribbling": player_found["dribbling"],
+            "ball_control": player_found["ball_control"]
+        }
+        return player_statistics
+
+    # visualizar_lista_jugadores #visualizar_lista_jugadores #visualizar_lista_jugadores #visualizar_lista_jugadores #visualizar_lista_jugadores
+    def filter_by_field_position(self):
+        while True:
+            print(
+                "IMPORTANTE: Deben ser solo LETRAS, ademas ambas iniciales deben empezar con MAYUSCULAS ej: Delantero o Extremo Derecho.")
+            position_filter = Menu.validate_string_input("Ingrese la posicion que desea filtrar de los jugadores: ")
+            try:
+                players = self.load_players_json()
+                # esta primera(jugador_expresion)es una variable de iteracion que se utiliza para recorrer cada elemento de la lista jugadores.
+                if players:
+                    filter_players = [player_expression for player_expression in players["players"] if
+                                      player_expression["position_in_field"] == position_filter]
+
+                    if players:
                         print("Jugadores encontrados: ")
-                        for jugador_expresion in filtrar_jugadores:
-                            print(json.dumps(jugador_expresion, indent=4))
-                        opcion = input("Desea realizar otra consulta? (SI/NO): ")
-                        if opcion.lower() != 'si':
-                            print("Volviendo al menu anterior...")
-                            time.sleep(2)
-                            break
+                        for player_expression in filter_players:
+                            print(json.dumps(player_expression, indent=4))
                     else:
                         print("No se encontraron jugadores de la posicion especificida")
+                else:
+                    print("No se encontraron datos de jugadores en el archivo")
 
+                if not self.back_to_menu():
+                    break
             except FileNotFoundError:
                 print("No existe el archivo")
-            except json.decoder.JSONDecodeError:
-                print("El archivo players_data.json no contiene datos legibles")
+                break
 
-    def filtrar_por_origen(self):
+    def filter_by_origen(self):
         while True:
             print(
                 "IMPORTANTE: Deben ser solo LETRAS, ademas ambas iniciales deben empezar con MAYUSCULAS ej: Belgica o Costa Rica.")
-            filtrar = input("Ingrese el pais de origen que desea filtrar de los jugadores,(SI desea volver al menu anterior digite (EXIT):: ")
-            if filtrar.lower() == "exit":
-                return()
-            if not filtrar.replace(" ","").isalpha() or not filtrar.istitle():
-                continue
+            filter = Menu.validate_string_input("Ingrese el pais de origen que desea filtrar de los jugadores: ")
             try:
-                with open("players_data.json", "r") as jugadores_file:
-                    jugadores = json.load(jugadores_file)
-                    # esta primera (jugador_expresion) es una variable de iteracion que se utiliza para recorrer cada elemento de la lista jugadores.
-                    filtrar_jugadores = [jugador_expresion for jugador_expresion in jugadores if jugador_expresion["origen"] == filtrar]
-                    if jugadores:
-                        print("Jugadores encontrados: ")
-                        for jugador_expresion in filtrar_jugadores:
-                            print(json.dumps(jugador_expresion, indent=4))
-                        opcion = input("Desea realizar otra consulta? (SI/NO): ")
-                        if opcion.lower() != 'si':
-                            print("Volviendo al menu anterior...")
-                            time.sleep(2)
-                            break
-                    else:
-                        print("No se encontraron jugadores del origen especificido")
-
-            except FileNotFoundError:
-                print("No existe el archivo")
-            except json.decoder.JSONDecodeError:
-                print("El archivo players_data.json no contiene datos legibles")
-
-    def filtrar_por_reconocimientos(self):
-        while True:
-            print("IMPORTANTE: Deben ser solo NUMEROS, (Ej: 10, 20, 2)")
-            try:
-                filtrar = int(input("Ingrese los reconocimientos que desea filtrar de los jugadores(SI desea volver al menu anterior digite (000):: "))
-                if filtrar == 000:
-                    return()
-            except ValueError:
-                print("Error: Debe ingresar un NUMERO entero")
-                continue
-
-            try:
-                with open("players_data.json", "r") as jugadores_file:
-                    jugadores = json.load(jugadores_file)
-                    # esta primera (jugador_expresion) es una variable de iteracion que se utiliza para recorrer cada elemento de la lista jugadores.
-                    filtrar_jugadores = [jugador_expresion for jugador_expresion in jugadores if jugador_expresion["reconocimientos"] == filtrar]
-                    if jugadores:
-                        print("Jugadores encontrados: ")
-                        for jugador_expresion in filtrar_jugadores:
-                            print(json.dumps(jugador_expresion, indent=4))
-                        opcion = input("Desea realizar otra consulta? (SI/NO): ")
-                        if opcion.lower() != 'si':
-                            print("Volviendo al menu anterior...")
-                            time.sleep(2)
-                            break
-                    else:
-                        print("No se encontraron jugadores con los reconocimientos especificidos")
-
-            except FileNotFoundError:
-                print("No existe el archivo")
-            except json.decoder.JSONDecodeError:
-                print("El archivo players_data.json no contiene datos legibles")
-
-    def visualizar_todos_jugadores(self):
-        try:
-            with open("players_data.json", "r") as file:
-                jugadores_datos = json.load(file)
-                print(json.dumps(jugadores_datos, indent=4))
-        except FileNotFoundError:
-            print("El archivo 'players_data.json' no se encontró.")
-        except json.JSONDecodeError:
-            print("El archivo 'players_data.json' no contiene datos JSON válidos.")
-        while True:
-            opcion = input("Para volver al menu anterior digite (exit): ")
-            if opcion.lower() == 'exit':
-                print("Volviendo al menu.")
-                time.sleep(2)
-                return
-            else:
-                print("Por favor, digite (exit).")
-
-#Visualizar estadisticas jugadores #Visualizar estadisticas jugadores #Visualizar estadisticas jugadores #Visualizar estadisticas jugadores #Visualizar estadisticas jugadores
-
-    def ver_estadisticas_jugador(self):
-        while True:
-            jugador_encontrado = False
-            while True:
-                nombre_jugador = input("Ingrese el nombre de jugador cuyas estadisticas desea ver: ")
-                if not nombre_jugador.replace(" ", "").isalpha() or not nombre_jugador.istitle():
-                    print("Error: El nombre de jugador debe iniciar con MAYUSCULA y solo se permiten letras.")
-                    continue
-                else:
+                if not self.load_players_json():
                     break
-
-            with open("estadistica_jugador.json", "r") as file:
-                estadisticas = json.load(file)
-
-            for nombre in estadisticas:
-                if nombre["Jugador"] == nombre_jugador:
-                    jugador_encontrado = True
-                    print("\nEstadisticas de Jugador: ")
-                    print(json.dumps(nombre, indent=4))
-
-                    opcion = input("Desea consultar a otro jugador?(SI/NO): ")
-                    if opcion.lower() != "si":
-                        print("Volviendo al menu anterior")
-                        time.sleep(2)
-                        return ()
-                    else:
+                players = self.load_players_json()
+                # esta primera (jugador_expresion) es una variable de iteracion que se utiliza para recorrer cada elemento de la lista jugadores.
+                filter_players = [player_expression for player_expression in players["players"] if
+                                  player_expression["origin"] == filter]
+                if players:
+                    print("Jugadores encontrados: ")
+                    for player_expression in filter_players:
+                        print(json.dumps(player_expression, indent=4))
+                    if not self.back_to_menu():
                         break
+                else:
+                    print("No se encontraron jugadores del origen especificido")
+            except FileNotFoundError:
+                print("No existe el archivo")
 
-            if not jugador_encontrado:
-                print("El jugador no fue encontrado o no existe.")
-                opcion = input("Desea consultar a otro jugador?(SI/NO): ")
-                if opcion.lower() != "si":
-                    print("Volviendo al menu anterior")
-                    time.sleep(2)
-                    return ()
-
-    def comparar_estadisticas(self):
+    def filter_by_recognitions(self):
+        print("IMPORTANTE: Deben ser solo NUMEROS, (Ej: 10, 20, 2)")
+        filter = Menu.validate_int_input("Ingrese los reconocimientos que desea filtrar de los jugadores: ", 0, 50)
         while True:
-            while True:
-                nombre1 = input("Ingrese el nombre del primer jugador, si desea volver al menu anterior digite (EXIT): ")
-
-                if nombre1.lower() == "salir":
-                    print("Volviendo al menu anterior")
-                    time.sleep(2)
-                    return()
-
-                if not nombre1.replace(" ", "").isalpha() or not nombre1.istitle():
-                    print("Error: El nombre de jugador debe iniciar con MAYUSCULA y solo se permiten letras.")
-                    continue
+            try:
+                players = self.load_players_json()
+                # esta primera (jugador_expresion) es una variable de iteracion que se utiliza para recorrer cada elemento de la lista jugadores.
+                filter_player = [player_expression for player_expression in players["players"] if
+                                 player_expression["awards"] == filter]
+                if players:
+                    print("Jugadores encontrados: ")
+                    for player_expression in filter_player:
+                        print(json.dumps(player_expression, indent=4))
+                    if not self.back_to_menu():
+                        break
                 else:
+                    print("No se encontraron jugadores con los reconocimientos especificidos")
+            except FileNotFoundError:
+                print("No existe el archivo")
+
+    # estadisticas jugadores #estadisticas jugadores #estadisticas jugadores #estadisticas jugadores
+    def view_player_statistics(self):
+        while True:
+            name_player = Menu.validate_string_input("Ingrese el nombre del jugador: ")
+
+            players = self.load_players_json()
+
+            player_found = None
+            for player in players["players"]:
+                if player["name"] == name_player:
+                    player_found = player
                     break
 
-            while True:
-                nombre2 = input("Ingrese el nombre del segundo jugador: ")
-                if not nombre2.replace(" ", "").isalpha() or not nombre2.istitle():
-                    print("Error: El nombre de jugador debe iniciar con MAYUSCULA y solo se permiten letras.")
-                    continue
-                else:
+            if player_found is None:
+                print("El jugador no se encuentra en la base de datos")
+                if not self.back_to_menu():
                     break
 
-            with open("players_data.json", "r") as file:
-                estadistica = json.load(file)
+            print("Estadisticas de ", name_player)
+            player_statistics = self.get_player_statistics(player_found)
+            print(json.dumps(player_statistics, indent=4))
+            if not self.back_to_menu():
+                break
 
-            jugador1 = None
-            jugador2 = None
+    def compare_statistics(self):
+        while True:
+            name1 = Menu.validate_string_input("Ingrese el nombre del primer jugador: ")
+            name2 = Menu.validate_string_input("Ingrese el nombre del segundo jugador: ")
 
-            for jugador in estadistica:
-                if jugador["nombre"] == nombre1:
-                    jugador1 = jugador
-                elif jugador["nombre"] == nombre2:
-                    jugador2 = jugador
+            players = self.load_players_json()
 
-            if jugador1 is None or jugador2 is None:
-                print("Uno o ambos jugadores no se encontraron, intente de nuevo")
-                opcion = input("Desea hacer otra comparacion?(SI/NO): ")
-                if opcion.lower() != "si":
-                    print("Volviendo al menu anterior")
-                    time.sleep(2)
-                    return ()
+            player1 = None
+            player2 = None
 
+            for player in players["players"]:
+                if player["name"] == name1:
+                    player1 = player
+                elif player["name"] == name2:
+                    player2 = player
+
+            if player1 is None or player2 is None:
+                print("Uno o ambos jugadores no se encontraron, intentelo de nuevo.")
+                if not self.back_to_menu():
+                    break
                 continue
 
-            if jugador1["posicion_campo"] != jugador2["posicion_campo"]:
+            if player1["position_in_field"] != player2["position_in_field"]:
                 print("Los jugadores no poseen la misma posicion de campo y no son comparables")
-                opcion = input("Desea hacer otra comparacion?(SI/NO): ")
-                if opcion.lower() != "si":
-                    print("Volviendo al menu anterior")
-                    time.sleep(2)
-                    return()
-
+                if not self.back_to_menu():
+                    break
                 continue
 
             print("\nEstadisticas del primer jugador: ")
-            print(json.dumps(jugador1, indent=4))
+            player_statistics1 = self.get_player_statistics(player1)
+            print(json.dumps(player_statistics1, indent=4))
+
             print("\nEstadisticas del segundo jugador: ")
-            print(json.dumps(jugador2, indent=4))
+            player_statistics2 = self.get_player_statistics(player2)
+            print(json.dumps(player_statistics2, indent=4))
 
-            opcion = input("Desea hacer otra comparacion?(SI/NO): ")
-            if opcion.lower() != "si":
-                print("Volviendo al menu anterior")
-                time.sleep(2)
-                return ()
+            if not self.back_to_menu():
+                break
 
-            continue
-
-#Gestion de jugadores Gestion de jugadores Gestion de jugadores Gestion de jugadores
-
-    def insertar_nuevo_jugador(self):
+    # Gestion de jugadores Gestion de jugadores Gestion de jugadores Gestion de jugadores
+    def insert_new_player(self):
         while True:
             # Solicitar al usuario que ingrese los datos del nuevo jugador
-            nombre_jugador = input("Ingrese el nombre del jugador que desea ingresar (Ej: Lionel Andres Messi) o (SALIR, regresar al menu de gestion): ")
+            name_player = Menu.validate_string_input_min(
+                "Ingrese el nombre del jugador que desea ingresar (Ej: Lionel Andres Messi): ")
+            player_dont_repit_name = self.load_players_json()
 
-            if nombre_jugador.lower() == "salir":
-                return()
-
-            if not nombre_jugador.replace(" ", "").isalpha() or not nombre_jugador.istitle():
-                print("\nError: El nombre debe contener solo letras y comenzar con mayuscula Ej: Lionel Andres.")
-                continue
-
-            with open("players_data.json", "r") as jugadores_file:
-                jugadores_no_repetir_nombre = json.load(jugadores_file)
-
-            nombre_existente = False
-            for jugador in jugadores_no_repetir_nombre:
-                if jugador.get("nombre") == nombre_jugador:
-                    nombre_existente = True
-
-            if nombre_existente:
+            existing_name = False
+            for player in player_dont_repit_name["players"]:
+                if player.get("name") == name_player:
+                    existing_name = True
+            if existing_name:
                 print("\nError: Este nombre ya esta en uso. Por favor, ingrese un nombre diferente.")
                 continue
 
-            while True:
-                fecha_nacimiento = input("Ingrese la fecha de nacimiento del jugador (Ej: 28 de octubre de 1991): ")
-
-                # Definir el patron regex para validar la fecha de nacimiento
-                patron_fecha = r"^\d{1,2} de (enero|febrero|marzo|abril|mayo|junio|julio|agosto|septiembre|octubre|noviembre|diciembre) de \d{4}$"
-
-                # Verificar si la entrada coincide con el patron regex
-                if re.match(patron_fecha, fecha_nacimiento.lower()):
-                    break
-                else:
-                    print("Error: El formato de la fecha de nacimiento no es válido. Debe ser en el formato 'dd de mes de año'. Por ejemplo, '28 de octubre de 1991'.")
-
-            while True:
-                origen = input("Ingrese el origen del jugador (Ej: Costa Rica): ")
-                if not origen.replace(" ", "").isalpha() or not origen.istitle():
-                    print("\nError: El nombre debe contener solo letras y debe empezar con mayuscula.")
-                    continue
-                else:
-                    break
-
-            while True:
-                genero = input("Ingrese el género del jugador (Masculino/Femenino/Otro): ")
-                if not genero.isalpha():
-                    print("\nError: El genero debe contener solo letras")
-                if not (genero == "Masculino" or genero == "Femenino" or genero == "Otro"):
-                    print("\nError: Debe ser Masculino o Femenino")
-                    continue
-                else:
-                    break
-
-            while True:
-                try:
-                    altura = float(input("Ingrese la altura del jugador (Ej: 1.82) (Min:1.0, Max:2.1 MTS): "))
-                    if altura < 1.0 or altura > 2.1:
-                        print("\nError: Debe ser una altura entre 1.0 y 2.1 MTS")
-                        continue
-                    else:
-                        break
-                except ValueError:
-                    print("Error: Ingrese solo NUMEROS decimales en el formato adecuado (Ej: 1.82)")
-                    continue
-
-            while True:
-                try:
-                    peso = float(input("Ingrese el peso del jugador (Ej: 82.5kgs) (Min:50, Max:130 KGS): "))
-                    if peso < 50 or peso > 130:
-                        print("\nError: Debe ser un peso entre 50 y 130kgs")
-                        continue
-                    else:
-                        break
-                except ValueError:
-                    print("Error: Ingrese solo NUMEROS decimales o enteros en el formato adecuado (Ej: 82.5 o 90 KGS)")
-                    continue
-
-            posicion_campo = input("Ingrese la posición en el campo del jugador (Ej: Delantero): ")
-            if not posicion_campo.isalpha() and not posicion_campo.istitle():
-                print("\nError: El campo debe ser en letras y las iniciales MAYUSCULAS ej: Delantero o Extremo Derecho.")
-                continue
-
-            club_militante = input("Ingrese el club militante del jugador (Ej: Inter Miami): ")
-            if club_militante.replace(" ", "").isalpha() and club_militante.istitle():
-                pass
-            else:
-                print("\nError: Debe contener solo letras.")
-                continue
-
-            reconocimientos = input("Ingrese los reconocimientos del jugador (Ej: 13): ")
-            try:
-                reconocimientos = int(reconocimientos)
-            except ValueError:
-                print("\nError: Los reconocimientos deben ser un número entero.")
-                continue
+            date_of_birth = Menu.validate_date_of_birth(
+                "Ingrese la fecha de nacimiento, debe de usar este formato DIA/MES/AÑO Ej: 25/07/1991: ")
+            origin = Menu.validate_string_input_origin("Ingrese el origen del jugador (Ej: Costa Rica): ")
+            gender = Menu.validate_gender("Ingrese el género del jugador (Masculino/Femenino/Otro): ")
+            height = Menu.validate_float_input("Ingrese la altura del jugador (Ej: 1.82) (Min:1.4, Max:2.1 MTS): ", 1.4,
+                                               2.1)
+            weight = Menu.validate_float_input("Ingrese el peso del jugador (Ej: 82.5kgs) (Min:50, Max:130 KGS): ", 50,
+                                               130)
+            position_in_field = Menu.validate_position_in_field(
+                "Ingrese la posición en el campo del jugador (Ej: Delantero): ")
+            club_militant = Menu.validate_string_input_min("Ingrese el club militante del jugador (Ej: Inter Miami): ")
+            awards = Menu.validate_int_input("Ingrese los reconocimientos del jugador (Ej: 13): ", 0, 50)
 
             while True:
                 idx = input("Ingrese el ID del jugador (Ej: 30): ")
@@ -475,652 +455,344 @@ class Menu:
                     print("\nError: El ID debe ser un número entero.")
                     continue
 
-                with open("estadistica_jugador.json", "r") as file:
-                    jugadores_id_y_nombres = json.load(file)
+                players_id_name = self.load_players_json()
 
                 idx = int(idx)
-                id_existente = False
-                for jugador in jugadores_id_y_nombres:
-                    if jugador.get("ID") == idx:
-                        id_existente = True
+                existing_id = False
+                for player in players_id_name["players"]:
+                    if player.get("id") == idx:
+                        existing_id = True
                         break
 
-                if id_existente:
+                if existing_id:
                     print("\nError: Este ID ya está en uso. Por favor, ingrese un ID diferente.")
                 else:
                     break  # El ID es valido y unico
 
-            print("\nADVERTENCIA: A partir de aqui si digita algo que no se le indica VOLVERA al INICIO...\n")
-            jugador = input("Ingrese el nombre del jugador nuevamente (Debe ser exactamente igual): ")
-            if not jugador == nombre_jugador:
-                print("\nError: El nombre del jugador debe de ser el mismo")
-                continue
-
-            aceleracion = input("Ingrese la aceleracion del jugador (Ej: 42-99): ")
-            try:
-                aceleracion = int(aceleracion)
-                if aceleracion < 42 or aceleracion > 99:
-                    print("\nError: El valor no debe ser menor a 42 y mayor a 99")
-                    continue
-            except ValueError:
-                    print("\nError: Debe ingresar un número entero.")
-                    continue
-
-            pases_cortos = input("Ingrese la estadistica de pases cortos del jugador(Ej: 42-99): ")
-            pases_cortos = int(pases_cortos)
-            try:
-                if pases_cortos < 42 or pases_cortos > 99:
-                    print("\nError: El valor no debe ser menor a 42 y mayor a 99")
-                    continue
-            except ValueError:
-                    print("\nError: Debe ingresar un número entero.")
-                    continue
-
-            potencia_tiro = input("Ingrese la potencia de tiro del jugador (Ej: 42-99): ")
-            potencia_tiro = int(potencia_tiro)
-            try:
-                if potencia_tiro < 42 or potencia_tiro > 100:
-                    print("\nError: El valor no debe ser menor a 42 y mayor a 99")
-                    continue
-            except ValueError:
-                    print("\nError: Debe ingresar un número entero.")
-                    continue
-
-            pases_largos = input("Ingrese la estadistica de pases largos del jugador(Ej: 42-99): ")
-            pases_largos = int(pases_largos)
-            try:
-                if pases_largos < 42 or pases_largos > 99:
-                    print("\nError: El valor no debe ser menor a 42 y mayor a 99")
-                    continue
-            except ValueError:
-                    print("\nError: Debe ingresar un número entero.")
-                    continue
-
-            velocidad = input("Ingrese la velocidad del jugador(Ej: 42-99): ")
-            velocidad = int(velocidad)
-            try:
-                if velocidad < 42 or velocidad > 99:
-                    print("\nError: El valor no debe ser menor a 42 y mayor a 99")
-                    continue
-            except ValueError:
-                    print("\nError: Debe ingresar un número entero.")
-                    continue
-
-            agilidad = input("Ingrese la agilidad del jugador(Ej: 42-99): ")
-            agilidad = int(agilidad)
-            try:
-                if agilidad < 42 or agilidad > 99:
-                    print("\nError: El valor no debe ser menor a 42 y mayor a 99")
-                    continue
-            except ValueError:
-                    print("\nError: Debe ingresar un número entero.")
-                    continue
-
-            resistencia = input("Ingrese la resistencia del jugador(Ej: 42-99): ")
-            resistencia = int(resistencia)
-            try:
-                if resistencia < 42 or resistencia > 99:
-                    print("\nError: El valor no debe ser menor a 0 y mayor a 100")
-                    continue
-            except ValueError:
-                    print("\nError: Debe ingresar un número entero.")
-                    continue
-
-            salto = input("Ingrese el salto del jugador(Ej: 42-99): ")
-            salto = int(salto)
-            try:
-                if salto < 42 or salto > 99:
-                    print("\nError: El valor no debe ser menor a 42 y mayor a 99")
-                    continue
-            except ValueError:
-                    print("\nError: Debe ingresar un número entero.")
-                    continue
-
-            regates = input("Ingrese la estadistica de regate del jugador(Ej: 42-99): ")
-            regates = int(regates)
-            try:
-                if regates < 42 or regates > 99:
-                    print("\nError: El valor no debe ser menor a 42 y mayor a 99")
-                    continue
-            except ValueError:
-                    print("\nError: Debe ingresar un número entero.")
-                    continue
-            control_balon = input("Ingrese la estadistica de control de balon del jugador(Ej: 42-99): ")
-            control_balon = int(control_balon)
-            try:
-                if control_balon < 42 or control_balon > 99:
-                    print("\nError: El valor no debe ser menor a 42 y mayor a 99")
-                    continue
-            except ValueError:
-                    print("\nError: Debe ingresar un número entero.")
-                    continue
-
+            aceleration = Menu.validate_int_input("Ingrese la aceleracion del jugador (Ej: 42-99): ", 42, 99)
+            short_passes = Menu.validate_int_input("Ingrese la estadistica de pases cortos del jugador(Ej: 42-99): ",
+                                                   42, 99)
+            power_of_shot = Menu.validate_int_input("Ingrese la potencia de tiro del jugador (Ej: 42-99): ", 42, 99)
+            long_passes = Menu.validate_int_input("Ingrese la estadistica de pases largos del jugador(Ej: 42-99): ", 42,
+                                                  99)
+            speed = Menu.validate_int_input("Ingrese la velocidad del jugador(Ej: 42-99): ", 42, 99)
+            agility = Menu.validate_int_input("Ingrese la agilidad del jugador(Ej: 42-99): ", 42, 99)
+            resistance = Menu.validate_int_input("Ingrese la resistencia del jugador(Ej: 42-99): ", 42, 99)
+            jump = Menu.validate_int_input("Ingrese el salto del jugador(Ej: 42-99): ", 42, 99)
+            dribbling = Menu.validate_int_input("Ingrese la estadistica de regate del jugador(Ej: 42-99): ", 42, 99)
+            ball_control = Menu.validate_int_input(
+                "Ingrese la estadistica de control de balon del jugador(Ej: 42-99): ", 42, 99)
             # Crear un diccionario con los datos del nuevo jugador
-            nuevo_jugador = {
-                "Nombre": nombre_jugador,
-                "Fecha de nacimiento": fecha_nacimiento,
-                "Origen": origen,
-                "Genero": genero,
-                "Altura": altura,
-                "Peso": peso,
-                "Posicion en campo": posicion_campo,
-                "Club militante": club_militante,
-                "Reconocimientos": reconocimientos
+            new_player = {
+                "id": idx,
+                "name": name_player,
+                "date_of_birth": date_of_birth,
+                "origin": origin,
+                "gender": gender,
+                "height": height,
+                "weight": weight,
+                "position_in_field": position_in_field,
+                "club_militant": club_militant,
+                "awards": awards,
+                "aceleration": aceleration,
+                "short_passes": short_passes,
+                "power_of_shot": power_of_shot,
+                "long_passes": long_passes,
+                "speed": speed,
+                "agility": agility,
+                "resistance": resistance,
+                "jump": jump,
+                "dribbling": dribbling,
+                "ball_control": ball_control
             }
-
-            nuevo_jugador_estadisticas = {
-                "ID": idx,
-                "Jugador": jugador,
-                "Aceleracion": aceleracion,
-                "Pases cortos": pases_cortos,
-                "Potencia de tiro": potencia_tiro,
-                "Pases largos": pases_largos,
-                "Velocidad": velocidad,
-                "Agilidad": agilidad,
-                "Resistencia": resistencia,
-                "Salto": salto,
-                "Regates": regates,
-                "Control de balon": control_balon
-            }
-
-            # Leer los datos actuales de los jugadores desde el archivo JSON
-            try:
-                with open("players_data.json", "r") as file:
-                    jugadores = json.load(file)
-            except FileNotFoundError:
-                jugadores = []
+            players = self.load_players_json()
 
             # Agregar el nuevo jugador a la lista de jugadores
-            jugadores.append(nuevo_jugador)
+            players["players"].append(new_player)
 
             # Escribir los datos actualizados de los jugadores en el archivo JSON
             with open("players_data.json", "w") as file:
-                json.dump(jugadores, file, indent=4)
-
-            try:
-                with open("estadistica_jugador.json", "r") as file:
-                    estadistica = json.load(file)
-            except FileNotFoundError:
-                estadistica = []
-
-            estadistica.append(nuevo_jugador_estadisticas)
-
-            with open("estadistica_jugador.json", "w") as file:
-                json.dump(estadistica, file, indent=4)
+                json.dump(players, file, indent=4)
 
             print("\nNuevo jugador agregado con éxito.")
-            time.sleep(2)
-            return()
+            if not self.back_to_menu():
+                break
 
-    def leer_informacion_jugador(self):
+    def read_player_information(self):
         while True:
-            with open("players_data.json", "r") as nombre_file:
-                ver_nombre = json.load(nombre_file)
-
-            with open("estadistica_jugador.json", "r") as ID_file:
-                ver_ID = json.load(ID_file)
-
+            see_name = self.load_players_json()
             print("\nIMPORTANTE: El NOMBRE del jugador DEBE ser EXACTO (Ej: Lionel Andres Messi)...")
-            preguntar_nombre = input("Ingrese el nombre del jugador que desea consultar informacion: ")
+            ask_name = Menu.validate_string_input("Ingrese el nombre del jugador que desea consultar informacion: ")
 
-            if not preguntar_nombre.replace(" ","").isalpha():
-                print("\nError: Debe ingresar los datos correctos, en ID un NUMERO entero, en nombre LETRAS")
-                continue
-
-            jugador_existente = False
-            for jugador in ver_nombre:
-                if jugador["nombre"] == preguntar_nombre:
-                    for jugadorr in ver_ID:
-                        if jugadorr["Jugador"] == preguntar_nombre:
-                            jugador_existente = True
-# En vez de key y value puede ser cualquier parametro, para mas legibilidad asi, tambien podria ser (for nombre, informacion in jugador.items():
-                            print("\nInformacion del jugador:")
-                            for key, value in jugador.items():
-                                print(f"{key}: {value}")
-                            for key, value in jugadorr.items():
-                                print(f"{key}: {value}")
-                            repetir = input("Desea consultar la informacion de otro jugador? (SI/NO): ")
-                            if repetir.lower() != "si":
-                                print("\nVolviendo al gestor de jugadores...")
-                                time.sleep(2)
-                                return ()
-
-            if not jugador_existente:
+            existing_name = False
+            for player in see_name["players"]:
+                if player["name"] == ask_name:
+                    existing_name = True
+                    # En vez de key y value puede ser cualquier parametro, para mas legibilidad asi, tambien podria ser (for nombre, informacion in jugador.items():
+                    print("\nInformacion del jugador:")
+                    for key, value in player.items():
+                        print(f"{key}: {value}")
+                    if not self.back_to_menu():
+                        return
+            if not existing_name:
                 print("\nNo se encontro el jugador que se especifico, intentelo de nuevo...")
-                repetir = input("Desea consultar la informacion de otro jugador? (SI/NO): ")
-                if repetir.lower() != "si":
-                    print("\nVolviendo al gestor de jugadores...")
-                    time.sleep(2)
-                    return ()
+                if not self.back_to_menu():
+                    break
 
-
-
-    def modificar_datos_jugador(self):
+    def modify_player_data(self):
         while True:
-            with open("players_data.json", "r") as informacion_jugadores_file:
-                informacion_jugadores = json.load(informacion_jugadores_file)
-
-            with open("estadistica_jugador.json", "r") as estadisticas_jugadores_file:
-                estadisticas_jugadores = json.load(estadisticas_jugadores_file)
+            player_information = self.load_players_json()
+            players = player_information.get("players", [])
 
             print("\nIMPORTANTE: El NOMBRE del jugador DEBE ser EXACTO (Ej: Lionel Andres Messi)...")
+            ask_player_name = Menu.validate_string_input_min("Ingrese el nombre del jugador que desea modificar: ")
 
-            pedir_nombre_jugador = input("Ingrese el nombre del jugador que desea modificar(SI desea volver al menu anterior digite EXIT): ")
-            if pedir_nombre_jugador.lower() == "exit":
-                print("Volviendo al menu anterior...")
-                time.sleep(2)
-                return ()
+            existing_name = False
+            for player in players:
+                if player["name"] == ask_player_name:
+                    existing_name = True
+                    print("\nInformacion basica del jugador:")
+                    print(json.dumps(player, indent=4))
 
-            if not pedir_nombre_jugador.replace(" ","").isalpha():
-                print("El nombre del jugador debe ser en LETRAS y el ID del jugador en NUMEROS...")
-                continue
+                    new_name = Menu.validate_string_input_min(
+                        "Ingrese el nuevo nombre, si no desea cambiar este dato digite el mismo dato: ")
+                    new_date_of_birth = Menu.validate_date_of_birth(
+                        "Ingrese la nueva fecha de nacimiento, debe de usar este formato DIA/MES/AÑO Ej: 25/07/1991: ")
+                    new_gender = Menu.validate_gender(
+                        "Ingrese el nuevo genero, si no desea cambiar este dato digite el mismo dato(Masculino/Femenino/Otro): ")
+                    new_height = Menu.validate_float_input(
+                        "Ingrese la nueva altura, si no desea cambiar este dato digite el mismo dato: ", 1.4, 2.1)
+                    new_weight = Menu.validate_float_input(
+                        "Ingrese el nuevo peso, si no desea cambiar este dato digite el mismo dato: ", 50, 130)
+                    new_position_in_field = Menu.validate_position_in_field(
+                        "Ingrese la posición en el campo del jugador (Ej: Delantero): ")
+                    new_militant_club = Menu.validate_string_input_min(
+                        "Ingrese el nuevo club militante, si no desea cambiar este dato digite el mismo dato: ")
+                    new_awards = Menu.validate_int_input(
+                        "Ingrese el nuevo(s) reconocimientos, si no desea cambiar este dato digite el mismo dato: ", 1,
+                        100)
+                    acceleration = Menu.validate_int_input(
+                        "Ingrese la nueva estadistica de aceleracion, si no desea cambiar este dato digite el mismo dato: ",
+                        42, 99)
+                    new_short_passes = Menu.validate_int_input(
+                        "Ingrese la nueva estadistica de pases cortos, si no desea cambiar este dato digite el mismo dato: ",
+                        42, 99)
+                    new_power_of_shot = Menu.validate_int_input(
+                        "Ingrese la nueva estadistica de potencia de tiro, si no desea cambiar este dato digite el mismo dato: ",
+                        42, 99)
+                    new_long_passes = Menu.validate_int_input(
+                        "Ingrese la nueva estadistica de pases largos, si no desea cambiar este dato digite el mismo dato: ",
+                        42, 99)
+                    new_speed = Menu.validate_int_input(
+                        "Ingrese la nueva estadistica de velocidad, si no desea cambiar este dato digite el mismo dato: ",
+                        42, 99)
+                    new_agility = Menu.validate_int_input(
+                        "Ingrese la nueva estadistica de agilidad, si no desea cambiar este dato digite el mismo dato: ",
+                        42, 99)
+                    new_resistance = Menu.validate_int_input(
+                        "Ingrese la nueva estadistica de resistencia, si no desea cambiar este dato digite el mismo dato: ",
+                        42, 99)
+                    new_jump = Menu.validate_int_input(
+                        "Ingrese la nueva estadistica de salto, si no desea cambiar este dato digite el mismo dato: ",
+                        42, 99)
+                    new_dribbling = Menu.validate_int_input(
+                        "Ingrese la nueva estadistica de regate, si no desea cambiar este dato digite el mismo dato: ",
+                        42, 99)
+                    new_ball_control = Menu.validate_int_input(
+                        "Ingrese la nueva estadistica de control de balon, si no desea cambiar este dato digite el mismo dato: ",
+                        42, 99)
 
-            nombre_existente = False
-            for nombre in informacion_jugadores:
-                if nombre["nombre"] == pedir_nombre_jugador:
-                    for jugadorr in estadisticas_jugadores:
-                        if jugadorr["Jugador"] == pedir_nombre_jugador:
-                            nombre_existente = True
-                            print("\nInformacion basica del jugador:")
-                            print(json.dumps(nombre, indent=4))
-                            print("\nInformacion estadistica del jugador:")
-                            print(json.dumps(jugadorr, indent=4))
-                            while True:
-                                nuevo_nombre = input("Ingrese el nuevo nombre, si no desea cambiar este dato digite el mismo dato: ")
-                                if not nuevo_nombre.replace(" ", "").isalpha() or not nuevo_nombre.istitle():
-                                    print("\nError: El nombre debe contener solo letras y debe empezar con mayuscula.")
-                                    continue
-                                else:
-                                    break
+                    player["name"] = new_name
+                    player["date_of_birth"] = new_date_of_birth
+                    player["gender"] = new_gender
+                    player["height"] = new_height
+                    player["weight"] = new_weight
+                    player["position_in_field"] = new_position_in_field
+                    player["club_militant"] = new_militant_club
+                    player["awards"] = new_awards
+                    player["acceleration"] = acceleration
+                    player["short_passes"] = new_short_passes
+                    player["power_of_shot="] = new_power_of_shot
+                    player["long_passes"] = new_long_passes
+                    player["speed"] = new_speed
+                    player["agility"] = new_agility
+                    player["resistance"] = new_resistance
+                    player["jump"] = new_jump
+                    player["dribbling"] = new_dribbling
+                    player["ball_control"] = new_ball_control
 
-                            while True:
-                                nueva_fecha_nacimiento = input("Ingrese la nueva fecha de nacimiento, si no desea cambiar este dato digite el mismo dato: ")
-                                # Definir el patron regex para validar la fecha de nacimiento
-                                patron_fecha = r"^\d{1,2} de (enero|febrero|marzo|abril|mayo|junio|julio|agosto|septiembre|octubre|noviembre|diciembre) de \d{4}$"
+                    with open("players_data.json", "w") as ifile:
+                        json.dump({"players": players}, ifile, indent=4)
+                    print("Los cambios se han aplicado correctamente...")
+                    if not self.back_to_menu():
+                        break
 
-                                # Verificar si la entrada coincide con el patron regex
-                                if re.match(patron_fecha, nueva_fecha_nacimiento.lower()):
-                                    break
-                                else:
-                                    print("Error: El formato de la fecha de nacimiento no es válido. Debe ser en el formato 'dd de mes de año'. Por ejemplo, '28 de octubre de 1991'.")
+            if not existing_name:
+                print("No se encontro al jugador con el nombre especificado...")
+                if not self.back_to_menu():
+                    break
 
-                            while True:
-                                nuevo_genero = input("Ingrese el nuevo genero, si no desea cambiar este dato digite el mismo dato(Masculino/Femenino/Otro): ")
-                                if nuevo_genero in ["Masculino", "Femenino", "Otro"]:
-                                    break
-                                else:
-                                    print("Debe ser exactamente (Masculino/Femenino/Otro), respetando la mayuscula inicial")
-
-                            while True:
-                                try:
-                                    nueva_altura = float(input("Ingrese la nueva altura, si no desea cambiar este dato digite el mismo dato: "))
-                                    if nueva_altura < 1.0 or nueva_altura > 2.1:
-                                        print("Error: Ingrese solo NUMEROS, ademas debe ser decimal, con un limite (Min:1.0, Max:2.1 MTS), (Ej: 1.82) : ")
-                                        continue
-                                    else:
-                                        break
-                                except ValueError:
-                                    print("Error: Ingrese solo NUMEROS decimales en el formato adecuado (Ej: 1.82)")
-                                    continue
-
-                            while True:
-                                try:
-                                    nuevo_peso = float(input("Ingrese el nuevo peso, si no desea cambiar este dato digite el mismo dato: "))
-                                    if nuevo_peso < 50 or nuevo_peso > 130:
-                                        print("Error: Ingrese solo NUMEROS, ademas debe ser decimal, con un limite (Min:50, Max:130 KGS), (Ej: 72) : ")
-                                        continue
-                                    else:
-                                        break
-                                except ValueError:
-                                    print("Error: Ingrese solo números decimales en el formato adecuado (Ej: 72, 72.5 KGS)")
-                                    continue
-
-                            while True:
-                                nueva_posicion_campo = input("Ingrese la nueva posicion de campo, si no desea cambiar este dato digite el mismo dato: ")
-                                if not nueva_posicion_campo.replace(" ", "").isalpha or not nueva_posicion_campo.istitle():
-                                    print("Error: Debe empezar con MAYUSCULA y deben ser solo letras ")
-                                    continue
-                                else:
-                                    break
-
-                            while True:
-                                nuevo_club_militante = input("Ingrese el nuevo club militante, si no desea cambiar este dato digite el mismo dato: ")
-                                if not nuevo_club_militante.replace(" ", "").isalpha() or not nuevo_club_militante.istitle():
-                                    print("Error: Debe empezar con MAYUSCULA y deben ser solo letras ")
-                                    continue
-                                else:
-                                    break
-
-                            while True:
-                                nuevo_reconocimiento = input("Ingrese el nuevo(s) reconocimientos, si no desea cambiar este dato digite el mismo dato: ")
-                                if not nuevo_reconocimiento.isnumeric():
-                                    print("Error: Debe ser NUMEROS enteros")
-                                    continue
-                                else:
-                                    nuevo_reconocimiento = int(nuevo_reconocimiento)
-                                    break
-
-                            nombre["nombre"] = nuevo_nombre
-                            nombre["fecha_nacimiento"] = nueva_fecha_nacimiento
-                            nombre["genero"] = nuevo_genero
-                            nombre["altura"] = nueva_altura
-                            nombre["peso"] = nuevo_peso
-                            nombre["posicion_campo"] = nueva_posicion_campo
-                            nombre["club_militante"] = nuevo_club_militante
-                            nombre["reconocimientos"] = nuevo_reconocimiento
-
-                            with open("players_data.json", "w") as informacion_jugadores_file:
-                                json.dump(informacion_jugadores, informacion_jugadores_file, indent=4)
-
-                            print("Los cambios se han aplicado correctamente...")
-                            while True:
-                                opcion_si_no = input("Desea tambien modificar las estadisticas del jugador?(SI/NO): ")
-                                if opcion_si_no.lower() == "si":
-                                    break
-                                elif opcion_si_no.lower() == "no":
-                                    print("Volviendo al menu anterior...")
-                                    time.sleep(2)
-                                    return()
-                                else:
-                                    print("Digite (SI o NO)")
-
-                            while True:
-                                nueva_aceleracion = input("Ingrese la nueva estadistica de aceleracion, si no desea cambiar este dato digite el mismo dato: ")
-                                if not nueva_aceleracion.isnumeric() or nueva_aceleracion.isalpha():
-                                    print("Error: Debe ser NUMEROS enteros")
-                                    continue
-                                nueva_aceleracion = int(nueva_aceleracion)
-                                if nueva_aceleracion < 42 or nueva_aceleracion > 99:
-                                    print("\nError: El valor no DEBE ser MENOR a 42 y MAYOR a 99")
-                                    continue
-                                else:
-                                    break
-
-                            while True:
-                                nuevo_pases_cortos = input("Ingrese la nueva estadistica de pases cortos, si no desea cambiar este dato digite el mismo dato: ")
-                                if not nuevo_pases_cortos.isnumeric() or nuevo_pases_cortos.isalpha():
-                                    print("Error: Debe ser NUMEROS enteros")
-                                    continue
-                                nuevo_pases_cortos = int(nuevo_pases_cortos)
-                                if nuevo_pases_cortos < 42 or nuevo_pases_cortos > 99:
-                                    print("\nError: El valor no DEBE ser MENOR a 42 y MAYOR a 99")
-                                    continue
-                                else:
-                                    break
-
-                            while True:
-                                nueva_potencia_tiro = input("Ingrese la nueva estadistica de potencia de tiro, si no desea cambiar este dato digite el mismo dato: ")
-                                if not nueva_potencia_tiro.isnumeric() or nueva_potencia_tiro.isalpha():
-                                    print("Error: Debe ser NUMEROS enteros")
-                                    continue
-                                nueva_potencia_tiro = int(nueva_potencia_tiro)
-                                if nueva_potencia_tiro < 42 or nueva_potencia_tiro > 99:
-                                    print("\nError: El valor no DEBE ser MENOR a 42 y MAYOR a 99")
-                                    continue
-                                else:
-                                    break
-
-                            while True:
-                                nuevo_pases_largos = input("Ingrese la nueva estadistica de pases largos, si no desea cambiar este dato digite el mismo dato: ")
-                                if not nuevo_pases_largos.isnumeric() or nuevo_pases_largos.isalpha():
-                                    print("Error: Debe ser NUMEROS enteros")
-                                    continue
-                                nuevo_pases_largos = int(nuevo_pases_largos)
-                                if nuevo_pases_largos < 42 or nuevo_pases_largos > 99:
-                                    print("\nError: El valor no DEBE ser MENOR a 42 y MAYOR a 99")
-                                    continue
-                                else:
-                                    break
-
-                            while True:
-                                nueva_velocidad = input("Ingrese la nueva estadistica de velocidad, si no desea cambiar este dato digite el mismo dato: ")
-                                if not nueva_velocidad.isnumeric() or nueva_velocidad.isalpha():
-                                    print("Error: Debe ser NUMEROS enteros")
-                                    continue
-                                nueva_velocidad = int(nueva_velocidad)
-                                if nueva_velocidad < 42 or nueva_velocidad > 99:
-                                    print("\nError: El valor no DEBE ser MENOR a 42 y MAYOR a 99")
-                                    continue
-                                else:
-                                    break
-
-                            while True:
-                                nueva_agilidad = input("Ingrese la nueva estadistica de agilidad, si no desea cambiar este dato digite el mismo dato: ")
-                                if not nueva_velocidad.isnumeric() or nueva_velocidad.isalpha():
-                                    print("Error: Debe ser NUMEROS enteros")
-                                    continue
-                                nueva_agilidad = int(nueva_agilidad)
-                                if nueva_agilidad < 42 or nueva_agilidad > 99:
-                                    print("\nError: El valor no DEBE ser MENOR a 42 y MAYOR a 99")
-                                    continue
-                                else:
-                                    break
-
-                            while True:
-                                nueva_resistencia = input("Ingrese la nueva estadistica de resistencia, si no desea cambiar este dato digite el mismo dato: ")
-                                if not nueva_resistencia.isnumeric() or nueva_resistencia.isalpha():
-                                    print("Error: Debe ser NUMEROS enteros")
-                                    continue
-                                nueva_resistencia = int(nueva_resistencia)
-                                if nueva_resistencia < 42 or nueva_resistencia > 99:
-                                    print("\nError: El valor no DEBE ser MENOR a 42 y MAYOR a 99")
-                                    continue
-                                else:
-                                    break
-
-                            while True:
-                                nuevo_salto = input("Ingrese la nueva estadistica de salto, si no desea cambiar este dato digite el mismo dato: ")
-                                if not nuevo_salto.isnumeric() or nuevo_salto.isalpha():
-                                    print("Error: Debe ser NUMEROS enteros")
-                                    continue
-                                nuevo_salto = int(nuevo_salto)
-                                if nuevo_salto < 42 or nuevo_salto > 99:
-                                    print("\nError: El valor no DEBE ser MENOR a 42 y MAYOR a 99")
-                                    continue
-                                else:
-                                    break
-
-                            while True:
-                                nuevo_regate = input("Ingrese la nueva estadistica de regate, si no desea cambiar este dato digite el mismo dato: ")
-                                if not nuevo_regate.isnumeric() or nuevo_regate.isalpha():
-                                    print("Error: Debe ser NUMEROS enteros")
-                                    continue
-                                nuevo_regate = int(nuevo_regate)
-                                if nuevo_regate < 42 or nuevo_regate > 99:
-                                    print("\nError: El valor no DEBE ser MENOR a 42 y MAYOR a 99")
-                                    continue
-                                else:
-                                    break
-
-                            jugadorr["Jugador"] = nuevo_nombre
-                            jugadorr["Aceleracion"] = nueva_aceleracion
-                            jugadorr["Pases cortos"] = nuevo_pases_cortos
-                            jugadorr["Potencia de tiro"] = nueva_potencia_tiro
-                            jugadorr["Pases largos"] = nuevo_pases_largos
-                            jugadorr["Velocidad"] = nueva_velocidad
-                            jugadorr["Agilidad"] = nueva_agilidad
-                            jugadorr["Resistencia"] = nueva_resistencia
-                            jugadorr["Salto"] = nuevo_salto
-                            jugadorr["Regates"] = nuevo_regate
-
-                            with open("estadistica_jugador.json", "w") as estadisticas_jugadores_file:
-                                json.dump(estadisticas_jugadores, estadisticas_jugadores_file, indent=4)
-
-                            print("Datos del jugador actualizados correctamente")
-                            consultar = input("Desea modificar otro jugador?(SI/NO)")
-                            if consultar.lower() != "si":
-                                print("Volviendo al menu anterior...")
-                                time.sleep(2)
-                                return()
-
-            if not nombre_existente:
-                print("No se encontro al jugador con el ID y nombre especificados...")
-
-    def eliminar_jugador(self):
+    def remove_player(self):
         while True:
-            nombre_jugador = input("Ingrese el nombre del jugador que desea eliminar, si desea volver al menu anterior ingrese (EXIT): ")
+            name_player = Menu.validate_string_input("Ingrese el nombre del jugador que desea eliminar: ")
 
-            if nombre_jugador.lower() == "exit":
-                print("Volviendo al menu anterior")
-                time.sleep(2)
-                return()
+            players_data = self.load_players_json()
+            players = players_data.get("players", [])
 
-            if not nombre_jugador.replace(" ", "").isalpha() or not nombre_jugador.istitle():
-                print("Error: El nombre del jugador debe empezar con MAYUSCULA y deben ser solo letras")
-                continue
+            updated_players = [player for player in players if player["name"] != name_player]
 
-            with open("players_data.json", "r") as jugadores_file:
-                jugadores = json.load(jugadores_file)
+            if len(updated_players) == len(players):
+                print(f"El jugador {name_player} no se encontro en la lista")
+                if not self.back_to_menu():
+                    return
+            else:
 
-            jugadores_actualizados = [jugador for jugador in jugadores if jugador["nombre"] != nombre_jugador]
+                with open("players_data.json", "w") as players_file:
+                    json.dump({"players": updated_players}, players_file, indent=4)
+                print(f"El jugador {name_player} se ha eliminado con exito")
+                if not self.back_to_menu():
+                    break
 
-            if len(jugadores_actualizados) == len(jugadores):
-                print(f"El jugador {nombre_jugador} no se encontro en la lista")
-                continue
-
-            with open("players_data.json", "w") as jugadores_file:
-                json.dump(jugadores_actualizados, jugadores_file, indent=4)
-
-            with open("estadistica_jugador.json", "r") as estadistica_jugador_file:
-                estadistica_jugador = json.load(estadistica_jugador_file)
-
-            estadisticas_actualizadas = [estadistica for estadistica in estadistica_jugador if estadistica["Jugador"] != nombre_jugador]
-
-            if len(estadisticas_actualizadas) == len(estadistica_jugador):
-                print(f"El jugador {nombre_jugador} no se encontro en la lista")
-                continue
-
-            with open("estadistica_jugador.json", "w") as estadistica_jugador_file:
-                json.dump(estadisticas_actualizadas, estadistica_jugador_file, indent=4)
-
-            print(f"El jugador {nombre_jugador} se ha eliminado con exito")
-
-            consultar = input("Desea modificar otro jugador?(SI/NO)")
-            if consultar.lower() != "si":
-                print("Volviendo al menu anterior...")
-                time.sleep(2)
-                return ()
-
-#CONSULTAS AVANZADAS #CONSULTAS AVANZADAS #CONSULTAS AVANZADAS #CONSULTAS AVANZADAS #CONSULTAS AVANZADAS
-
-    def Mostrar_cantidad_jugadores_mismo_origen(self):
+    # CONSULTAS AVANZADAS #CONSULTAS AVANZADAS #CONSULTAS AVANZADAS #CONSULTAS AVANZADAS #CONSULTAS AVANZADAS
+    def show_number_player_same_origen(self):
         while True:
-            origen_buscar = input("Ingrese el origen para mostrar la cantidad de jugadores: ")
+            search_origin = Menu.validate_string_input("Ingrese el origen para mostrar la cantidad de jugadores: ")
 
-            with open("players_data.json", "r") as file:
-                jugadores = json.load(file)
+            players = self.load_players_json()
 
-            jugadores_mismo_origen = {}
+            players_same_origin = {}
 
-            for jugador in jugadores:
-                if jugador["origen"] == origen_buscar:
-                    if origen_buscar in jugadores_mismo_origen:
-                        jugadores_mismo_origen[origen_buscar] += 1
+            for player in players["players"]:
+                if player["origin"] == search_origin:
+                    if search_origin in players_same_origin:
+                        players_same_origin[search_origin] += 1
                     else:
-                        jugadores_mismo_origen[origen_buscar] = 1
+                        players_same_origin[search_origin] = 1
 
-            if origen_buscar in jugadores_mismo_origen:
-                print(f"La cantidad de jugadores provenientes de {origen_buscar}: {jugadores_mismo_origen.get(origen_buscar, 0)}")
+            if search_origin in players_same_origin:
+                print(
+                    f"La cantidad de jugadores provenientes de {search_origin}: {players_same_origin.get(search_origin, 0)}")
             else:
-                print(f"No se encontraron los jugadores provenientes de {origen_buscar}")
+                print(f"No se encontraron los jugadores provenientes de {search_origin}")
+            if not self.back_to_menu():
+                break
 
-            consultar = input("Desea hacer otra consulta?(SI/NO)")
-            if consultar.lower() != "si":
-                print("Volviendo al menu anterior...")
-                time.sleep(2)
-                return()
-
-    def Mostrar_todos_los_jugadores_que_se_encuentren_en_un_rango_de_edad(self):
+    def show_all_players_in_an_age_range(self):
         while True:
+            players_in_range = []
 
-            edad_buscar = int(input("Ingrese la edad para mostrar la cantidad de jugadores: "))
+            players = self.load_players_json()
 
-            with open("jugadores", "r") as file:
-                jugadores = json.load(file)
+            min_age = Menu.validate_int_input("Ingrese la edad minima del rango: ", 16, 124)
+            max_age = Menu.validate_int_input("Ingrese la edad maximo del rango: ", min_age, 124)
 
-            jugadores_misma_edad = {}
+            for player in players["players"]:
+                age = Menu.calculate_age(player["date_of_birth"])
+                if min_age <= age <= max_age:
+                    players_in_range.append(player)
 
-            for jugador in jugadores:
-                if jugador["edad"] == edad_buscar:
-                    if edad_buscar in jugadores_misma_edad:
-                        jugadores_misma_edad[edad_buscar] += 1
-                    else:
-                        jugadores_misma_edad[edad_buscar] = 1
-
-            if edad_buscar in jugadores_misma_edad:
-                print(f"La cantidad de jugadores de la edad de {edad_buscar}: {jugadores_misma_edad.get(edad_buscar)}")
+            if players_in_range:
+                print("Jugadores en el rango de edad de", min_age, " a ", max_age, "años")
+                for player in players_in_range:
+                    print(json.dumps(player, indent=4))
+                if not self.back_to_menu():
+                    return
             else:
-                print(f"No se encontraron los jugadores provenientes de {edad_buscar}")
+                print("No se encontraron los jugadores en el rango de edad de especificado")
+                if not self.back_to_menu():
+                    return
 
-            consultar = input("Desea hacer otra consulta?(SI/NO)")
-            if consultar.lower() != "si":
-                print("Volviendo al menu anterior...")
-                time.sleep(2)
-                return()
+    def show_number_players_with_same_height_and_reference_to_gender_each_one(self):
+        show_players_by_height_and_gender = {}
 
-    def Mostrar_cantidad_jugadores_con_misma_altura_y_tienen_referencia_al_genero_de_cada_uno(self):
-        pass
+        players = self.load_players_json()
 
-    def Mostrar_los_jugadores_de_club_específico(self):
+        for player in players["players"]:
+            height = player["height"]
+            gender = player["gender"]
+
+            if height not in show_players_by_height_and_gender:
+                show_players_by_height_and_gender[height] = {"Masculino": 0, "Femenino": 0, "Otro": 0}
+
+            show_players_by_height_and_gender[height][gender] += 1
+        print("Cantidad de jugadores con la misma altura y refentes al genero:")
+        for height, gender_counts in show_players_by_height_and_gender.items():
+            print(
+                f"Altura{height}m - Masculino: {gender_counts['Masculino']}, Femenino: {gender_counts['Femenino']}, Otro: {gender_counts['Otro']}: ")
+
+    def show_all_players_in_a_specific_club(self):
         while True:
-            preguntar_club = input("Ingrese el nombre del club que desea saber que jugadores pertenecen: ")
+            ask_club = Menu.validate_string_input(
+                "Ingrese el nombre del club que desea saber que jugadores pertenecen: ")
 
-            with open("players_data.json", "r") as file:
-                jugadores = json.load(file)
+            players = self.load_players_json()
+            players_of_club = []
 
-            jugadores_del_club = []
+            for player in players["players"]:
+                if player["club_militant"] == ask_club:
+                    players_of_club.append(player["name"])
 
-            for jugador in jugadores:
-                if jugador["Club militante"] == preguntar_club:
-                    jugadores_del_club.append(jugador["Nombre"])
-
-            if jugadores_del_club:
-                print(f"El jugadores del club {preguntar_club} son:")
-                for jugador in jugadores_del_club:
-                    print(jugador)
+            if players_of_club:
+                print(f"El jugadores del club {ask_club} son:")
+                for player in players_of_club:
+                    print(player)
             else:
-                print(f"No se encontraron jugadores del club {preguntar_club}")
+                print(f"No se encontraron jugadores del club {ask_club}")
+            if not self.back_to_menu():
+                break
 
-            consultar = input("Desea hacer otra consulta?(SI/NO)")
-            if consultar.lower() != "si":
-                print("Volviendo al menu anterior...")
-                time.sleep(2)
-                return()
-
-    def Mostrar_cantidad_jugadores_acuerdo_con_la_posición_en_el_campo_considerando_unicamente_los_de_género_femenino(self):
+    def show_number_of_players_accordance_position_on_field_considering_only_gender_female(self):
         while True:
             print("Recuerde son JUGADORAS, en vez de DELANTERO, sera DELANTERA")
-            preguntar_posicion = input("Ingrese la posicion en el campo(SE CONSIDERA UNICAMENTE EL GENERO FEMENINO): ")
+            ask_position = Menu.validate_string_input(
+                "Ingrese la posicion en el campo(SE CONSIDERA UNICAMENTE EL GENERO FEMENINO): ")
 
-            with open("players_data.json", "r") as file:
-                jugadores = json.load(file)
+            players = self.load_players_json()
 
-            cantidad_jugadoras = 0
+            number_players = 0
 
-            for jugador in jugadores:
-                if jugador["Genero"] == "Femenino" and jugador["Posicion en campo"] == preguntar_posicion:
-                    cantidad_jugadoras += 1
+            for player in players:
+                if player["gender"] == "Femenino" and player["position_in_field"] == ask_position:
+                    number_players += 1
 
-            if cantidad_jugadoras == 0:
-                print(f"No se encontraron jugadores de la posicion {preguntar_posicion}")
+            if number_players == 0:
+                print(f"No se encontraron jugadores de la posicion {ask_position}")
             else:
-                print(f"La cantidad de jugadoras de genero femenino en la posicion de {preguntar_posicion} es de: {cantidad_jugadoras}")
+                print(
+                    f"La cantidad de jugadoras de genero femenino en la posicion de {ask_position} es de: {number_players}")
+            if not self.back_to_menu():
+                break
 
-            consultar = input("Desea hacer otra consulta?(SI/NO)")
-            if consultar.lower() != "si":
-                print("Volviendo al menu anterior...")
-                time.sleep(2)
-                return()
-
-    def Mostrar_top_diez_jugadores_mayor_altura_con_mejor_agilidad_la_información_muestra_nombre_genero_origen_altura_agilidad(self):
+    def show_top_ten_players_highest_with_best_agility_information_sample_name_gender_origin_height_agility(self):
         pass
 
-    def Mostrar_cantidad_jugadores_cuya_velocidad_este_en_un_rango_específico(self):
+    def show_number_players_whose_speed_is_in_specific_range(self):
+        while True:
+            players_speed_range = []
+
+            players = self.load_players_json()
+
+            speed_min = Menu.validate_int_input("Ingrese la velocidad minima del rango: ", 42, 99)
+            speed_max = Menu.validate_int_input("Ingrese la velocidad maxima del rango: ", speed_min, 99)
+
+            for player in players["players"]:
+                if speed_min <= player["speed"] <= speed_max:
+                    players_speed_range.append(player)
+
+            if players_speed_range:
+                print("Jugadores con rango de velocidad de", speed_min, "a ", speed_max)
+                for player in players_speed_range:
+                    print(json.dumps(player, indent=4))
+                if not self.back_to_menu():
+                    return
+            else:
+                print("No se encontraron jugadores con ese rango de velocidad")
+                if not self.back_to_menu():
+                    return
+
+    def determinate_average_ball_control_for_players_in_a_specific_position(self):
         pass
 
-    def Determinar_promedio_control_balon_para_jugadores_en_una_posición_específica(self):
-        pass
 
-
-iniciador = Menu()
-iniciador.main()
+iniciator = Menu()
+iniciator.main()

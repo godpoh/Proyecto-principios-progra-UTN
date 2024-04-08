@@ -152,7 +152,6 @@ class Menu:
         return True
 
 #VALIDACIONES #VALIDACIONES #VALIDACIONES #VALIDACIONES #VALIDACIONES #VALIDACIONES #VALIDACIONES #VALIDACIONES #VALIDACIONES
-
     def calculate_age(date_of_birth):
         current_date = datetime.now()
         date_of_birthh = datetime.strptime(date_of_birth, "%d/%m/%Y")
@@ -162,7 +161,7 @@ class Menu:
     def validate_gender(prompt):
         while True:
             user_input = input(prompt)
-            if not (user_input == "Masculino" or user_input == "Femenino" or user_input == "Other"):
+            if not (user_input == "Masculino" or user_input == "Femenino" or user_input == "Otro"):
                 print("\nError: Debe ser Masculino/Femenino/Otro")
                 continue
             else:
@@ -408,14 +407,12 @@ class Menu:
         while True:
             # Solicitar al usuario que ingrese los datos del nuevo jugador
             name_player = Menu.validate_string_input_min("Ingrese el nombre del jugador que desea ingresar (Ej: Lionel Andres Messi): ")
-
             player_dont_repit_name = self.load_players_json()
 
             existing_name = False
             for player in player_dont_repit_name["players"]:
                 if player.get("name") == name_player:
                     existing_name = True
-
             if existing_name:
                 print("\nError: Este nombre ya esta en uso. Por favor, ingrese un nombre diferente.")
                 continue
@@ -482,7 +479,6 @@ class Menu:
                 "dribbling": dribbling,
                 "ball_control": ball_control
             }
-
             players = self.load_players_json()
 
             # Agregar el nuevo jugador a la lista de jugadores
@@ -499,7 +495,6 @@ class Menu:
     def read_player_information(self):
         while True:
             see_name = self.load_players_json()
-
             print("\nIMPORTANTE: El NOMBRE del jugador DEBE ser EXACTO (Ej: Lionel Andres Messi)...")
             ask_name = Menu.validate_string_input("Ingrese el nombre del jugador que desea consultar informacion: ")
 
@@ -652,7 +647,21 @@ class Menu:
                     return
 
     def show_number_players_with_same_height_and_reference_to_gender_each_one(self):
-        pass
+        show_players_by_height_and_gender = {}
+
+        players = self.load_players_json()
+
+        for player in players["players"]:
+            height = player["height"]
+            gender = player["gender"]
+
+            if height not in show_players_by_height_and_gender:
+                show_players_by_height_and_gender[height] = {"Masculino": 0, "Femenino": 0, "Otro": 0}
+
+            show_players_by_height_and_gender[height][gender] += 1
+        print("Cantidad de jugadores con la misma altura y refentes al genero:")
+        for height, gender_counts in show_players_by_height_and_gender.items():
+            print(f"Altura{height}m - Masculino: {gender_counts['Masculino']}, Femenino: {gender_counts['Femenino']}, Otro: {gender_counts['Otro']}: ")
 
     def show_all_players_in_a_specific_club(self):
         while True:
