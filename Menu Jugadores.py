@@ -3,7 +3,6 @@ import time
 import re
 from datetime import datetime
 
-
 class Menu:
     def __init__(self):
         self.main_options = {
@@ -94,22 +93,17 @@ class Menu:
 
     def advanced_queries(self):
         while True:
-            print(
-                "\n-----------------------------------------------Consultas Avanzadas-----------------------------------------------")
+            print("\n-----------------------------------------------Consultas Avanzadas-----------------------------------------------")
             print("1-Mostrar la cantidad de jugadores de acuerdo al origen")
             print("2-Mostrar todos los jugadores que se encuentren en un rango de edad")
-            print(
-                "3-Mostrar la cantidad de jugadores de acuerdo con la altura que tienen y con referencia al genero de cada uno")
+            print("3-Mostrar la cantidad de jugadores de acuerdo con la altura que tienen y con referencia al genero de cada uno")
             print("4-Mostrar los jugadores de Club específico")
-            print(
-                "5-Mostrar la cantidad de jugadores de acuerdo con la posición en el campo que posee, considerando UNICAMENTE los de genero femenino")
-            print(
-                "6-Mostrar el top 10 de los jugadores con mayor altura y con mejor agilidad, la informacion que se muestra es el nombre, genero, origen, altura y agilidad")
+            print("5-Mostrar la cantidad de jugadores de acuerdo con la posición en el campo que posee, considerando UNICAMENTE los de genero femenino")
+            print("6-Mostrar el top 10 de los jugadores con mayor altura y con mejor agilidad, la informacion que se muestra es el nombre, genero, origen, altura y agilidad")
             print("7-Mostrar la cantidad de jugadores cuya velocidad esté en un rango específico")
             print("8-Determinar el promedio de control de balón para jugadores en una posición específica")
             print("9-Volver al Menu Principal")
-            print(
-                "--------------------------------------------------------------------------------------------------------------------")
+            print("--------------------------------------------------------------------------------------------------------------------")
 
             option = input("Seleccione una opcion y digitela: ")
             if option == "1":
@@ -161,8 +155,7 @@ class Menu:
     def calculate_age(date_of_birth):
         current_date = datetime.now()
         date_of_birthh = datetime.strptime(date_of_birth, "%d/%m/%Y")
-        age = current_date.year - date_of_birthh.year - (
-                    (current_date.month, current_date.day) < (date_of_birthh.month, date_of_birthh.day))
+        age = current_date.year - date_of_birthh.year - ((current_date.month, current_date.day) < (date_of_birthh.month, date_of_birthh.day))
         return age
 
     def validate_gender(prompt):
@@ -183,8 +176,7 @@ class Menu:
                 return user_input
             else:
                 print("Error: La posicion ingresada no es valida")
-                print(
-                    "Las posiciones validas son: Portero|Portera|Defensa|Centrocampista|Defensa Central|Defensa Lateral|Mediapunta|Mediocentro defensivo|Interior Derecho|Interior Izquierdo|Delantero|Delantera|Delantero Centro|Delantera Centro|Segunda Punta|Extremo Izquierdo|Extremo Derecha|Segunda Punta")
+                print("Las posiciones validas son: Portero|Portera|Defensa|Centrocampista|Defensa Central|Defensa Lateral|Mediapunta|Mediocentro defensivo|Interior Derecho|Interior Izquierdo|Delantero|Delantera|Delantero Centro|Delantera Centro|Segunda Punta|Extremo Izquierdo|Extremo Derecha|Segunda Punta")
                 continue
 
     def validate_date_of_birth(prompt):
@@ -197,19 +189,16 @@ class Menu:
                     datetime.strptime(user_input, "%d/%m/%Y")
                     return user_input
                 except ValueError:
-                    print(
-                        "Error: La fecha no es valida, debe de usar este formato DIA/MES/AÑO Ej: 10/07/1991 Ademas los dias deben concordar con el mes y esta limitado del AÑO 1900 a 2008")
+                    print("Error: La fecha no es valida, debe de usar este formato DIA/MES/AÑO Ej: 10/07/1991 Ademas los dias deben concordar con el mes y esta limitado del AÑO 1900 a 2008")
             else:
-                print(
-                    "Error: La fecha no es valida, debe de usar este formato DIA/MES/AÑO Ej: 10/07/1991, Ademas los dias deben concordar con el mes y esta limitado del AÑO 1900 a 2008. ")
+                print("Error: La fecha no es valida, debe de usar este formato DIA/MES/AÑO Ej: 10/07/1991, Ademas los dias deben concordar con el mes y esta limitado del AÑO 1900 a 2008. ")
 
     def validate_string_input_origin(prompt):
         while True:
             user_input = input(prompt)
             words = user_input.split()
             if all(len(word) < 4 for word in words):
-                print(
-                    "Error: El valor minimo deben ser 4 letras, ADEMAS entre cada palabra deben de haber otras 4 (Ej: Costa Rica/Omen )")
+                print("Error: El valor minimo deben ser 4 letras, ADEMAS entre cada palabra deben de haber otras 4 (Ej: Costa Rica/Omen )")
                 continue
             if not user_input.replace(" ", "").isalpha() or not user_input.istitle():
                 print("Error: Deben ser solo letras y empezar con MAYUSCULAS")
@@ -289,15 +278,13 @@ class Menu:
     # visualizar_lista_jugadores #visualizar_lista_jugadores #visualizar_lista_jugadores #visualizar_lista_jugadores #visualizar_lista_jugadores
     def filter_by_field_position(self):
         while True:
-            print(
-                "IMPORTANTE: Deben ser solo LETRAS, ademas ambas iniciales deben empezar con MAYUSCULAS ej: Delantero o Extremo Derecho.")
+            print("IMPORTANTE: Deben ser solo LETRAS, ademas ambas iniciales deben empezar con MAYUSCULAS ej: Delantero o Extremo Derecho.")
             position_filter = Menu.validate_string_input("Ingrese la posicion que desea filtrar de los jugadores: ")
             try:
                 players = self.load_players_json()
                 # esta primera(jugador_expresion)es una variable de iteracion que se utiliza para recorrer cada elemento de la lista jugadores.
                 if players:
-                    filter_players = [player_expression for player_expression in players["players"] if
-                                      player_expression["position_in_field"] == position_filter]
+                    filter_players = [player_expression for player_expression in players["players"] if player_expression["position_in_field"] == position_filter]
 
                     if players:
                         print("Jugadores encontrados: ")
@@ -313,19 +300,16 @@ class Menu:
             except FileNotFoundError:
                 print("No existe el archivo")
                 break
-
     def filter_by_origen(self):
         while True:
-            print(
-                "IMPORTANTE: Deben ser solo LETRAS, ademas ambas iniciales deben empezar con MAYUSCULAS ej: Belgica o Costa Rica.")
+            print("IMPORTANTE: Deben ser solo LETRAS, ademas ambas iniciales deben empezar con MAYUSCULAS ej: Belgica o Costa Rica.")
             filter = Menu.validate_string_input("Ingrese el pais de origen que desea filtrar de los jugadores: ")
             try:
                 if not self.load_players_json():
                     break
                 players = self.load_players_json()
                 # esta primera (jugador_expresion) es una variable de iteracion que se utiliza para recorrer cada elemento de la lista jugadores.
-                filter_players = [player_expression for player_expression in players["players"] if
-                                  player_expression["origin"] == filter]
+                filter_players = [player_expression for player_expression in players["players"] if player_expression["origin"] == filter]
                 if players:
                     print("Jugadores encontrados: ")
                     for player_expression in filter_players:
@@ -344,8 +328,7 @@ class Menu:
             try:
                 players = self.load_players_json()
                 # esta primera (jugador_expresion) es una variable de iteracion que se utiliza para recorrer cada elemento de la lista jugadores.
-                filter_player = [player_expression for player_expression in players["players"] if
-                                 player_expression["awards"] == filter]
+                filter_player = [player_expression for player_expression in players["players"] if player_expression["awards"] == filter]
                 if players:
                     print("Jugadores encontrados: ")
                     for player_expression in filter_player:
@@ -419,13 +402,11 @@ class Menu:
 
             if not self.back_to_menu():
                 break
-
     # Gestion de jugadores Gestion de jugadores Gestion de jugadores Gestion de jugadores
     def insert_new_player(self):
         while True:
             # Solicitar al usuario que ingrese los datos del nuevo jugador
-            name_player = Menu.validate_string_input_min(
-                "Ingrese el nombre del jugador que desea ingresar (Ej: Lionel Andres Messi): ")
+            name_player = Menu.validate_string_input_min("Ingrese el nombre del jugador que desea ingresar (Ej: Lionel Andres Messi): ")
             player_dont_repit_name = self.load_players_json()
 
             existing_name = False
@@ -436,16 +417,12 @@ class Menu:
                 print("\nError: Este nombre ya esta en uso. Por favor, ingrese un nombre diferente.")
                 continue
 
-            date_of_birth = Menu.validate_date_of_birth(
-                "Ingrese la fecha de nacimiento, debe de usar este formato DIA/MES/AÑO Ej: 25/07/1991: ")
+            date_of_birth = Menu.validate_date_of_birth("Ingrese la fecha de nacimiento, debe de usar este formato DIA/MES/AÑO Ej: 25/07/1991: ")
             origin = Menu.validate_string_input_origin("Ingrese el origen del jugador (Ej: Costa Rica): ")
             gender = Menu.validate_gender("Ingrese el género del jugador (Masculino/Femenino/Otro): ")
-            height = Menu.validate_float_input("Ingrese la altura del jugador (Ej: 1.82) (Min:1.4, Max:2.1 MTS): ", 1.4,
-                                               2.1)
-            weight = Menu.validate_float_input("Ingrese el peso del jugador (Ej: 82.5kgs) (Min:50, Max:130 KGS): ", 50,
-                                               130)
-            position_in_field = Menu.validate_position_in_field(
-                "Ingrese la posición en el campo del jugador (Ej: Delantero): ")
+            height = Menu.validate_float_input("Ingrese la altura del jugador (Ej: 1.82) (Min:1.4, Max:2.1 MTS): ", 1.4,2.1)
+            weight = Menu.validate_float_input("Ingrese el peso del jugador (Ej: 82.5kgs) (Min:50, Max:130 KGS): ", 50,130)
+            position_in_field = Menu.validate_position_in_field("Ingrese la posición en el campo del jugador (Ej: Delantero): ")
             club_militant = Menu.validate_string_input_min("Ingrese el club militante del jugador (Ej: Inter Miami): ")
             awards = Menu.validate_int_input("Ingrese los reconocimientos del jugador (Ej: 13): ", 0, 50)
 
@@ -470,18 +447,15 @@ class Menu:
                     break  # El ID es valido y unico
 
             aceleration = Menu.validate_int_input("Ingrese la aceleracion del jugador (Ej: 42-99): ", 42, 99)
-            short_passes = Menu.validate_int_input("Ingrese la estadistica de pases cortos del jugador(Ej: 42-99): ",
-                                                   42, 99)
+            short_passes = Menu.validate_int_input("Ingrese la estadistica de pases cortos del jugador(Ej: 42-99): ",42, 99)
             power_of_shot = Menu.validate_int_input("Ingrese la potencia de tiro del jugador (Ej: 42-99): ", 42, 99)
-            long_passes = Menu.validate_int_input("Ingrese la estadistica de pases largos del jugador(Ej: 42-99): ", 42,
-                                                  99)
+            long_passes = Menu.validate_int_input("Ingrese la estadistica de pases largos del jugador(Ej: 42-99): ", 42,99)
             speed = Menu.validate_int_input("Ingrese la velocidad del jugador(Ej: 42-99): ", 42, 99)
             agility = Menu.validate_int_input("Ingrese la agilidad del jugador(Ej: 42-99): ", 42, 99)
             resistance = Menu.validate_int_input("Ingrese la resistencia del jugador(Ej: 42-99): ", 42, 99)
             jump = Menu.validate_int_input("Ingrese el salto del jugador(Ej: 42-99): ", 42, 99)
             dribbling = Menu.validate_int_input("Ingrese la estadistica de regate del jugador(Ej: 42-99): ", 42, 99)
-            ball_control = Menu.validate_int_input(
-                "Ingrese la estadistica de control de balon del jugador(Ej: 42-99): ", 42, 99)
+            ball_control = Menu.validate_int_input("Ingrese la estadistica de control de balon del jugador(Ej: 42-99): ", 42, 99)
             # Crear un diccionario con los datos del nuevo jugador
             new_player = {
                 "id": idx,
@@ -554,53 +528,24 @@ class Menu:
                     print("\nInformacion basica del jugador:")
                     print(json.dumps(player, indent=4))
 
-                    new_name = Menu.validate_string_input_min(
-                        "Ingrese el nuevo nombre, si no desea cambiar este dato digite el mismo dato: ")
-                    new_date_of_birth = Menu.validate_date_of_birth(
-                        "Ingrese la nueva fecha de nacimiento, debe de usar este formato DIA/MES/AÑO Ej: 25/07/1991: ")
-                    new_gender = Menu.validate_gender(
-                        "Ingrese el nuevo genero, si no desea cambiar este dato digite el mismo dato(Masculino/Femenino/Otro): ")
-                    new_height = Menu.validate_float_input(
-                        "Ingrese la nueva altura, si no desea cambiar este dato digite el mismo dato: ", 1.4, 2.1)
-                    new_weight = Menu.validate_float_input(
-                        "Ingrese el nuevo peso, si no desea cambiar este dato digite el mismo dato: ", 50, 130)
-                    new_position_in_field = Menu.validate_position_in_field(
-                        "Ingrese la posición en el campo del jugador (Ej: Delantero): ")
-                    new_militant_club = Menu.validate_string_input_min(
-                        "Ingrese el nuevo club militante, si no desea cambiar este dato digite el mismo dato: ")
-                    new_awards = Menu.validate_int_input(
-                        "Ingrese el nuevo(s) reconocimientos, si no desea cambiar este dato digite el mismo dato: ", 1,
-                        100)
-                    acceleration = Menu.validate_int_input(
-                        "Ingrese la nueva estadistica de aceleracion, si no desea cambiar este dato digite el mismo dato: ",
-                        42, 99)
-                    new_short_passes = Menu.validate_int_input(
-                        "Ingrese la nueva estadistica de pases cortos, si no desea cambiar este dato digite el mismo dato: ",
-                        42, 99)
-                    new_power_of_shot = Menu.validate_int_input(
-                        "Ingrese la nueva estadistica de potencia de tiro, si no desea cambiar este dato digite el mismo dato: ",
-                        42, 99)
-                    new_long_passes = Menu.validate_int_input(
-                        "Ingrese la nueva estadistica de pases largos, si no desea cambiar este dato digite el mismo dato: ",
-                        42, 99)
-                    new_speed = Menu.validate_int_input(
-                        "Ingrese la nueva estadistica de velocidad, si no desea cambiar este dato digite el mismo dato: ",
-                        42, 99)
-                    new_agility = Menu.validate_int_input(
-                        "Ingrese la nueva estadistica de agilidad, si no desea cambiar este dato digite el mismo dato: ",
-                        42, 99)
-                    new_resistance = Menu.validate_int_input(
-                        "Ingrese la nueva estadistica de resistencia, si no desea cambiar este dato digite el mismo dato: ",
-                        42, 99)
-                    new_jump = Menu.validate_int_input(
-                        "Ingrese la nueva estadistica de salto, si no desea cambiar este dato digite el mismo dato: ",
-                        42, 99)
-                    new_dribbling = Menu.validate_int_input(
-                        "Ingrese la nueva estadistica de regate, si no desea cambiar este dato digite el mismo dato: ",
-                        42, 99)
-                    new_ball_control = Menu.validate_int_input(
-                        "Ingrese la nueva estadistica de control de balon, si no desea cambiar este dato digite el mismo dato: ",
-                        42, 99)
+                    new_name = Menu.validate_string_input_min("Ingrese el nuevo nombre, si no desea cambiar este dato digite el mismo dato: ")
+                    new_date_of_birth = Menu.validate_date_of_birth("Ingrese la nueva fecha de nacimiento, debe de usar este formato DIA/MES/AÑO Ej: 25/07/1991: ")
+                    new_gender = Menu.validate_gender("Ingrese el nuevo genero, si no desea cambiar este dato digite el mismo dato(Masculino/Femenino/Otro): ")
+                    new_height = Menu.validate_float_input("Ingrese la nueva altura, si no desea cambiar este dato digite el mismo dato: ", 1.4, 2.1)
+                    new_weight = Menu.validate_float_input( "Ingrese el nuevo peso, si no desea cambiar este dato digite el mismo dato: ", 50, 130)
+                    new_position_in_field = Menu.validate_position_in_field("Ingrese la posición en el campo del jugador (Ej: Delantero): ")
+                    new_militant_club = Menu.validate_string_input_min("Ingrese el nuevo club militante, si no desea cambiar este dato digite el mismo dato: ")
+                    new_awards = Menu.validate_int_input("Ingrese el nuevo(s) reconocimientos, si no desea cambiar este dato digite el mismo dato: ", 1,100)
+                    acceleration = Menu.validate_int_input("Ingrese la nueva estadistica de aceleracion, si no desea cambiar este dato digite el mismo dato: ",42, 99)
+                    new_short_passes = Menu.validate_int_input("Ingrese la nueva estadistica de pases cortos, si no desea cambiar este dato digite el mismo dato: ",42, 99)
+                    new_power_of_shot = Menu.validate_int_input("Ingrese la nueva estadistica de potencia de tiro, si no desea cambiar este dato digite el mismo dato: ",42, 99)
+                    new_long_passes = Menu.validate_int_input("Ingrese la nueva estadistica de pases largos, si no desea cambiar este dato digite el mismo dato: ",42, 99)
+                    new_speed = Menu.validate_int_input("Ingrese la nueva estadistica de velocidad, si no desea cambiar este dato digite el mismo dato: ",42, 99)
+                    new_agility = Menu.validate_int_input("Ingrese la nueva estadistica de agilidad, si no desea cambiar este dato digite el mismo dato: ",42, 99)
+                    new_resistance = Menu.validate_int_input("Ingrese la nueva estadistica de resistencia, si no desea cambiar este dato digite el mismo dato: ",42, 99)
+                    new_jump = Menu.validate_int_input("Ingrese la nueva estadistica de salto, si no desea cambiar este dato digite el mismo dato: ",42, 99)
+                    new_dribbling = Menu.validate_int_input("Ingrese la nueva estadistica de regate, si no desea cambiar este dato digite el mismo dato: ",42, 99)
+                    new_ball_control = Menu.validate_int_input("Ingrese la nueva estadistica de control de balon, si no desea cambiar este dato digite el mismo dato: ",42, 99)
 
                     player["name"] = new_name
                     player["date_of_birth"] = new_date_of_birth
@@ -670,8 +615,7 @@ class Menu:
                         players_same_origin[search_origin] = 1
 
             if search_origin in players_same_origin:
-                print(
-                    f"La cantidad de jugadores provenientes de {search_origin}: {players_same_origin.get(search_origin, 0)}")
+                print(f"La cantidad de jugadores provenientes de {search_origin}: {players_same_origin.get(search_origin, 0)}")
             else:
                 print(f"No se encontraron los jugadores provenientes de {search_origin}")
             if not self.back_to_menu():
@@ -717,13 +661,11 @@ class Menu:
             show_players_by_height_and_gender[height][gender] += 1
         print("Cantidad de jugadores con la misma altura y refentes al genero:")
         for height, gender_counts in show_players_by_height_and_gender.items():
-            print(
-                f"Altura{height}m - Masculino: {gender_counts['Masculino']}, Femenino: {gender_counts['Femenino']}, Otro: {gender_counts['Otro']}: ")
+            print(f"Altura{height}m - Masculino: {gender_counts['Masculino']}, Femenino: {gender_counts['Femenino']}, Otro: {gender_counts['Otro']}: ")
 
     def show_all_players_in_a_specific_club(self):
         while True:
-            ask_club = Menu.validate_string_input(
-                "Ingrese el nombre del club que desea saber que jugadores pertenecen: ")
+            ask_club = Menu.validate_string_input("Ingrese el nombre del club que desea saber que jugadores pertenecen: ")
 
             players = self.load_players_json()
             players_of_club = []
@@ -744,8 +686,7 @@ class Menu:
     def show_number_of_players_accordance_position_on_field_considering_only_gender_female(self):
         while True:
             print("Recuerde son JUGADORAS, en vez de DELANTERO, sera DELANTERA")
-            ask_position = Menu.validate_string_input(
-                "Ingrese la posicion en el campo(SE CONSIDERA UNICAMENTE EL GENERO FEMENINO): ")
+            ask_position = Menu.validate_string_input("Ingrese la posicion en el campo(SE CONSIDERA UNICAMENTE EL GENERO FEMENINO): ")
 
             players = self.load_players_json()
 
@@ -758,8 +699,7 @@ class Menu:
             if number_players == 0:
                 print(f"No se encontraron jugadores de la posicion {ask_position}")
             else:
-                print(
-                    f"La cantidad de jugadoras de genero femenino en la posicion de {ask_position} es de: {number_players}")
+                print(f"La cantidad de jugadoras de genero femenino en la posicion de {ask_position} es de: {number_players}")
             if not self.back_to_menu():
                 break
 
@@ -792,7 +732,6 @@ class Menu:
 
     def determinate_average_ball_control_for_players_in_a_specific_position(self):
         pass
-
 
 iniciator = Menu()
 iniciator.main()

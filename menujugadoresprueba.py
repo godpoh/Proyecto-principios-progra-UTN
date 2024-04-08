@@ -730,7 +730,6 @@ class Menu:
                 if not self.back_to_menu():
                     return
 
-
     def determinate_average_ball_control_for_players_in_a_specific_position(self):
         pass
 
