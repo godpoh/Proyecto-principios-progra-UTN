@@ -152,6 +152,14 @@ class Menu:
         return True
 
     # VALIDACIONES #VALIDACIONES #VALIDACIONES #VALIDACIONES #VALIDACIONES #VALIDACIONES #VALIDACIONES #VALIDACIONES #VALIDACIONES
+    def advanced_queries_back(prompt):
+        while True:
+            user_input = input(prompt)
+            if user_input.lower() == "listo":
+                break
+            else:
+                print("Debe colocar estrictamente 'listo'")
+
     def calculate_age(date_of_birth):
         current_date = datetime.now()
         date_of_birthh = datetime.strptime(date_of_birth, "%d/%m/%Y")
@@ -662,6 +670,7 @@ class Menu:
         print("Cantidad de jugadores con la misma altura y refentes al genero:")
         for height, gender_counts in show_players_by_height_and_gender.items():
             print(f"Altura{height}m - Masculino: {gender_counts['Masculino']}, Femenino: {gender_counts['Femenino']}, Otro: {gender_counts['Otro']}: ")
+        ask = Menu.advanced_queries_back("\nCuando desee volver al menu anterior digite 'listo': ")
 
     def show_all_players_in_a_specific_club(self):
         while True:
@@ -704,12 +713,23 @@ class Menu:
                 break
 
     def show_top_ten_players_highest_with_best_agility_information_sample_name_gender_origin_height_agility(self):
-        pass
+        players = self.load_players_json()
+        sorted_players = sorted(players["players"], key=lambda x: (-x["height"], -x["agility"]))
+
+        print("Los 10 jugadores con mayor altura y agilidad: ")
+        for x, player in enumerate(sorted_players[:10], 1):
+            print(f"\nPosicion {x}:")
+            print(f"Nombre: {player['name']}")
+            print(f"Genero: {player['gender']}")
+            print(f"Origen: {player['origin']}")
+            print(f"Altura: {player['height']}")
+            print(f"Agilidad: {player['agility']}")
+
+        ask = Menu.advanced_queries_back("\nCuando desee volver al menu anterior digite 'listo': ")
 
     def show_number_players_whose_speed_is_in_specific_range(self):
         while True:
             players_speed_range = []
-
             players = self.load_players_json()
 
             speed_min = Menu.validate_int_input("Ingrese la velocidad minima del rango: ", 42, 99)
