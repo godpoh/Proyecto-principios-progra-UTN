@@ -655,7 +655,8 @@
             "long_passes": 80,
             "speed": 86,
             "agility": 87,
-            "resistance": 78
+            "resistance": 78,
+            "ball_control": 91
         }
     ]
 }

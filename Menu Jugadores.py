@@ -143,7 +143,7 @@ class Menu:
                 time.sleep(1)
 
     def back_to_menu(self):
-        print("IMPORTANTE: Si se digita algo diferente de 'SI' se tomara como un 'NO'")
+        print("\nIMPORTANTE: Si se digita algo diferente de 'SI' se tomara como un 'NO'")
         option = input("Desea realizar otra accion? (SI/NO): ")
         if option.lower() != 'si':
             print("Volviendo al menu anterior...")
@@ -178,7 +178,7 @@ class Menu:
     def validate_position_in_field(prompt):
         while True:
             user_input = input(prompt)
-            pattern_position = r"^(Portero|Portera|Defensa|Centrocampista|Defensa Central|Defensa Lateral|Mediapunta|Mediocentro defensivo|Interior Derecho|Interior Izquierdo|Delantero|Delantera|Delantero Centro|Delantera Centro|Segunda Punta|Extremo Izquierdo|Extremo Derecha|Segunda Punta)$"
+            pattern_position = r"^(Portero|Portera|Defensa|Centrocampista|Defensa Central|Defensa Lateral|Mediapunta|Mediocentro defensivo|Interior Derecho|Interior Izquierdo|Delantero|Delantera|Delantero Centro|Delantera Centro|Segunda Punta|Extremo Izquierdo|Extremo Derecho|Segunda Punta)$"
 
             if re.match(pattern_position, user_input):
                 return user_input
@@ -209,7 +209,7 @@ class Menu:
                 print("Error: El valor minimo deben ser 4 letras, ADEMAS entre cada palabra deben de haber otras 4 (Ej: Costa Rica/Omen )")
                 continue
             if not user_input.replace(" ", "").isalpha() or not user_input.istitle():
-                print("Error: Deben ser solo letras y empezar con MAYUSCULAS")
+                print("Error: Deben ser solo letras y empezar con MAYUSCULA")
                 continue
             return user_input
 
@@ -249,8 +249,8 @@ class Menu:
         while True:
             input_string = input(prompt)
             words = input_string.split()
-            if not all(len(word) >= 3 for word in words):
-                print("Error: Cada palabra debe tener almenos 3 letras")
+            if not all(len(word) >= 2 for word in words):
+                print("Error: Cada palabra debe tener almenos 2 letras")
                 continue
             if not input_string.replace(" ", "").isalpha() or not input_string.istitle():
                 print("Error: Deben ser solo LETRAS, ademas ambas iniciales deben empezar con MAYUSCULAS")
@@ -282,6 +282,17 @@ class Menu:
             "ball_control": player_found["ball_control"]
         }
         return player_statistics
+
+    def pattern_club(prompt):
+        while True:
+            user_input = input(prompt)
+            pattern_club = r'^[A-Z][a-zA-Z0-9\- ]*$'
+
+            if re.match(pattern_club, user_input):
+                return user_input
+            else:
+                print("Por favor introduzca un nombre de Club valido, puede llevar numeros del 0 al 9, utilizar (-) y DEBE respetar la mayuscula inicial, ademas debe ingresar una letra antes de un numero")
+                continue
 
     # visualizar_lista_jugadores #visualizar_lista_jugadores #visualizar_lista_jugadores #visualizar_lista_jugadores #visualizar_lista_jugadores
     def filter_by_field_position(self):
@@ -431,7 +442,7 @@ class Menu:
             height = Menu.validate_float_input("Ingrese la altura del jugador (Ej: 1.82) (Min:1.4, Max:2.1 MTS): ", 1.4,2.1)
             weight = Menu.validate_float_input("Ingrese el peso del jugador (Ej: 82.5kgs) (Min:50, Max:130 KGS): ", 50,130)
             position_in_field = Menu.validate_position_in_field("Ingrese la posición en el campo del jugador (Ej: Delantero): ")
-            club_militant = Menu.validate_string_input_min("Ingrese el club militante del jugador (Ej: Inter Miami): ")
+            club_militant = Menu.pattern_club("Ingrese el club militante del jugador (Ej: Inter Miami): ").title()
             awards = Menu.validate_int_input("Ingrese los reconocimientos del jugador (Ej: 13): ", 0, 50)
 
             while True:
@@ -701,14 +712,14 @@ class Menu:
 
             number_players = 0
 
-            for player in players:
+            for player in players["players"]:
                 if player["gender"] == "Femenino" and player["position_in_field"] == ask_position:
                     number_players += 1
 
             if number_players == 0:
-                print(f"No se encontraron jugadores de la posicion {ask_position}")
+                print(f"\nNo se encontraron jugadores de la posicion {ask_position}")
             else:
-                print(f"La cantidad de jugadoras de genero femenino en la posicion de {ask_position} es de: {number_players}")
+                print(f"\nLa cantidad de jugadoras de genero femenino en la posicion de {ask_position} es de: {number_players}")
             if not self.back_to_menu():
                 break
 
@@ -753,7 +764,7 @@ class Menu:
     def determinate_average_ball_control_for_players_in_a_specific_position(self):
         while True:
             players = self.load_players_json()
-            specific_position = input("Ingrese la posicion especifica para determinar el promedio de control de balon:")
+            specific_position = Menu.validate_position_in_field("Ingrese la posicion especifica para determinar el promedio de control de balon:")
 
             total_ball_control_for_players = 0
             num_players = 0
@@ -762,16 +773,17 @@ class Menu:
                 if player["position_in_field"] == specific_position:
                     num_players += 1
                     total_ball_control_for_players += player["ball_control"]
+                    average_control_ball = total_ball_control_for_players / num_players
+                    print(f"El promedio de control de balon es de {average_control_ball}")
+                    if not self.back_to_menu():
+                        return
 
             if num_players == 0:
                 print("No hay jugadores en la posicion especificada")
-                return
+                if not self.back_to_menu():
+                    return
 
-            average_control_ball = total_ball_control_for_players / num_players
 
-            print(f"El promedio de control de balon es de {average_control_ball}")
-            if not self.back_to_menu():
-                return
 
 iniciator = Menu()
 iniciator.main()
