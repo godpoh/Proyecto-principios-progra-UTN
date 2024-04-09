@@ -291,7 +291,7 @@ class Menu:
             if re.match(pattern_club, user_input):
                 return user_input
             else:
-                print("Por favor introduzca un nombre de Club valido, puede llevar numeros del 0 al 9, utilizar (-) y DEBE respetar la mayuscula inicial, ademas debe ingresar una letra antes de un numero")
+                print("Por favor introduzca un nombre de Club valido, puede llevar numeros del 0 al 9, utilizar (-) y DEBE respetar la mayuscula inicial, ademas debe ingresar una letra antes de un numero.")
                 continue
 
     # visualizar_lista_jugadores #visualizar_lista_jugadores #visualizar_lista_jugadores #visualizar_lista_jugadores #visualizar_lista_jugadores
