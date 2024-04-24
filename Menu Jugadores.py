@@ -482,7 +482,7 @@ class Menu:
                     break #El ID es unico y valido
 
             #Ingresa los demas datos estadisticos
-            aceleration = Menu.validate_int_input("Ingrese la aceleracion del jugador (Ej: 42-99): ", 42, 99)
+            acceleration = Menu.validate_int_input("Ingrese la aceleracion del jugador (Ej: 42-99): ", 42, 99)
             short_passes = Menu.validate_int_input("Ingrese la estadistica de pases cortos del jugador(Ej: 42-99): ",42, 99)
             power_of_shot = Menu.validate_int_input("Ingrese la potencia de tiro del jugador (Ej: 42-99): ", 42, 99)
             long_passes = Menu.validate_int_input("Ingrese la estadistica de pases largos del jugador(Ej: 42-99): ", 42,99)
@@ -504,7 +504,7 @@ class Menu:
                 "position_in_field": position_in_field,
                 "club_militant": club_militant,
                 "awards": awards,
-                "aceleration": aceleration,
+                "acceleration": acceleration,
                 "short_passes": short_passes,
                 "power_of_shot": power_of_shot,
                 "long_passes": long_passes,
@@ -551,28 +551,36 @@ class Menu:
 #Metodo para modificar los datos de un jugador
     def modify_player_data(self):
         while True:
-            #Se carga el json mediante el llamado del metodo
             player_information = self.load_players_json()
             players = player_information.get("players", [])
 
             print("\nIMPORTANTE: El NOMBRE del jugador DEBE ser EXACTO (Ej: Lionel Andres Messi)...")
             ask_player_name = Menu.validate_string_input_min("Ingrese el nombre del jugador que desea modificar: ")
-            #Se comprueba que el jugador exista mediante el nombre
+
             existing_name = False
             for player in players:
                 if player["name"] == ask_player_name:
                     existing_name = True
                     print("\nInformacion basica del jugador:")
-                    print(json.dumps(player, indent=4)) #Imprime los datos antes de empezar a modificarlos
-
-                    #Se pregunta al usuario todos los nuevos datos que desea insertar
-                    new_name = Menu.validate_string_input_min("Ingrese el nuevo nombre, si no desea cambiar este dato digite el mismo dato: ")
+                    print(json.dumps(player, indent=4))
+                    while True:
+                        new_name = Menu.validate_string_input_min("Ingrese el nuevo nombre, si no desea cambiar este dato digite el mismo dato: ")
+                        # Verifica que el nuevo nombre del jugador no se repita
+                        existing_name = False
+                        for player in player_information["players"]:
+                            if player.get("name") == new_name:
+                                existing_name = True
+                        if existing_name:
+                            print("\nError: Este nombre ya esta en uso. Por favor, ingrese un nombre diferente.")
+                            continue
+                        else:
+                            break
                     new_date_of_birth = Menu.validate_date_of_birth("Ingrese la nueva fecha de nacimiento, debe de usar este formato DIA/MES/AÑO Ej: 25/07/1991: ")
                     new_gender = Menu.validate_gender("Ingrese el nuevo genero, si no desea cambiar este dato digite el mismo dato(Masculino/Femenino/Otro): ")
                     new_height = Menu.validate_float_input("Ingrese la nueva altura, si no desea cambiar este dato digite el mismo dato: ", 1.4, 2.1)
                     new_weight = Menu.validate_float_input( "Ingrese el nuevo peso, si no desea cambiar este dato digite el mismo dato: ", 50, 130)
                     new_position_in_field = Menu.validate_position_in_field("Ingrese la posición en el campo del jugador (Ej: Delantero): ")
-                    new_militant_club = Menu.validate_string_input_min("Ingrese el nuevo club militante, si no desea cambiar este dato digite el mismo dato: ")
+                    new_militant_club = Menu.pattern_club("Ingrese el nuevo club militante, si no desea cambiar este dato digite el mismo dato: ")
                     new_awards = Menu.validate_int_input("Ingrese el nuevo(s) reconocimientos, si no desea cambiar este dato digite el mismo dato: ", 1,100)
                     acceleration = Menu.validate_int_input("Ingrese la nueva estadistica de aceleracion, si no desea cambiar este dato digite el mismo dato: ",42, 99)
                     new_short_passes = Menu.validate_int_input("Ingrese la nueva estadistica de pases cortos, si no desea cambiar este dato digite el mismo dato: ",42, 99)
@@ -595,7 +603,7 @@ class Menu:
                     player["awards"] = new_awards
                     player["acceleration"] = acceleration
                     player["short_passes"] = new_short_passes
-                    player["power_of_shot="] = new_power_of_shot
+                    player["power_of_shot"] = new_power_of_shot
                     player["long_passes"] = new_long_passes
                     player["speed"] = new_speed
                     player["agility"] = new_agility
@@ -608,7 +616,7 @@ class Menu:
                         json.dump({"players": players}, ifile, indent=4)
                     print("Los cambios se han aplicado correctamente...")
                     if not self.back_to_menu():
-                        break
+                        return
 
             if not existing_name:
                 print("No se encontro al jugador con el nombre especificado...")
@@ -705,7 +713,7 @@ class Menu:
 #Metodo para mostrar a todos los jugadores de un club en especifico
     def show_all_players_in_a_specific_club(self):
         while True:
-            ask_club = Menu.validate_string_input("Ingrese el nombre del club que desea saber que jugadores pertenecen: ")
+            ask_club = Menu.pattern_club("Ingrese el nombre del club que desea saber que jugadores pertenecen: ")
             #Se llama al json utilizando el metodo
             players = self.load_players_json()
             players_of_club = []

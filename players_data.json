@@ -637,26 +637,6 @@
             "jump": 76,
             "dribbling": 91,
             "ball_control": 91
-        },
-        {
-            "id": 30,
-            "name": "Carli Lloyd",
-            "date_of_birth": "16/07/1982",
-            "origin": "Estados Unidos",
-            "gender": "Femenino",
-            "height": 1.68,
-            "weight": 64,
-            "position_in_field": "Delantera",
-            "club_militant": "NJ/NY Gotham FC",
-            "awards": 7,
-            "acceleration": 85,
-            "short_passes": 83,
-            "power_of_shot": 88,
-            "long_passes": 80,
-            "speed": 86,
-            "agility": 87,
-            "resistance": 78,
-            "ball_control": 91
         }
     ]
 }
