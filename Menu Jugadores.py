@@ -20,7 +20,7 @@ class Menu:
         print("\n------------Menu Principal------------")
         print("1-Gestion de Jugadores")
         print("2-Visualizar lista de jugadores")
-        print("3-Estadísticas de Jugadores")
+        print("3-Estadisticas de Jugadores")
         print("4-Consultas avanzadas")
         print("5-Salir del sistema.")
         print("--------------------------------------")
@@ -132,12 +132,12 @@ class Menu:
     def main(self):
         while True:
             self.show_main_menu()
-            option = input("Seleccione una opción: ")
+            option = input("Seleccione una opcion: ")
             accion = self.main_options.get(option)
             if accion:
                 accion()
             else:
-                print("\nError: Opción no válida. Por favor, seleccione una opción válida.\n")
+                print("\nError: Opción no valida. Por favor, seleccione una opcion válida.\n")
                 time.sleep(1)
 #Metodo para reciclar codigo y consultar si desea volver al menu anterior
     def back_to_menu(self):
